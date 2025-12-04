@@ -235,6 +235,78 @@ footer {
     </div>
 </section>
 
+<!-- SISTEMA DE MEMBRESÍA ULTRA MODERNO 2025 -->
+<section class="py-5 bg-dark text-light" id="membresia">
+    <div class="container">
+        <h2 class="text-center section-title"><i class="fas fa-crown"></i> Membresía Premium – Grimoire Access</h2>
+        <p class="text-center mb-5">Sistema completamente compatible con GitHub Pages (solo front-end, sin backend). Se maneja con claves dinámicas, tokens locales y un panel visual futurista.</p>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card p-4 text-center glass-card">
+                    <h3 class="mb-3">Ingresar Token Premium</h3>
+                    <input type="password" id="premiumToken" class="form-control mb-3" placeholder="Ingresá tu clave premium">
+                    <button class="btn btn-primary w-100" onclick="validarTokenPremium()">Acceder</button>
+                    <p id="tokenStatus" class="mt-3"></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="premiumContent" class="mt-5 d-none">
+            <h3 class="text-center text-warning"><i class="fas fa-star"></i> Contenido Exclusivo</h3>
+            <div class="row mt-4">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <i class="fas fa-rocket fa-3x mb-3"></i>
+                        <h5>Launcher Grimoire Rev Plus</h5>
+                        <p>Versión extendida con módulos avanzados y efectos 3D.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <i class="fas fa-magic fa-3x mb-3"></i>
+                        <h5>Acceso Anticipado a Apps Futuras</h5>
+                        <p>Probá versiones alpha antes de su lanzamiento.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center">
+                        <i class="fas fa-vr-cardboard fa-3x mb-3"></i>
+                        <h5>Experiencias Interactivas</h5>
+                        <p>Mini apps inmersivas basadas en WebGL y UI dinámica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const TOKEN_VALIDO = "GRIMOIRE-2025-PASS";
+
+            function validarTokenPremium() {
+                let token = document.getElementById("premiumToken").value;
+                let status = document.getElementById("tokenStatus");
+                let content = document.getElementById("premiumContent");
+
+                if (token === TOKEN_VALIDO) {
+                    status.innerHTML = "<span class='text-success'>✔ Acceso concedido</span>";
+                    localStorage.setItem("premium", "true");
+                    content.classList.remove("d-none");
+                } else {
+                    status.innerHTML = "<span class='text-danger'>✘ Token incorrecto</span>";
+                    localStorage.removeItem("premium");
+                    content.classList.add("d-none");
+                }
+            }
+
+            window.onload = () => {
+                if (localStorage.getItem("premium") === "true") {
+                    document.getElementById("premiumContent").classList.remove("d-none");
+                }
+            }
+        </script>
+    </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
     <p>© 2025 Creado por <strong>Matías Taibo</strong>. Todos los derechos reservados.</p>
@@ -274,5 +346,6 @@ searchInput.addEventListener("input", () => {
 </script>
 </body>
 </html>
+
 
 
