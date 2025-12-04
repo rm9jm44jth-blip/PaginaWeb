@@ -1,1385 +1,1873 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>OptiM v1 Beta - Tienda de Programas Matías Taibo</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-<!-- SDK de PayPal -->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD" data-sdk-integration-source="button-factory"></script>
-<!-- SDK de MercadoPago -->
-<script src="https://sdk.mercadopago.com/js/v2"></script>
-<meta name="theme-color" content="#0f1724">
-<style>
-:root{--accent1:#ff6b6b;--accent2:#feca57;--primary-bg:#081421}
-*{box-sizing:border-box}
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;background:linear-gradient(135deg,#081421 0%,#072033 100%);color:#e6eef8;min-height:100vh}
-.navbar{backdrop-filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent)}
-.brand{font-weight:800}
-.hero{padding:80px 20px;text-align:center;background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:18px;margin:24px auto;width:92%;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
-.lead{color:var(--accent2)}
-.search-container{max-width:820px;margin:20px auto}
-.section-title{font-size:1.8rem;margin-bottom:18px}
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;border:1px solid rgba(255,255,255,0.03);color:#eaf6ff;transition:transform 0.3s, box-shadow 0.3s}
-.card:hover{transform:translateY(-5px);box-shadow:0 15px 30px rgba(0,0,0,0.4)}
-.btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;border-radius:999px;padding:10px 20px;font-weight:700}
-.btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);border-radius:999px}
-.launcher{background:linear-gradient(135deg,#1f005c,#5b0060);padding:24px;border-radius:12px;margin-top:22px}
-.pulse{animation:pulse 2.2s infinite}
-@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
-.footer{background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.9));padding:30px;text-align:center;margin-top:40px}
-.glass-card{background:rgba(255,255,255,0.02);padding:16px;border-radius:12px}
-.login-card{width:480px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));padding:20px;border-radius:12px}
-.muted{color:rgba(255,255,255,0.65)}
-.small-muted{color:rgba(255,255,255,0.5);font-size:0.9rem}
-.payment-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
-.payment-card{width:100%;max-width:600px;background:linear-gradient(180deg,rgba(30,30,40,0.95),rgba(15,15,25,0.98));border-radius:16px;padding:25px;border:1px solid rgba(255,255,255,0.05)}
-.token-display{background:linear-gradient(90deg,rgba(255,107,107,0.1),rgba(254,202,87,0.1));padding:15px;border-radius:10px;margin:15px 0;font-family:monospace;font-size:1.1rem;text-align:center;letter-spacing:1px;word-break:break-all}
-.success-check{color:#4caf50;font-size:3rem;margin:20px 0}
-.payment-step{padding:12px;border-left:3px solid var(--accent1);margin:10px 0;background:rgba(255,255,255,0.02)}
-.price-tag{font-size:2rem;font-weight:bold;background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.payment-method-card{border:2px solid transparent;border-radius:10px;padding:15px;cursor:pointer;transition:all 0.3s}
-.payment-method-card:hover{border-color:var(--accent1);background:rgba(255,255,255,0.05)}
-.payment-method-card.active{border-color:var(--accent2);background:rgba(254,202,87,0.1)}
-.country-flag{width:24px;height:24px;border-radius:50%;margin-right:10px}
-.product-badge{position:absolute;top:10px;right:10px;background:var(--accent1);color:white;padding:5px 10px;border-radius:20px;font-size:0.8rem}
-.cart-badge{position:absolute;top:-5px;right:-5px;background:var(--accent2);color:#000;border-radius:50%;width:20px;height:20px;font-size:0.8rem;display:flex;align-items:center;justify-content:center}
-.shop-container{max-width:1200px;margin:0 auto}
-@media (max-width:768px){.hero{padding:40px 12px}.login-card{width:100%}.payment-card{padding:15px}}
-</style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OptiM Shop v1.0 - Programas Premium Matías Taibo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!-- SDKs de Pago -->
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=USD" defer></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <meta name="theme-color" content="#0f1724">
+    <meta name="description" content="Tienda oficial de programas premium y herramientas para Windows. Membresías Plus y Elite con acceso inmediato.">
+    <meta name="author" content="Matías Taibo">
+    <style>
+        :root {
+            --accent1: #ff6b6b;
+            --accent2: #feca57;
+            --primary-bg: #081421;
+            --gradient-dark: linear-gradient(135deg, #081421 0%, #072033 100%);
+            --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            --gradient-premium: linear-gradient(135deg, #1f005c, #5b0060);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-dark);
+            color: #e6eef8;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Navbar */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 20px;
+            text-align: center;
+            background: var(--gradient-card);
+            border-radius: 24px;
+            margin: 30px auto;
+            width: 95%;
+            max-width: 1200px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero {
+                padding: 60px 15px;
+            }
+        }
+        
+        .lead {
+            color: var(--accent2);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--gradient-card);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.03);
+            color: #eaf6ff;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.1);
+        }
+        
+        .card-premium {
+            border: 2px solid var(--accent2);
+            background: linear-gradient(180deg, rgba(254,202,87,0.05), rgba(15,23,42,0.9));
+        }
+        
+        .card-popular {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-popular::before {
+            content: 'MÁS POPULAR';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent1);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transform: rotate(45deg);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            border: none;
+            border-radius: 50px;
+            padding: 12px 28px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,107,107,0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 10px 25px;
+            color: #e6eef8;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--accent1);
+            background: rgba(255,107,107,0.1);
+        }
+        
+        /* Badges */
+        .badge-premium {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            color: #000;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 50px;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: var(--accent2);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* Pricing */
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 1rem 0;
+        }
+        
+        .price-tag small {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        /* Progress Bar */
+        .progress {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            height: 8px;
+            margin: 1rem 0;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            border-radius: 10px;
+        }
+        
+        /* Stats */
+        .stats-card {
+            background: rgba(255,255,255,0.02);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Modal */
+        .payment-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .payment-card {
+            background: linear-gradient(180deg, #0f172a, #1e293b);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+        
+        /* Features List */
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-list i {
+            color: var(--accent2);
+            margin-right: 10px;
+        }
+        
+        /* Search */
+        .search-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            position: relative;
+        }
+        
+        .search-input {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: white;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent1);
+            background: rgba(255,255,255,0.08);
+        }
+        
+        /* Cart */
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent1);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* Utility Classes */
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .bg-gradient {
+            background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        }
+        
+        .border-gradient {
+            border: 2px solid;
+            border-image: linear-gradient(90deg, var(--accent1), var(--accent2)) 1;
+        }
+        
+        /* Footer */
+        .footer {
+            background: rgba(0,0,0,0.8);
+            padding: 40px 0;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent2);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .price-tag {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .btn-primary, .btn-outline {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--accent1), var(--accent2));
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #ff5252, #ffb347);
+        }
+        
+        /* Token Display */
+        .token-display {
+            background: rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 1px;
+            word-break: break-all;
+            margin: 20px 0;
+        }
+        
+        /* Security Badge */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin: 5px;
+        }
+        
+        .security-badge i {
+            color: #4CAF50;
+            margin-right: 8px;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-top: 4px solid var(--accent1);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Alert Styles */
+        .alert-premium {
+            background: rgba(254,202,87,0.1);
+            border: 1px solid rgba(254,202,87,0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        /* Section Spacing */
+        .section-spacing {
+            padding: 80px 0;
+        }
+        
+        /* Category Filter */
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .category-btn {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            padding: 10px 25px;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background: rgba(255,107,107,0.1);
+            border-color: var(--accent1);
+            color: white;
+        }
+        
+        .category-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.1);
+        }
+    </style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav class="navbar navbar-expand-lg navbar-dark px-4">
-  <div class="container-fluid">
-    <a class="navbar-brand brand text-light"><i class="fas fa-bolt"></i> OptiM Shop</a>
-    <div class="d-flex gap-2 align-items-center">
-      <div class="position-relative me-2">
-        <button class="btn btn-outline text-light" id="cartBtn">
-          <i class="fas fa-shopping-cart"></i> Carrito
-        </button>
-        <span id="cartCount" class="cart-badge" style="display:none">0</span>
-      </div>
-      <button class="btn btn-outline text-light" id="openAdminBtn"><i class="fas fa-tools"></i> Admin</button>
-      <button class="btn btn-outline text-light" id="openMemberBtn"><i class="fas fa-crown"></i> Membresía</button>
-      <a class="btn btn-outline text-light" href="#contacto-info"><i class="fas fa-envelope"></i> Contacto</a>
-    </div>
-  </div>
-</nav>
-
-<!-- CARRITO FLOTANTE -->
-<div id="cartSidebar" style="display:none;position:fixed;right:0;top:0;width:350px;height:100vh;background:linear-gradient(180deg,#0c1a2d,#081421);z-index:9997;padding:20px;box-shadow:-5px 0 20px rgba(0,0,0,0.5);overflow-y:auto">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h4><i class="fas fa-shopping-cart"></i> Tu Carrito</h4>
-    <button class="btn btn-sm btn-outline text-light" onclick="toggleCart()">
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-  <div id="cartItems"></div>
-  <div class="mt-3 pt-3 border-top border-secondary">
-    <div class="d-flex justify-content-between mb-2">
-      <span>Subtotal:</span>
-      <span id="cartSubtotal">$0.00</span>
-    </div>
-    <div class="d-flex justify-content-between mb-3">
-      <span>Total:</span>
-      <span class="fw-bold" id="cartTotal">$0.00</span>
-    </div>
-    <button class="btn btn-primary w-100 mb-2" onclick="proceedToCheckout()">
-      <i class="fas fa-lock"></i> Proceder al Pago
-    </button>
-    <button class="btn btn-outline w-100" onclick="clearCart()">
-      <i class="fas fa-trash"></i> Vaciar Carrito
-    </button>
-  </div>
-</div>
-
-<!-- HERO -->
-<section class="hero container">
-  <h1 class="display-5">OptiM Shop — v1 Beta <small class="small-muted">(2025) — Creado por Matías Taibo</small></h1>
-  <p class="lead">Tienda oficial de programas y membresías premium. Paga como prefieras: <strong>PayPal, MercadoPago, transferencias internacionales</strong>. Todo llega directo a mi CVU personal.</p>
-  <div class="search-container">
-    <input id="searchInput" class="form-control form-control-lg" placeholder="Buscar programas, apps o membresías..." aria-label="Buscar">
-  </div>
-  <div class="d-flex justify-content-center gap-3 mt-3">
-    <a class="btn btn-primary" id="ctaLauncher"><i class="fas fa-magic"></i> Abrir Grimoire Rev</a>
-    <a class="btn btn-outline text-light" id="ctaExplore"><i class="fas fa-compass"></i> Explorar Tienda</a>
-  </div>
-</section>
-
-<!-- TIENDA PRINCIPAL -->
-<section class="container py-5" id="tienda">
-  <h2 class="section-title">🏪 Tienda OptiM</h2>
-  <div class="row g-4" id="productosContainer"></div>
-</section>
-
-<!-- LAUNCHER -->
-<div class="container mt-4">
-  <div class="launcher d-flex flex-column align-items-center text-light">
-    <h3><i class="fas fa-rocket"></i> Grimoire Rev — Mejorado (AQW)</h3>
-    <p class="small-muted">Launcher dedicado para mejorar la experiencia de AQW: módulos de optimización, skins y arranque rápido. (Integrado en OptiM).</p>
-    <div class="d-flex gap-2 flex-wrap justify-content-center mt-3">
-      <button class="btn btn-primary" id="openLauncherUI"><i class="fas fa-desktop"></i> Abrir Launcher</button>
-      <button class="btn btn-outline text-light" id="openSettings"><i class="fas fa-sliders-h"></i> Ajustes</button>
-    </div>
-  </div>
-</div>
-
-<!-- MEMBRESÍAS PREMIUM -->
-<section class="container py-5" id="membresias">
-  <h2 class="section-title">👑 Membresías Premium</h2>
-  <p class="text-center mb-4 small-muted">Acceso completo a todos los programas + contenido exclusivo</p>
-  <div class="row g-4">
-    <!-- Plan Free -->
-    <div class="col-md-4">
-      <div class="card p-4 h-100">
-        <div class="text-center mb-3">
-          <h4 class="mb-1">Free</h4>
-          <div class="price-tag">$0</div>
-          <small class="small-muted">Acceso básico</small>
-        </div>
-        <ul class="list-unstyled">
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Programas básicos</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Actualizaciones</li>
-          <li class="mb-2"><i class="fas fa-times text-muted me-2"></i> Contenido exclusivo</li>
-          <li class="mb-2"><i class="fas fa-times text-muted me-2"></i> Soporte prioritario</li>
-        </ul>
-        <button class="btn btn-outline w-100 mt-3" onclick="addToCart('free')">Seleccionar</button>
-      </div>
-    </div>
-    
-    <!-- Plan Plus -->
-    <div class="col-md-4">
-      <div class="card p-4 h-100 position-relative">
-        <span class="product-badge">MÁS POPULAR</span>
-        <div class="text-center mb-3">
-          <h4 class="mb-1">Plus</h4>
-          <div class="price-tag">$9.99<span class="fs-6">/mes</span></div>
-          <small class="small-muted">o $99.99/año (ahorra 16%)</small>
-        </div>
-        <ul class="list-unstyled">
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Todo el contenido Free</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Acceso anticipado</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 5 skins exclusivas</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Soporte prioritario</li>
-        </ul>
-        <button class="btn btn-primary w-100 mt-3" onclick="addToCart('plus-monthly')">Suscribirse Mensual</button>
-        <button class="btn btn-outline w-100 mt-2" onclick="addToCart('plus-yearly')">Suscribirse Anual</button>
-      </div>
-    </div>
-    
-    <!-- Plan Elite -->
-    <div class="col-md-4">
-      <div class="card p-4 h-100">
-        <div class="text-center mb-3">
-          <h4 class="mb-1">Elite</h4>
-          <div class="price-tag">$19.99<span class="fs-6">/mes</span></div>
-          <small class="small-muted">o $199.99/año (ahorra 16%)</small>
-        </div>
-        <ul class="list-unstyled">
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Todo el contenido Plus</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Todas las skins (20+)</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Soporte VIP 24/7</li>
-          <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Acceso de por vida (beta)</li>
-        </ul>
-        <button class="btn btn-primary w-100 mt-3" onclick="addToCart('elite-monthly')">Suscribirse Mensual</button>
-        <button class="btn btn-outline w-100 mt-2" onclick="addToCart('elite-yearly')">Suscribirse Anual</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PAGOS INTERNACIONALES -->
-<section class="container py-5" id="pagosInternacionales">
-  <h2 class="section-title">🌍 Pagos Internacionales</h2>
-  <p class="text-center mb-4 small-muted">Para usuarios fuera de Argentina. El dinero siempre llega a mi cuenta personal.</p>
-  
-  <div class="row g-4">
-    <!-- PayPal -->
-    <div class="col-md-6">
-      <div class="card p-4 h-100">
-        <div class="text-center mb-3">
-          <i class="fab fa-paypal fa-3x mb-3" style="color:#003087"></i>
-          <h4>PayPal</h4>
-          <p class="small-muted">Pago seguro internacional</p>
-        </div>
-        <div class="mb-3">
-          <h6>Beneficios:</h6>
-          <ul class="small">
-            <li>Protegido por PayPal</li>
-            <li>Reembolsos disponibles</li>
-            <li>Pago en USD/EUR</li>
-            <li>Procesamiento instantáneo</li>
-          </ul>
-        </div>
-        <button class="btn btn-primary w-100" onclick="selectPaymentMethod('paypal')">
-          <i class="fab fa-paypal me-2"></i>Pagar con PayPal
-        </button>
-      </div>
-    </div>
-    
-    <!-- Transferencia Internacional -->
-    <div class="col-md-6">
-      <div class="card p-4 h-100">
-        <div class="text-center mb-3">
-          <i class="fas fa-globe-americas fa-3x mb-3" style="color:#feca57"></i>
-          <h4>Transferencia Internacional</h4>
-          <p class="small-muted">Para bancos extranjeros</p>
-        </div>
-        <div class="mb-3">
-          <h6>Instrucciones:</h6>
-          <ul class="small">
-            <li>Transferencia SWIFT/IBAN</li>
-            <li>Datos bancarios argentinos</li>
-            <li>Envía comprobante por email</li>
-            <li>Token manual en 24hs</li>
-          </ul>
-        </div>
-        <button class="btn btn-outline w-100" onclick="showBankDetails()">
-          <i class="fas fa-university me-2"></i>Ver Datos Bancarios
-        </button>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Otras opciones -->
-  <div class="mt-4">
-    <h5 class="mb-3">Otras opciones de pago:</h5>
-    <div class="d-flex flex-wrap gap-2">
-      <button class="btn btn-outline" onclick="showMercadoPago()">
-        <i class="fas fa-dollar-sign me-2"></i>MercadoPago (Argentina)
-      </button>
-      <button class="btn btn-outline" onclick="showCrypto()">
-        <i class="fas fa-coins me-2"></i>Crypto (USDT, Bitcoin)
-      </button>
-      <button class="btn btn-outline" onclick="showBrubank()">
-        <i class="fas fa-mobile-alt me-2"></i>Brubank (Argentina)
-      </button>
-    </div>
-  </div>
-</section>
-
-<!-- MODAL DE CHECKOUT -->
-<div id="checkoutModal" class="payment-modal" style="display:none;">
-  <div class="payment-card">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4><i class="fas fa-shopping-bag"></i> Finalizar Compra</h4>
-      <button class="btn btn-sm btn-outline text-light" onclick="closeCheckout()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    
-    <div id="checkoutContent">
-      <!-- Contenido dinámico del checkout -->
-    </div>
-  </div>
-</div>
-
-<!-- MODAL DATOS BANCARIOS -->
-<div id="bankModal" class="payment-modal" style="display:none;">
-  <div class="payment-card">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4><i class="fas fa-university"></i> Datos Bancarios</h4>
-      <button class="btn btn-sm btn-outline text-light" onclick="closeBankModal()">
-        <i class="fas fa-times"></i>
-      </button>
-    </div>
-    
-    <div class="alert alert-dark mb-3">
-      <i class="fas fa-info-circle me-2"></i>
-      <strong>Importante:</strong> Todo el dinero llega directo a mi CVU personal. Una vez realizada la transferencia, envía el comprobante a matias.taibo2023@gmail.com
-    </div>
-    
-    <div class="row">
-      <!-- Argentina -->
-      <div class="col-md-6 mb-4">
-        <h5 class="mb-3"><img src="https://flagcdn.com/w40/ar.png" class="country-flag"> Argentina</h5>
-        <div class="glass-card p-3">
-          <div class="mb-2">
-            <strong>Banco:</strong> Galicia
-          </div>
-          <div class="mb-2">
-            <strong>Titular:</strong> Matías Taibo
-          </div>
-          <div class="mb-2">
-            <strong>CVU:</strong> 0000007900000000000000
-          </div>
-          <div class="mb-2">
-            <strong>Alias:</strong> grimoire.tokens
-          </div>
-          <div>
-            <strong>CUIT:</strong> 20-12345678-9
-          </div>
-        </div>
-      </div>
-      
-      <!-- Internacional -->
-      <div class="col-md-6 mb-4">
-        <h5 class="mb-3"><i class="fas fa-globe-americas"></i> Internacional</h5>
-        <div class="glass-card p-3">
-          <div class="mb-2">
-            <strong>Banco:</strong> Banco Galicia
-          </div>
-          <div class="mb-2">
-            <strong>SWIFT:</strong> BACOARBAXXX
-          </div>
-          <div class="mb-2">
-            <strong>IBAN:</strong> AR1234567890123456789012
-          </div>
-          <div class="mb-2">
-            <strong>Address:</strong> Tte. Gral. J. D. Perón 407, Buenos Aires
-          </div>
-          <div>
-            <strong>Currency:</strong> USD/ARS
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="mt-3">
-      <h6>¿Ya pagaste?</h6>
-      <div class="input-group mb-2">
-        <input type="email" id="transferEmail" class="form-control" placeholder="Tu email">
-        <input type="file" id="transferReceipt" class="form-control" accept="image/*,.pdf">
-      </div>
-      <button class="btn btn-primary w-100" onclick="uploadTransferReceipt()">
-        <i class="fas fa-upload me-2"></i>Enviar Comprobante
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- PREMIUM CONTENT -->
-<section class="container py-4" id="premiumContent" style="display:none">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h3 class="section-title mb-0">Contenido Exclusivo</h3>
-    <div class="badge bg-success px-3 py-2">
-      <i class="fas fa-crown me-2"></i>Premium Activo
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4"><div class="card p-3"> <h5>Grimoire Rev Pro</h5><p class="muted">Módulos 3D y skins exclusivos.</p></div></div>
-    <div class="col-md-4"><div class="card p-3"> <h5>Acceso Anticipado</h5><p class="muted">Prueba apps alpha y betas.</p></div></div>
-    <div class="col-md-4"><div class="card p-3"> <h5>Experiencias Interactivas</h5><p class="muted">Mini apps WebGL y visualizaciones premium.</p></div></div>
-  </div>
-  
-  <div class="mt-4">
-    <h5>Tu Información Premium</h5>
-    <div class="glass-card mt-3">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="mb-2">
-            <small class="small-muted">Token:</small>
-            <div id="currentToken" class="token-display">-</div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-2">
-            <small class="small-muted">Plan:</small>
-            <div id="currentPlan" class="fs-5">-</div>
-          </div>
-        </div>
-      </div>
-      <div class="mt-3">
-        <small class="small-muted">Expiración:</small>
-        <div id="expirationDate" class="fs-6">-</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ADMIN PANEL -->
-<div id="adminPanel" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
-  <div class="login-card p-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4>Panel Admin — OptiM Shop</h4>
-      <small class="small-muted">Demo frontend</small>
-    </div>
-    
-    <div id="adminLoginArea">
-      <input id="adminPass" class="form-control mb-2" placeholder="Contraseña admin" type="password" />
-      <div class="d-flex gap-2 mb-3">
-        <button class="btn btn-primary" onclick="loginAdmin()">Ingresar</button>
-        <button class="btn btn-outline" onclick="closeAdmin()">Cerrar</button>
-      </div>
-    </div>
-
-    <div id="adminActions" style="display:none">
-      <ul class="nav nav-tabs mb-3">
-        <li class="nav-item"><button class="nav-link active" onclick="showAdminTab('tokens')">Tokens</button></li>
-        <li class="nav-item"><button class="nav-link" onclick="showAdminTab('orders')">Pedidos</button></li>
-        <li class="nav-item"><button class="nav-link" onclick="showAdminTab('products')">Productos</button></li>
-        <li class="nav-item"><button class="nav-link" onclick="showAdminTab('settings')">Config</button></li>
-      </ul>
-      
-      <!-- Tokens Tab -->
-      <div id="tabTokens">
-        <h6>Generador de Tokens</h6>
-        <div class="d-flex gap-2 mb-2">
-          <input id="newTokenInput" class="form-control" placeholder="Etiqueta (ej: OPTIM-ELITE-2025)"/>
-          <select id="tokenPlan" class="form-control" style="max-width:120px">
-            <option value="plus">Plus</option>
-            <option value="elite">Elite</option>
-          </select>
-          <button class="btn btn-primary" onclick="generarToken()">Generar</button>
-        </div>
-        <small class="small-muted">Tokens guardados en local (demo).</small>
-        <pre id="tokensList" style="max-height:120px;overflow:auto;background:rgba(0,0,0,0.15);padding:10px;border-radius:8px;margin-top:8px"></pre>
-        
-        <div class="d-flex gap-2 mt-3">
-          <button class="btn btn-outline" onclick="exportTokens()">Exportar Tokens</button>
-          <button class="btn btn-outline" onclick="clearTokens()">Limpiar Tokens</button>
-        </div>
-      </div>
-      
-      <!-- Pedidos Tab -->
-      <div id="tabOrders" style="display:none">
-        <h6>Pedidos Recientes</h6>
-        <div id="ordersList" style="max-height:200px;overflow:auto;background:rgba(0,0,0,0.05);padding:10px;border-radius:8px"></div>
-        <div class="d-flex gap-2 mt-2">
-          <button class="btn btn-outline" onclick="exportOrders()">Exportar CSV</button>
-          <button class="btn btn-outline" onclick="clearOrders()">Limpiar</button>
-        </div>
-      </div>
-      
-      <!-- Productos Tab -->
-      <div id="tabProducts" style="display:none">
-        <h6>Gestión de Productos</h6>
-        <button class="btn btn-primary mb-3" onclick="addProductModal()">
-          <i class="fas fa-plus"></i> Agregar Producto
-        </button>
-        <div id="productsAdminList"></div>
-      </div>
-      
-      <!-- Config Tab -->
-      <div id="tabSettings" style="display:none">
-        <h6>Configuración de Pagos</h6>
-        <div class="mb-3">
-          <label class="form-label small-muted">Email PayPal</label>
-          <input type="email" id="paypalEmail" class="form-control" value="matias.taibo2023@gmail.com">
-        </div>
-        <div class="mb-3">
-          <label class="form-label small-muted">Alias Brubank</label>
-          <input type="text" id="brubankAlias" class="form-control" value="grimoire.tokens">
-        </div>
-        <div class="mb-3">
-          <label class="form-label small-muted">MercadoPago Access Token</label>
-          <input type="text" id="mpAccessToken" class="form-control" placeholder="TEST-XXXX...">
-        </div>
-        <button class="btn btn-primary" onclick="savePaymentSettings()">Guardar Configuración</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- LAUNCHER UI (mini) -->
-<div id="launcherUI" style="display:none;position:fixed;right:20px;bottom:20px;width:360px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.2));padding:12px;border-radius:12px;z-index:9998;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
-  <div class="d-flex justify-content-between align-items-center mb-2"><strong>Grimoire Rev - Launcher</strong><div><button class="btn btn-sm btn-outline" onclick="closeLauncherUI()"><i class="fas fa-times"></i></button></div></div>
-  <div id="launcherApps" style="max-height:300px;overflow:auto"></div>
-  <div class="mt-2 d-flex gap-2"><button class="btn btn-primary w-100" onclick="optimizarSistema()">Optimizar Ahora</button></div>
-</div>
-
-<!-- CONTACTO -->
-<section id="contacto-info" class="py-5 text-center">
-  <h2 class="section-title">Contacto Oficial</h2>
-  <p class="small-muted mb-1">Consultas generales o soporte técnico:</p>
-  <p class="font-weight-bold">📧 <a href="mailto:matias.taibo2023@gmail.com" class="text-light">matias.taibo2023@gmail.com</a></p>
-  <p class="font-weight-bold">📞 3872252758 (solo emergencias o problemas no solucionables)</p>
-  <p class="small-muted mt-3">Para problemas con pagos, incluir ID de transacción y correo usado.</p>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container d-flex justify-content-between align-items-center">
-    <div>© 2025 OptiM Shop — v1 Beta — Matías Taibo</div>
-    <div>
-      <a class="text-light me-2" href="#"><i class="fab fa-github"></i></a>
-      <a class="text-light" href="#"><i class="fab fa-twitter"></i></a>
-    </div>
-  </div>
-</footer>
-
-<script>
-/* ========== CONFIGURACIÓN INICIAL ========== */
-const CONFIG = {
-  miCVU: "0000007900000000000000",
-  miAlias: "grimoire.tokens",
-  miEmail: "matias.taibo2023@gmail.com",
-  paypalEmail: "matias.taibo2023@gmail.com",
-  // Agregar aquí tu PUBLIC KEY de MercadoPago
-  mercadoPagoPublicKey: "TEST-XXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-};
-
-/* ========== PRODUCTOS DE LA TIENDA ========== */
-const PRODUCTOS = [
-  {
-    id: 'plus-monthly',
-    nombre: 'Membresía Plus Mensual',
-    descripcion: 'Acceso completo por 1 mes',
-    precio: 9.99,
-    moneda: 'USD',
-    tipo: 'membresia',
-    categoria: 'premium',
-    popular: true
-  },
-  {
-    id: 'elite-monthly',
-    nombre: 'Membresía Elite Mensual',
-    descripcion: 'Acceso VIP por 1 mes',
-    precio: 19.99,
-    moneda: 'USD',
-    tipo: 'membresia',
-    categoria: 'premium'
-  },
-  {
-    id: 'plus-yearly',
-    nombre: 'Membresía Plus Anual',
-    descripcion: 'Acceso completo por 1 año (16% descuento)',
-    precio: 99.99,
-    moneda: 'USD',
-    tipo: 'membresia',
-    categoria: 'premium'
-  },
-  {
-    id: 'elite-yearly',
-    nombre: 'Membresía Elite Anual',
-    descripcion: 'Acceso VIP por 1 año (16% descuento)',
-    precio: 199.99,
-    moneda: 'USD',
-    tipo: 'membresia',
-    categoria: 'premium'
-  },
-  {
-    id: 'swf-pro',
-    nombre: 'Descompresor SWF Pro',
-    descripcion: 'Versión profesional con más funciones',
-    precio: 14.99,
-    moneda: 'USD',
-    tipo: 'software',
-    categoria: 'herramientas'
-  },
-  {
-    id: 'grimoire-pro',
-    nombre: 'Grimoire Rev Pro',
-    descripcion: 'Launcher premium con skins exclusivas',
-    precio: 24.99,
-    moneda: 'USD',
-    tipo: 'software',
-    categoria: 'aqw',
-    popular: true
-  },
-  {
-    id: 'skin-pack-1',
-    nombre: 'Pack Skins Básico',
-    descripcion: '5 skins exclusivas para Grimoire',
-    precio: 7.99,
-    moneda: 'USD',
-    tipo: 'skin',
-    categoria: 'aqw'
-  },
-  {
-    id: 'skin-pack-2',
-    nombre: 'Pack Skins Premium',
-    descripcion: '15 skins exclusivas + efectos',
-    precio: 19.99,
-    moneda: 'USD',
-    tipo: 'skin',
-    categoria: 'aqw'
-  }
-];
-
-/* ========== CARRITO DE COMPRAS ========== */
-let carrito = JSON.parse(localStorage.getItem('optim_cart')) || [];
-let ordenActual = null;
-
-function actualizarCarrito() {
-  localStorage.setItem('optim_cart', JSON.stringify(carrito));
-  
-  // Actualizar badge
-  const cartCount = document.getElementById('cartCount');
-  if (carrito.length > 0) {
-    cartCount.textContent = carrito.length;
-    cartCount.style.display = 'flex';
-  } else {
-    cartCount.style.display = 'none';
-  }
-  
-  // Actualizar sidebar si está visible
-  if (document.getElementById('cartSidebar').style.display === 'block') {
-    renderCartItems();
-  }
-}
-
-function addToCart(productId) {
-  const producto = PRODUCTOS.find(p => p.id === productId);
-  if (!producto) {
-    alert('Producto no encontrado');
-    return;
-  }
-  
-  carrito.push({
-    ...producto,
-    cartId: Date.now() + Math.random().toString(36).substr(2, 9)
-  });
-  
-  actualizarCarrito();
-  showNotification(`${producto.nombre} agregado al carrito`, 'success');
-  
-  // Mostrar carrito automáticamente
-  toggleCart();
-}
-
-function removeFromCart(cartId) {
-  carrito = carrito.filter(item => item.cartId !== cartId);
-  actualizarCarrito();
-}
-
-function clearCart() {
-  if (carrito.length === 0) return;
-  if (confirm('¿Vaciar todo el carrito?')) {
-    carrito = [];
-    actualizarCarrito();
-    showNotification('Carrito vaciado', 'info');
-  }
-}
-
-function renderCartItems() {
-  const container = document.getElementById('cartItems');
-  const subtotal = document.getElementById('cartSubtotal');
-  const total = document.getElementById('cartTotal');
-  
-  if (carrito.length === 0) {
-    container.innerHTML = '<div class="text-center py-4"><i class="fas fa-shopping-cart fa-2x mb-3"></i><p class="small-muted">Tu carrito está vacío</p></div>';
-    subtotal.textContent = '$0.00';
-    total.textContent = '$0.00';
-    return;
-  }
-  
-  let html = '';
-  let sum = 0;
-  
-  carrito.forEach(item => {
-    sum += item.precio;
-    html += `
-      <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-bottom border-secondary">
-        <div style="flex:1">
-          <div class="fw-bold">${item.nombre}</div>
-          <div class="small-muted">${item.descripcion}</div>
-        </div>
-        <div class="text-end ms-3">
-          <div class="fw-bold">$${item.precio.toFixed(2)} ${item.moneda}</div>
-          <button class="btn btn-sm btn-outline mt-1" onclick="removeFromCart('${item.cartId}')">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-      </div>
-    `;
-  });
-  
-  container.innerHTML = html;
-  subtotal.textContent = `$${sum.toFixed(2)}`;
-  total.textContent = `$${sum.toFixed(2)}`;
-}
-
-function toggleCart() {
-  const sidebar = document.getElementById('cartSidebar');
-  if (sidebar.style.display === 'block') {
-    sidebar.style.display = 'none';
-  } else {
-    sidebar.style.display = 'block';
-    renderCartItems();
-  }
-}
-
-function proceedToCheckout() {
-  if (carrito.length === 0) {
-    alert('Agrega productos al carrito primero');
-    return;
-  }
-  
-  showCheckout();
-}
-
-/* ========== CHECKOUT Y PAGOS ========== */
-function showCheckout() {
-  const modal = document.getElementById('checkoutModal');
-  const content = document.getElementById('checkoutContent');
-  
-  let total = carrito.reduce((sum, item) => sum + item.precio, 0);
-  
-  content.innerHTML = `
-    <div class="payment-step">
-      <h6><i class="fas fa-shopping-cart me-2"></i>Resumen de Compra</h6>
-      <div style="max-height:200px;overflow-y:auto" class="mt-2">
-        ${carrito.map(item => `
-          <div class="d-flex justify-content-between mb-2">
-            <div>
-              <div>${item.nombre}</div>
-              <small class="small-muted">${item.descripcion}</small>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-bolt me-2"></i>OptiM Shop v1.0
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#programas">Programas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#membresias">Membresías</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pagos">Pagos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <li class="nav-item ms-2">
+                        <button class="btn btn-outline" onclick="toggleCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartBadge" class="cart-badge" style="display: none;">0</span>
+                        </button>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button class="btn btn-primary" onclick="window.open('admin-panel.html', '_blank')">
+                            <i class="fas fa-user-shield"></i> Admin
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <div class="fw-bold">$${item.precio.toFixed(2)}</div>
-          </div>
-        `).join('')}
-      </div>
-      <div class="d-flex justify-content-between mt-3 border-top pt-2">
-        <strong>Total:</strong>
-        <strong class="price-tag">$${total.toFixed(2)} USD</strong>
-      </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h1 class="hero-title">OptiM Shop v1.0</h1>
+            <p class="lead">Tu destino premium para programas optimizados, herramientas exclusivas y membresías que transforman tu experiencia digital.</p>
+            
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="stats-card">
+                        <div class="stat-number" id="totalUsers">1,250+</div>
+                        <div class="small-muted">Usuarios Activos</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="stats-card">
+                        <div class="stat-number" id="totalSales">850+</div>
+                        <div class="small-muted">Ventas Completadas</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="stats-card">
+                        <div class="stat-number" id="satisfactionRate">99%</div>
+                        <div class="small-muted">Satisfacción</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="🔍 Buscar programas, herramientas o membresías...">
+            </div>
+            
+            <div class="mt-4">
+                <div class="security-badge">
+                    <i class="fas fa-shield-alt"></i> Pago 100% Seguro
+                </div>
+                <div class="security-badge">
+                    <i class="fas fa-bolt"></i> Entrega Instantánea
+                </div>
+                <div class="security-badge">
+                    <i class="fas fa-headset"></i> Soporte 24/7
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Productos Destacados -->
+    <section id="programas" class="section-spacing">
+        <div class="container">
+            <h2 class="text-center mb-5">🎮 Programas Destacados</h2>
+            
+            <div class="category-filter">
+                <button class="category-btn active" onclick="filterProducts('all')">Todos</button>
+                <button class="category-btn" onclick="filterProducts('optimization')">Optimización</button>
+                <button class="category-btn" onclick="filterProducts('gaming')">Gaming</button>
+                <button class="category-btn" onclick="filterProducts('tools')">Herramientas</button>
+                <button class="category-btn" onclick="filterProducts('premium')">Premium</button>
+            </div>
+            
+            <div class="row g-4" id="productsContainer">
+                <!-- Los productos se cargan dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Membresías Premium -->
+    <section id="membresias" class="section-spacing" style="background: rgba(0,0,0,0.3);">
+        <div class="container">
+            <h2 class="text-center mb-5">👑 Membresías Premium</h2>
+            <p class="text-center mb-5 small-muted">Elige el plan perfecto para tus necesidades. Todos incluyen actualizaciones gratuitas y soporte técnico.</p>
+            
+            <div class="row">
+                <!-- Free Plan -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 p-4">
+                        <div class="text-center mb-4">
+                            <h3 class="mb-3">Free</h3>
+                            <div class="price-tag">$0</div>
+                            <p class="small-muted">Acceso básico para empezar</p>
+                        </div>
+                        
+                        <ul class="feature-list mb-4">
+                            <li><i class="fas fa-check text-success"></i> 3 programas básicos</li>
+                            <li><i class="fas fa-check text-success"></i> Actualizaciones de seguridad</li>
+                            <li><i class="fas fa-check text-success"></i> Comunidad Discord</li>
+                            <li><i class="fas fa-times text-muted"></i> Contenido exclusivo</li>
+                            <li><i class="fas fa-times text-muted"></i> Soporte prioritario</li>
+                            <li><i class="fas fa-times text-muted"></i> Skins premium</li>
+                        </ul>
+                        
+                        <button class="btn btn-outline w-100 mt-auto" onclick="selectPlan('free')">
+                            Empezar Gratis
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Plus Plan -->
+                <div class="col-md-4 mb-4">
+                    <div class="card card-popular card-premium h-100 p-4">
+                        <div class="text-center mb-4">
+                            <h3 class="mb-3">Plus</h3>
+                            <div class="price-tag">$9.99<small>/mes</small></div>
+                            <p class="small-muted">o $99.99/año (ahorra 16%)</p>
+                        </div>
+                        
+                        <ul class="feature-list mb-4">
+                            <li><i class="fas fa-check text-success"></i> 15+ programas premium</li>
+                            <li><i class="fas fa-check text-success"></i> Acceso anticipado beta</li>
+                            <li><i class="fas fa-check text-success"></i> 10 skins exclusivas</li>
+                            <li><i class="fas fa-check text-success"></i> Soporte prioritario 12/7</li>
+                            <li><i class="fas fa-check text-success"></i> Cloud saves</li>
+                            <li><i class="fas fa-times text-muted"></i> Acceso lifetime</li>
+                        </ul>
+                        
+                        <button class="btn btn-primary w-100 mt-auto" onclick="addToCart('plus-monthly')">
+                            <i class="fas fa-crown me-2"></i>Elegir Plus
+                        </button>
+                        <button class="btn btn-outline w-100 mt-2" onclick="addToCart('plus-yearly')">
+                            <i class="fas fa-calendar-alt me-2"></i>Anual (Ahorra 16%)
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Elite Plan -->
+                <div class="col-md-4 mb-4">
+                    <div class="card card-premium h-100 p-4">
+                        <div class="text-center mb-4">
+                            <h3 class="mb-3">Elite</h3>
+                            <div class="price-tag">$19.99<small>/mes</small></div>
+                            <p class="small-muted">o $199.99/año (ahorra 16%)</p>
+                        </div>
+                        
+                        <ul class="feature-list mb-4">
+                            <li><i class="fas fa-check text-success"></i> Todos los programas</li>
+                            <li><i class="fas fa-check text-success"></i> Acceso alpha + betas</li>
+                            <li><i class="fas fa-check text-success"></i> Todas las skins (30+)</li>
+                            <li><i class="fas fa-check text-success"></i> Soporte VIP 24/7</li>
+                            <li><i class="fas fa-check text-success"></i> Acceso lifetime incluido</li>
+                            <li><i class="fas fa-check text-success"></i> Servidor privado Discord</li>
+                        </ul>
+                        
+                        <button class="btn btn-primary w-100 mt-auto" onclick="addToCart('elite-monthly')">
+                            <i class="fas fa-star me-2"></i>Elegir Elite
+                        </button>
+                        <button class="btn btn-outline w-100 mt-2" onclick="addToCart('elite-yearly')">
+                            <i class="fas fa-gem me-2"></i>Anual (Ahorra 16%)
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <div class="alert-premium">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Garantía de satisfacción:</strong> Todos los planes incluyen 30 días de garantía de devolución. Si no estás satisfecho, te devolvemos el 100%.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section id="pagos" class="section-spacing">
+        <div class="container">
+            <h2 class="text-center mb-5">💳 Métodos de Pago</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card p-4 h-100">
+                        <div class="text-center mb-4">
+                            <i class="fab fa-paypal fa-4x mb-3" style="color: #003087;"></i>
+                            <h4>PayPal</h4>
+                            <p class="small-muted">Pago internacional seguro</p>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary" onclick="selectPayment('paypal')">
+                                <i class="fab fa-paypal me-2"></i>Pagar con PayPal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card p-4 h-100">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-dollar-sign fa-4x mb-3" style="color: #00a1e1;"></i>
+                            <h4>MercadoPago</h4>
+                            <p class="small-muted">Argentina y Latinoamérica</p>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary" onclick="selectPayment('mercadopago')">
+                                <i class="fas fa-dollar-sign me-2"></i>Pagar con MercadoPago
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5><i class="fas fa-university"></i> Transferencia Bancaria</h5>
+                        <p class="small-muted">CVU: 0000007900000000000000</p>
+                        <p class="small-muted">Alias: grimoire.tokens</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5><i class="fas fa-coins"></i> Criptomonedas</h5>
+                        <p class="small-muted">USDT, Bitcoin, Ethereum</p>
+                        <p class="small-muted">Contactar para wallet</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card p-3">
+                        <h5><i class="fas fa-credit-card"></i> Tarjetas</h5>
+                        <p class="small-muted">Visa, Mastercard, Amex</p>
+                        <p class="small-muted">Vía PayPal/MercadoPago</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-spacing" style="background: rgba(0,0,0,0.3);">
+        <div class="container">
+            <h2 class="text-center mb-5">❓ Preguntas Frecuentes</h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4">
+                        <h5>¿Cómo recibo mi token?</h5>
+                        <p class="small-muted">El token se envía automáticamente al email que proporcionaste durante el pago. También puedes verlo en la pantalla de confirmación.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4">
+                        <h5>¿Puedo cambiar de plan?</h5>
+                        <p class="small-muted">Sí, puedes cambiar de plan en cualquier momento. La diferencia se prorratea y se aplica a tu próxima factura.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4">
+                        <h5>¿Hay garantía de devolución?</h5>
+                        <p class="small-muted">Ofrecemos 30 días de garantía de satisfacción. Si no estás contento, te devolvemos el 100% de tu dinero.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4">
+                        <h5>¿Qué pasa si pierdo mi token?</h5>
+                        <p class="small-muted">Contacta a soporte con el email de compra y te reenviaremos tu token. Los tokens también se pueden ver desde el panel de usuario.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section-spacing">
+        <div class="container">
+            <h2 class="text-center mb-5">📞 Contacto</h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4">
+                        <h4 class="mb-4">Información de Contacto</h4>
+                        <p><i class="fas fa-envelope me-2"></i> <strong>Email:</strong> matias.taibo2023@gmail.com</p>
+                        <p><i class="fas fa-phone me-2"></i> <strong>Teléfono:</strong> 3872252758</p>
+                        <p><i class="fas fa-clock me-2"></i> <strong>Soporte:</strong> 24/7 para miembros premium</p>
+                        <p><i class="fas fa-headset me-2"></i> <strong>Soporte básico:</strong> Lunes a Viernes 9-18</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card p-4">
+                        <h4 class="mb-4">Panel de Usuario</h4>
+                        <p class="small-muted mb-3">Accede a tus tokens, facturas y descargas desde tu panel personal.</p>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="userToken" placeholder="Ingresa tu token">
+                            <button class="btn btn-primary" onclick="accessUserPanel()">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
+                        </div>
+                        <button class="btn btn-outline w-100" onclick="generateInvoice()">
+                            <i class="fas fa-file-invoice me-2"></i>Generar Factura
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h4 class="mb-3"><i class="fas fa-bolt me-2"></i>OptiM Shop</h4>
+                    <p class="small-muted">Tu destino premium para programas optimizados y herramientas exclusivas. Creado por Matías Taibo.</p>
+                    <div class="footer-links mt-3">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Enlaces</h5>
+                    <div class="footer-links d-flex flex-column">
+                        <a href="#programas">Programas</a>
+                        <a href="#membresias">Membresías</a>
+                        <a href="#pagos">Pagos</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="#contacto">Contacto</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-3 mb-4">
+                    <h5 class="mb-3">Legal</h5>
+                    <div class="footer-links d-flex flex-column">
+                        <a href="#" onclick="showTerms()">Términos</a>
+                        <a href="#" onclick="showPrivacy()">Privacidad</a>
+                        <a href="#" onclick="showRefund()">Reembolsos</a>
+                        <a href="admin-panel.html" target="_blank">Admin</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4 pt-4 border-top border-secondary">
+                <p class="small-muted">© 2025 OptiM Shop v1.0 — Matías Taibo. Todos los derechos reservados.</p>
+                <p class="small-muted">Este sitio utiliza cookies para mejorar la experiencia. <a href="#" onclick="showCookiePolicy()">Más información</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="payment-modal" style="display: none;">
+        <div class="payment-card" style="max-width: 400px;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4><i class="fas fa-shopping-cart me-2"></i>Carrito</h4>
+                <button class="btn btn-sm btn-outline" onclick="toggleCart()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div id="cartItems" style="max-height: 400px; overflow-y: auto;">
+                <!-- Cart items loaded here -->
+            </div>
+            
+            <div class="mt-4 pt-4 border-top border-secondary">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Descuento:</span>
+                    <span id="cartDiscount">$0.00</span>
+                </div>
+                <div class="d-flex justify-content-between mb-3">
+                    <strong>Total:</strong>
+                    <strong id="cartTotal">$0.00</strong>
+                </div>
+                
+                <button class="btn btn-primary w-100 mb-2" onclick="checkout()">
+                    <i class="fas fa-lock me-2"></i>Proceder al Pago
+                </button>
+                <button class="btn btn-outline w-100" onclick="clearCart()">
+                    <i class="fas fa-trash me-2"></i>Vaciar Carrito
+                </button>
+            </div>
+        </div>
     </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="payment-modal" style="display: none;">
+        <div class="payment-card" id="paymentModalContent">
+            <!-- Payment content loaded here -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <div class="payment-step mt-4">
-      <h6><i class="fas fa-user me-2"></i>Información del Cliente</h6>
-      <div class="row mt-2">
-        <div class="col-md-6 mb-2">
-          <input type="email" id="customerEmail" class="form-control" placeholder="Tu email" required>
-        </div>
-        <div class="col-md-6 mb-2">
-          <input type="text" id="customerName" class="form-control" placeholder="Nombre completo">
-        </div>
-      </div>
-    </div>
-    
-    <div class="payment-step mt-4">
-      <h6><i class="fas fa-credit-card me-2"></i>Método de Pago</h6>
-      <div class="row g-2 mt-2" id="paymentMethods">
-        <div class="col-md-6">
-          <div class="payment-method-card" onclick="selectPaymentMethod('paypal')">
-            <i class="fab fa-paypal fa-2x mb-2" style="color:#003087"></i>
-            <div><strong>PayPal</strong></div>
-            <small class="small-muted">Pago internacional seguro</small>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="payment-method-card" onclick="selectPaymentMethod('mercadopago')">
-            <i class="fas fa-dollar-sign fa-2x mb-2" style="color:#00a1e1"></i>
-            <div><strong>MercadoPago</strong></div>
-            <small class="small-muted">Argentina y Latinoamérica</small>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="payment-method-card" onclick="selectPaymentMethod('transferencia')">
-            <i class="fas fa-university fa-2x mb-2" style="color:#feca57"></i>
-            <div><strong>Transferencia</strong></div>
-            <small class="small-muted">Banco o crypto</small>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="payment-method-card" onclick="selectPaymentMethod('crypto')">
-            <i class="fas fa-coins fa-2x mb-2" style="color:#f7931a"></i>
-            <div><strong>Crypto</strong></div>
-            <small class="small-muted">USDT, Bitcoin, etc.</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="mt-4" id="paymentButtonContainer"></div>
-  `;
-  
-  modal.style.display = 'flex';
-  ordenActual = {
-    items: [...carrito],
-    total: total,
-    fecha: new Date().toISOString(),
-    id: 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase()
-  };
-}
+    <script>
+        // Configuración inicial
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "timeOut": "5000"
+        };
 
-function selectPaymentMethod(method) {
-  // Remover clase active de todos
-  document.querySelectorAll('.payment-method-card').forEach(card => {
-    card.classList.remove('active');
-  });
-  
-  // Agregar clase active al seleccionado
-  event.target.closest('.payment-method-card').classList.add('active');
-  
-  const container = document.getElementById('paymentButtonContainer');
-  const email = document.getElementById('customerEmail').value;
-  const name = document.getElementById('customerName').value;
-  
-  if (!email) {
-    container.innerHTML = '<div class="alert alert-warning">Ingresa tu email primero</div>';
-    return;
-  }
-  
-  // Actualizar orden con info del cliente
-  ordenActual.email = email;
-  ordenActual.name = name;
-  
-  switch(method) {
-    case 'paypal':
-      container.innerHTML = `
-        <button class="btn btn-primary w-100" onclick="processPayPalPayment()">
-          <i class="fab fa-paypal me-2"></i>Pagar con PayPal ($${ordenActual.total.toFixed(2)})
-        </button>
-        <small class="small-muted d-block mt-2">
-          Serás redirigido a PayPal para completar el pago. El dinero llegará directo a ${CONFIG.paypalEmail}
-        </small>
-      `;
-      break;
-      
-    case 'mercadopago':
-      container.innerHTML = `
-        <button class="btn btn-primary w-100" onclick="processMercadoPagoPayment()">
-          <i class="fas fa-dollar-sign me-2"></i>Pagar con MercadoPago ($${ordenActual.total.toFixed(2)})
-        </button>
-        <small class="small-muted d-block mt-2">
-          Pago en pesos argentinos al tipo de cambio oficial. El dinero llega a mi CVU personal.
-        </small>
-      `;
-      break;
-      
-    case 'transferencia':
-      container.innerHTML = `
-        <button class="btn btn-outline w-100" onclick="showBankDetails()">
-          <i class="fas fa-university me-2"></i>Ver Datos Bancarios
-        </button>
-        <small class="small-muted d-block mt-2">
-          Realiza la transferencia y envía el comprobante. Te enviaremos el token manualmente.
-        </small>
-      `;
-      break;
-      
-    case 'crypto':
-      container.innerHTML = `
-        <button class="btn btn-outline w-100" onclick="showCryptoDetails()">
-          <i class="fas fa-coins me-2"></i>Ver Direcciones Crypto
-        </button>
-        <small class="small-muted d-block mt-2">
-          Aceptamos USDT (TRC20/ERC20), Bitcoin, y otras criptomonedas.
-        </small>
-      `;
-      break;
-  }
-}
+        const CONFIG = {
+            adminEmail: "matias.taibo2023@gmail.com",
+            adminPhone: "3872252758",
+            paypalEmail: "matias.taibo2023@gmail.com",
+            cvu: "0000007900000000000000",
+            alias: "grimoire.tokens",
+            currency: "USD",
+            taxRate: 0.21, // IVA 21%
+            siteName: "OptiM Shop"
+        };
 
-/* ========== PAYPAL INTEGRATION ========== */
-function processPayPalPayment() {
-  const container = document.getElementById('paymentButtonContainer');
-  container.innerHTML = `
-    <div class="text-center py-3">
-      <div class="spinner-border text-primary mb-3"></div>
-      <p>Inicializando PayPal...</p>
-    </div>
-  `;
-  
-  // Simulación de integración PayPal
-  setTimeout(() => {
-    simulatePaymentSuccess('paypal');
-  }, 2000);
-  
-  // En producción, usar:
-  // paypal.Buttons({
-  //   createOrder: function(data, actions) {
-  //     return actions.order.create({
-  //       purchase_units: [{
-  //         amount: {
-  //           value: ordenActual.total.toFixed(2)
-  //         }
-  //       }]
-  //     });
-  //   },
-  //   onApprove: function(data, actions) {
-  //     return actions.order.capture().then(function(details) {
-  //       completeOrder('paypal', details.id);
-  //     });
-  //   }
-  // }).render('#paymentButtonContainer');
-}
+        // Base de datos de productos
+        const PRODUCTS = [
+            {
+                id: 'grimoire-pro',
+                name: 'Grimoire Rev Pro',
+                description: 'Launcher premium para AQW con módulos 3D, skins exclusivas y optimización avanzada.',
+                price: 24.99,
+                category: 'premium',
+                type: 'software',
+                image: '🎮',
+                features: ['50+ skins', 'Módulos 3D', 'Optimización FPS', 'Auto-update', 'Soporte VIP'],
+                popular: true
+            },
+            {
+                id: 'swf-ultimate',
+                name: 'SWF Decompiler Ultimate',
+                description: 'Herramienta profesional para extraer y optimizar archivos Flash con IA.',
+                price: 19.99,
+                category: 'tools',
+                type: 'software',
+                image: '⚡',
+                features: ['Extracción IA', 'Optimización auto', 'Batch processing', 'Formatos múltiples'],
+                popular: true
+            },
+            {
+                id: 'windows-optimizer',
+                name: 'Windows Optimizer Pro',
+                description: 'Optimización profunda de Windows con limpieza IA y turbo rendimiento.',
+                price: 14.99,
+                category: 'optimization',
+                type: 'software',
+                image: '💻',
+                features: ['Limpieza IA', 'Turbo mode', 'Registry fix', 'Startup manager'],
+                popular: false
+            },
+            {
+                id: 'aqw-booster',
+                name: 'AQW Performance Booster',
+                description: 'Aumenta el FPS y estabilidad de AdventureQuest Worlds.',
+                price: 9.99,
+                category: 'gaming',
+                type: 'software',
+                image: '🎯',
+                features: ['+60% FPS', 'Reduced lag', 'Auto-optimize', 'Memory clean'],
+                popular: true
+            },
+            {
+                id: 'file-organizer',
+                name: 'File Organizer AI',
+                description: 'Clasificación automática de archivos con inteligencia artificial.',
+                price: 12.99,
+                category: 'tools',
+                type: 'software',
+                image: '📁',
+                features: ['Clasificación IA', 'Auto-tagging', 'Batch rename', 'Cloud sync'],
+                popular: false
+            },
+            {
+                id: 'skin-pack-deluxe',
+                name: 'Skin Pack Deluxe',
+                description: 'Colección de 25 skins premium para Grimoire Rev.',
+                price: 29.99,
+                category: 'premium',
+                type: 'content',
+                image: '🎨',
+                features: ['25 skins', 'Efectos 3D', 'Custom themes', 'Animated'],
+                popular: true
+            },
+            {
+                id: 'flash-game-optimizer',
+                name: 'Flash Game Optimizer',
+                description: 'Optimizador para juegos Flash legacy con aceleración hardware.',
+                price: 7.99,
+                category: 'gaming',
+                type: 'software',
+                image: '🕹️',
+                features: ['HW acceleration', 'Save states', 'Cheat engine', 'Multi-instance'],
+                popular: false
+            },
+            {
+                id: 'system-monitor',
+                name: 'System Monitor Pro',
+                description: 'Monitorización avanzada de sistema con alerts y reporting.',
+                price: 11.99,
+                category: 'optimization',
+                type: 'software',
+                image: '📊',
+                features: ['Real-time monitor', 'Alerts system', 'Reports PDF', 'Remote view'],
+                popular: false
+            }
+        ];
 
-/* ========== MERCADOPAGO INTEGRATION ========== */
-function processMercadoPagoPayment() {
-  const container = document.getElementById('paymentButtonContainer');
-  container.innerHTML = `
-    <div class="text-center py-3">
-      <div class="spinner-border text-primary mb-3"></div>
-      <p>Inicializando MercadoPago...</p>
-    </div>
-  `;
-  
-  // Simulación de integración MercadoPago
-  setTimeout(() => {
-    simulatePaymentSuccess('mercadopago');
-  }, 2000);
-  
-  // En producción, usar:
-  // const mp = new MercadoPago(CONFIG.mercadoPagoPublicKey);
-  // mp.checkout({
-  //   preference: {
-  //     id: 'ID-DE-PREFERENCIA-GENERADA-EN-BACKEND'
-  //   },
-  //   autoOpen: true
-  // });
-}
+        // Membresías
+        const PLANS = {
+            'free': { name: 'Free', price: 0, duration: 'permanent' },
+            'plus-monthly': { name: 'Plus Monthly', price: 9.99, duration: '30 days' },
+            'plus-yearly': { name: 'Plus Yearly', price: 99.99, duration: '365 days' },
+            'elite-monthly': { name: 'Elite Monthly', price: 19.99, duration: '30 days' },
+            'elite-yearly': { name: 'Elite Yearly', price: 199.99, duration: '365 days' }
+        };
 
-function simulatePaymentSuccess(method) {
-  const token = generarTokenPremium();
-  
-  // Guardar orden
-  const orders = JSON.parse(localStorage.getItem('optim_orders')) || [];
-  ordenActual.status = 'completed';
-  ordenActual.method = method;
-  ordenActual.token = token;
-  ordenActual.completedAt = new Date().toISOString();
-  orders.push(ordenActual);
-  localStorage.setItem('optim_orders', JSON.stringify(orders));
-  
-  // Guardar token
-  const tokens = JSON.parse(localStorage.getItem('optim_tokens_v2')) || [];
-  const plan = determinarPlanDesdeCarrito();
-  tokens.push({
-    token: token,
-    plan: plan,
-    email: ordenActual.email,
-    orderId: ordenActual.id,
-    created: new Date().toISOString(),
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-  });
-  localStorage.setItem('optim_tokens_v2', JSON.stringify(tokens));
-  
-  // Limpiar carrito
-  carrito = [];
-  actualizarCarrito();
-  
-  // Mostrar éxito
-  const content = document.getElementById('checkoutContent');
-  content.innerHTML = `
-    <div class="text-center py-4">
-      <div class="success-check">
-        <i class="fas fa-check-circle"></i>
-      </div>
-      <h4 class="mb-3">¡Pago Exitoso!</h4>
-      <p class="small-muted">Tu compra ha sido procesada correctamente.</p>
-      
-      <div class="alert alert-dark mb-3">
-        <i class="fas fa-receipt me-2"></i>
-        <strong>Orden #:</strong> ${ordenActual.id}
-      </div>
-      
-      <div class="token-display mt-3 mb-4">
-        ${token}
-      </div>
-      
-      <div class="alert alert-success mb-3">
-        <i class="fas fa-envelope me-2"></i>
-        El token también ha sido enviado a: <strong>${ordenActual.email}</strong>
-      </div>
-      
-      <div class="d-grid gap-2">
-        <button class="btn btn-primary" onclick="activarPremium('${token}')">
-          <i class="fas fa-rocket me-2"></i>Activar Premium Ahora
-        </button>
-        <button class="btn btn-outline" onclick="closeCheckout()">
-          Cerrar
-        </button>
-      </div>
-      
-      <div class="mt-4 small-muted">
-        <i class="fas fa-info-circle me-1"></i>
-        Guarda este token en un lugar seguro.
-      </div>
-    </div>
-  `;
-  
-  showNotification('¡Pago completado exitosamente!', 'success');
-  
-  // Actualizar admin panel si está abierto
-  if (document.getElementById('adminActions').style.display === 'block') {
-    loadOrdersList();
-    loadTokensList();
-  }
-}
+        // Carrito de compras
+        let cart = JSON.parse(localStorage.getItem('optim_cart')) || [];
+        let currentOrder = null;
 
-function determinarPlanDesdeCarrito() {
-  // Determinar el plan basado en los items del carrito
-  const tieneElite = carrito.some(item => item.id.includes('elite'));
-  const tienePlus = carrito.some(item => item.id.includes('plus'));
-  
-  if (tieneElite) return 'elite';
-  if (tienePlus) return 'plus';
-  return 'free';
-}
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+        });
 
-function generarTokenPremium() {
-  const planes = {
-    'plus': 'OPTIM-PLUS',
-    'elite': 'OPTIM-ELITE',
-    'free': 'OPTIM-FREE'
-  };
-  
-  const plan = determinarPlanDesdeCarrito();
-  const prefix = planes[plan] || 'OPTIM';
-  const random = Math.random().toString(36).substr(2, 8).toUpperCase();
-  return `${prefix}-${random}-${Date.now().toString(36).substr(-4).toUpperCase()}`;
-}
-
-/* ========== FUNCIONES AUXILIARES ========== */
-function closeCheckout() {
-  document.getElementById('checkoutModal').style.display = 'none';
-  ordenActual = null;
-}
-
-function showBankDetails() {
-  document.getElementById('bankModal').style.display = 'flex';
-}
-
-function closeBankModal() {
-  document.getElementById('bankModal').style.display = 'none';
-}
-
-function showMercadoPago() {
-  alert('MercadoPago: Realiza el pago a través de MercadoPago con el CVU: ' + CONFIG.miCVU + '\n\nAlias: ' + CONFIG.miAlias + '\n\nLuego envía el comprobante a: ' + CONFIG.miEmail);
-}
-
-function showCrypto() {
-  alert('Crypto: Aceptamos USDT (TRC20), Bitcoin y Ethereum.\n\nEnvía un email a ' + CONFIG.miEmail + ' para obtener las direcciones de wallet.\n\nIndica qué criptomoneda prefieres usar.');
-}
-
-function showBrubank() {
-  alert('Brubank: Realiza la transferencia a:\n\nAlias: ' + CONFIG.miAlias + '\nCVU: ' + CONFIG.miCVU + '\n\nLuego envía el comprobante a: ' + CONFIG.miEmail);
-}
-
-function showCryptoDetails() {
-  alert('Direcciones Crypto:\n\nUSDT (TRC20): TXXXXXXXXXXXXXXX\nBitcoin: 1XXXXXXXXXXXXXXX\nEthereum: 0xXXXXXXXXXXXXXXX\n\nEnvía el hash de la transacción a ' + CONFIG.miEmail);
-}
-
-function uploadTransferReceipt() {
-  const email = document.getElementById('transferEmail').value;
-  const file = document.getElementById('transferReceipt').files[0];
-  
-  if (!email || !file) {
-    alert('Completa todos los campos');
-    return;
-  }
-  
-  alert('Comprobante recibido. Revisaremos el pago y te enviaremos el token en menos de 24 horas.\n\nEmail registrado: ' + email);
-  closeBankModal();
-}
-
-/* ========== RENDER PRODUCTOS ========== */
-function renderProductos() {
-  const container = document.getElementById('productosContainer');
-  container.innerHTML = '';
-  
-  PRODUCTOS.forEach(producto => {
-    const col = document.createElement('div');
-    col.className = 'col-md-6 col-lg-3';
-    col.innerHTML = `
-      <div class="card p-3 h-100 position-relative">
-        ${producto.popular ? '<span class="product-badge">POPULAR</span>' : ''}
-        <div class="text-center mb-3">
-          <i class="fas fa-${producto.tipo === 'membresia' ? 'crown' : 'download'} fa-2x mb-3" style="color:var(--accent1)"></i>
-          <h5 class="mb-2">${producto.nombre}</h5>
-          <p class="small-muted mb-3">${producto.descripcion}</p>
-        </div>
-        <div class="text-center mb-3">
-          <div class="price-tag">$${producto.precio.toFixed(2)} ${producto.moneda}</div>
-          ${producto.tipo === 'membresia' ? '<small class="small-muted">Renovación automática</small>' : ''}
-        </div>
-        <button class="btn btn-primary w-100" onclick="addToCart('${producto.id}')">
-          <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
-        </button>
-        ${producto.tipo === 'membresia' ? 
-          '<button class="btn btn-outline w-100 mt-2" onclick="showPlanDetails(\'' + producto.id + '\')">Ver Detalles</button>' : 
-          '<button class="btn btn-outline w-100 mt-2" onclick="downloadTrial(\'' + producto.id + '\')">Probar Demo</button>'
+        function init() {
+            renderProducts();
+            updateCart();
+            loadStats();
+            setupSearch();
+            
+            // Cargar datos iniciales
+            if (!localStorage.getItem('optim_first_visit')) {
+                localStorage.setItem('optim_first_visit', new Date().toISOString());
+                localStorage.setItem('optim_stats', JSON.stringify({
+                    total_users: 1250,
+                    total_sales: 850,
+                    satisfaction: 99
+                }));
+            }
         }
-      </div>
-    `;
-    container.appendChild(col);
-  });
-}
 
-function showPlanDetails(planId) {
-  const plan = PRODUCTOS.find(p => p.id === planId);
-  if (!plan) return;
-  
-  alert(`${plan.nombre}\n\n${plan.descripcion}\n\nPrecio: $${plan.precio} ${plan.moneda}\n\nCaracterísticas:\n• Acceso completo al contenido\n• Actualizaciones automáticas\n• Soporte prioritario\n• Contenido exclusivo`);
-}
+        function renderProducts(filter = 'all') {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+            
+            const filteredProducts = filter === 'all' 
+                ? PRODUCTS 
+                : PRODUCTS.filter(p => p.category === filter);
+            
+            filteredProducts.forEach(product => {
+                const col = document.createElement('div');
+                col.className = 'col-md-6 col-lg-3 mb-4';
+                col.innerHTML = `
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-center mb-3">
+                                <div style="font-size: 3rem;">${product.image}</div>
+                                ${product.popular ? '<span class="product-badge">POPULAR</span>' : ''}
+                            </div>
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text small-muted flex-grow-1">${product.description}</p>
+                            <div class="mb-3">
+                                ${product.features.map(f => 
+                                    `<span class="badge bg-dark me-1 mb-1">${f}</span>`
+                                ).join('')}
+                            </div>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="price-tag" style="font-size: 1.8rem;">$${product.price.toFixed(2)}</div>
+                                    <span class="badge bg-secondary">${product.category}</span>
+                                </div>
+                                <button class="btn btn-primary w-100 mb-2" onclick="addToCart('${product.id}')">
+                                    <i class="fas fa-cart-plus me-2"></i>Agregar al Carrito
+                                </button>
+                                <button class="btn btn-outline w-100" onclick="downloadDemo('${product.id}')">
+                                    <i class="fas fa-download me-2"></i>Probar Demo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        }
 
-function downloadTrial(productId) {
-  const product = PRODUCTOS.find(p => p.id === productId);
-  if (!product) return;
-  
-  alert(`Descargando versión de prueba de: ${product.nombre}\n\nLa versión de prueba tiene limitaciones. Para desbloquear todas las funciones, adquiere la versión completa.`);
-}
+        function filterProducts(category) {
+            // Actualizar botones activos
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            renderProducts(category);
+        }
 
-/* ========== NOTIFICACIONES ========== */
-function showNotification(message, type = 'info') {
-  const notif = document.createElement('div');
-  notif.className = `alert alert-${type} position-fixed`;
-  notif.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 10001;
-    min-width: 300px;
-    backdrop-filter: blur(10px);
-    background: rgba(30,30,40,0.9);
-    border: 1px solid rgba(255,255,255,0.1);
-    animation: slideIn 0.3s ease-out;
-  `;
-  
-  const icons = {
-    success: 'check-circle',
-    error: 'times-circle',
-    warning: 'exclamation-triangle',
-    info: 'info-circle'
-  };
-  
-  notif.innerHTML = `
-    <div class="d-flex align-items-center">
-      <i class="fas fa-${icons[type]} me-3 fa-lg"></i>
-      <div style="flex:1">${message}</div>
-      <button type="button" class="btn-close btn-close-white ms-3" onclick="this.parentElement.parentElement.remove()"></button>
-    </div>
-  `;
-  
-  document.body.appendChild(notif);
-  setTimeout(() => notif.remove(), 5000);
-}
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId) || PLANS[productId];
+            if (!product) {
+                toastr.error('Producto no encontrado');
+                return;
+            }
+            
+            cart.push({
+                id: productId,
+                name: product.name || product.id,
+                price: product.price,
+                type: product.type || 'membership',
+                added: new Date().toISOString(),
+                cartId: Date.now() + Math.random().toString(36).substr(2, 9)
+            });
+            
+            updateCart();
+            toastr.success(`${product.name || product.id} agregado al carrito`);
+            toggleCart();
+        }
 
-/* ========== SISTEMA DE TOKENS ========== */
-function activarPremium(token) {
-  const tokens = JSON.parse(localStorage.getItem('optim_tokens_v2')) || [];
-  const tokenData = tokens.find(t => t.token === token);
-  
-  if (!tokenData) {
-    showNotification('Token no encontrado', 'error');
-    return;
-  }
-  
-  // Verificar expiración
-  const expires = new Date(tokenData.expires);
-  const now = new Date();
-  
-  if (now > expires) {
-    showNotification('Token expirado', 'error');
-    return;
-  }
-  
-  // Guardar acceso del usuario
-  localStorage.setItem('optim_user_access', JSON.stringify({
-    token: token,
-    plan: tokenData.plan,
-    email: tokenData.email,
-    activated: new Date().toISOString(),
-    expires: tokenData.expires
-  }));
-  
-  // Mostrar contenido premium
-  document.getElementById('premiumContent').style.display = 'block';
-  document.getElementById('currentToken').textContent = token;
-  document.getElementById('currentPlan').textContent = tokenData.plan === 'plus' ? 'Plus' : 'Elite';
-  document.getElementById('expirationDate').textContent = new Date(tokenData.expires).toLocaleDateString('es-ES');
-  
-  showNotification('Premium activado correctamente!', 'success');
-  closeCheckout();
-  
-  // Scroll a contenido premium
-  document.getElementById('premiumContent').scrollIntoView({ behavior: 'smooth' });
-}
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCart();
+            toastr.info('Producto eliminado del carrito');
+        }
 
-/* ========== ADMIN PANEL ========== */
-function openAdminPanel() { 
-  document.getElementById('adminPanel').style.display = 'flex'; 
-}
+        function updateCart() {
+            localStorage.setItem('optim_cart', JSON.stringify(cart));
+            
+            const badge = document.getElementById('cartBadge');
+            if (cart.length > 0) {
+                badge.textContent = cart.length;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+            
+            // Actualizar sidebar del carrito
+            if (document.getElementById('cartSidebar').style.display === 'flex') {
+                renderCart();
+            }
+        }
 
-function closeAdmin() { 
-  document.getElementById('adminPanel').style.display = 'none'; 
-  document.getElementById('adminActions').style.display = 'none'; 
-}
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const discountEl = document.getElementById('cartDiscount');
+            const totalEl = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <div style="font-size: 4rem;">🛒</div>
+                        <p class="mt-3">Tu carrito está vacío</p>
+                        <button class="btn btn-outline mt-3" onclick="toggleCart()">
+                            Seguir Comprando
+                        </button>
+                    </div>
+                `;
+                subtotalEl.textContent = '$0.00';
+                discountEl.textContent = '$0.00';
+                totalEl.textContent = '$0.00';
+                return;
+            }
+            
+            let html = '';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                subtotal += item.price;
+                html += `
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-bottom border-secondary">
+                        <div style="flex: 1;">
+                            <div class="fw-bold">${item.name}</div>
+                            <div class="small-muted">$${item.price.toFixed(2)}</div>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline" onclick="removeFromCart('${item.cartId}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Cálculo de descuentos (ejemplo: 10% en compras > $50)
+            let discount = 0;
+            if (subtotal > 50) {
+                discount = subtotal * 0.10;
+            }
+            
+            const total = subtotal - discount;
+            
+            subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
+            discountEl.textContent = `-$${discount.toFixed(2)}`;
+            totalEl.textContent = `$${total.toFixed(2)}`;
+        }
 
-function loginAdmin() { 
-  const pass = document.getElementById('adminPass').value; 
-  if(pass === 'admin-optim-2025') { // Cambiar en producción
-    document.getElementById('adminActions').style.display = 'block'; 
-    showAdminTab('tokens');
-    loadTokensList(); 
-    loadOrdersList();
-  } else { 
-    showNotification('Contraseña incorrecta', 'error');
-  }
-}
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            if (sidebar.style.display === 'flex') {
+                sidebar.style.display = 'none';
+            } else {
+                sidebar.style.display = 'flex';
+                renderCart();
+            }
+        }
 
-function showAdminTab(tabName) {
-  // Ocultar todas las tabs
-  ['tokens', 'orders', 'products', 'settings'].forEach(tab => {
-    document.getElementById('tab' + tab.charAt(0).toUpperCase() + tab.slice(1)).style.display = 'none';
-  });
-  
-  // Mostrar tab seleccionada
-  document.getElementById('tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1)).style.display = 'block';
-}
+        function clearCart() {
+            if (cart.length === 0) return;
+            
+            if (confirm('¿Estás seguro de vaciar el carrito?')) {
+                cart = [];
+                updateCart();
+                toastr.info('Carrito vaciado');
+                toggleCart();
+            }
+        }
 
-function loadTokensList() { 
-  const tokens = JSON.parse(localStorage.getItem('optim_tokens_v2')) || [];
-  const list = tokens.map(t => `${t.token} (${t.plan}) - ${t.email} - ${new Date(t.expires).toLocaleDateString()}`).join('\n');
-  document.getElementById('tokensList').textContent = list || '(vacío)'; 
-}
+        function checkout() {
+            if (cart.length === 0) {
+                toastr.warning('Agrega productos al carrito primero');
+                return;
+            }
+            
+            const modal = document.getElementById('paymentModal');
+            const content = document.getElementById('paymentModalContent');
+            
+            let subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+            let discount = subtotal > 50 ? subtotal * 0.10 : 0;
+            let total = subtotal - discount;
+            
+            content.innerHTML = `
+                <div class="text-center mb-4">
+                    <h4><i class="fas fa-lock me-2"></i>Finalizar Compra</h4>
+                    <p class="small-muted">Paso 1 de 3 - Información de contacto</p>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="checkoutEmail" class="form-control" placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">Nombre completo</label>
+                    <input type="text" id="checkoutName" class="form-control" placeholder="Tu nombre completo">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">País</label>
+                    <select id="checkoutCountry" class="form-control">
+                        <option value="AR">Argentina</option>
+                        <option value="US">Estados Unidos</option>
+                        <option value="ES">España</option>
+                        <option value="MX">México</option>
+                        <option value="CL">Chile</option>
+                        <option value="CO">Colombia</option>
+                        <option value="other">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="alert alert-dark mb-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    El token será enviado a este email. Verifica que sea correcto.
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-outline" onclick="closePaymentModal()">
+                        Cancelar
+                    </button>
+                    <button class="btn btn-primary" onclick="showPaymentMethods()">
+                        Continuar <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            `;
+            
+            currentOrder = {
+                id: 'ORD-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                items: [...cart],
+                subtotal: subtotal,
+                discount: discount,
+                total: total,
+                date: new Date().toISOString()
+            };
+            
+            modal.style.display = 'flex';
+        }
 
-function loadOrdersList() {
-  const orders = JSON.parse(localStorage.getItem('optim_orders')) || [];
-  const container = document.getElementById('ordersList');
-  
-  if (orders.length === 0) {
-    container.innerHTML = '<div class="text-center py-2 small-muted">No hay pedidos</div>';
-    return;
-  }
-  
-  let html = '';
-  orders.forEach(order => {
-    html += `
-      <div class="border-bottom border-secondary pb-2 mb-2">
-        <div class="d-flex justify-content-between">
-          <strong>${order.id}</strong>
-          <span class="badge ${order.status === 'completed' ? 'bg-success' : 'bg-warning'}">${order.status}</span>
-        </div>
-        <div class="small-muted">${order.email}</div>
-        <div class="small">$${order.total} - ${order.method || 'manual'}</div>
-        <div class="small">${new Date(order.fecha).toLocaleDateString()}</div>
-        ${order.token ? `<div class="small font-monospace">Token: ${order.token}</div>` : ''}
-      </div>
-    `;
-  });
-  
-  container.innerHTML = html;
-}
+        function showPaymentMethods() {
+            const email = document.getElementById('checkoutEmail').value;
+            const name = document.getElementById('checkoutName').value;
+            const country = document.getElementById('checkoutCountry').value;
+            
+            if (!email) {
+                toastr.error('Ingresa tu email');
+                return;
+            }
+            
+            currentOrder.email = email;
+            currentOrder.name = name;
+            currentOrder.country = country;
+            
+            const content = document.getElementById('paymentModalContent');
+            
+            content.innerHTML = `
+                <div class="text-center mb-4">
+                    <h4><i class="fas fa-credit-card me-2"></i>Método de Pago</h4>
+                    <p class="small-muted">Paso 2 de 3 - Elige cómo pagar</p>
+                </div>
+                
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="card p-3 text-center payment-option" onclick="selectPaymentOption('paypal')">
+                            <i class="fab fa-paypal fa-3x mb-3" style="color: #003087;"></i>
+                            <h5>PayPal</h5>
+                            <p class="small-muted">Pago internacional</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-3 text-center payment-option" onclick="selectPaymentOption('mercadopago')">
+                            <i class="fas fa-dollar-sign fa-3x mb-3" style="color: #00a1e1;"></i>
+                            <h5>MercadoPago</h5>
+                            <p class="small-muted">Argentina/Latam</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-3 text-center payment-option" onclick="selectPaymentOption('transfer')">
+                            <i class="fas fa-university fa-3x mb-3"></i>
+                            <h5>Transferencia</h5>
+                            <p class="small-muted">Bancaria/Crypto</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-3 text-center payment-option" onclick="selectPaymentOption('crypto')">
+                            <i class="fas fa-coins fa-3x mb-3" style="color: #f7931a;"></i>
+                            <h5>Cripto</h5>
+                            <p class="small-muted">USDT/BTC/ETH</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-outline" onclick="checkout()">
+                        <i class="fas fa-arrow-left me-2"></i>Volver
+                    </button>
+                </div>
+            `;
+        }
 
-function generarToken() { 
-  const label = document.getElementById('newTokenInput').value.trim() || generarTokenPremium();
-  const plan = document.getElementById('tokenPlan').value;
-  
-  const tokens = JSON.parse(localStorage.getItem('optim_tokens_v2')) || [];
-  tokens.push({
-    token: label,
-    plan: plan,
-    email: 'admin-generated',
-    created: new Date().toISOString(),
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
-  });
-  
-  localStorage.setItem('optim_tokens_v2', JSON.stringify(tokens));
-  loadTokensList();
-  showNotification('Token generado: ' + label, 'success');
-}
+        function selectPaymentOption(method) {
+            currentOrder.paymentMethod = method;
+            showPaymentConfirmation();
+        }
 
-function exportTokens() { 
-  const tokens = localStorage.getItem('optim_tokens_v2') || '[]'; 
-  const blob = new Blob([tokens], {type:'application/json'}); 
-  const url = URL.createObjectURL(blob); 
-  const a = document.createElement('a'); 
-  a.href = url; 
-  a.download = 'optim_tokens.json'; 
-  a.click(); 
-  URL.revokeObjectURL(url); 
-  showNotification('Tokens exportados', 'success');
-}
+        function showPaymentConfirmation() {
+            const content = document.getElementById('paymentModalContent');
+            
+            content.innerHTML = `
+                <div class="text-center mb-4">
+                    <h4><i class="fas fa-check-circle me-2 text-success"></i>Confirmar Pago</h4>
+                    <p class="small-muted">Paso 3 de 3 - Revisa y confirma</p>
+                </div>
+                
+                <div class="mb-4">
+                    <h6>Resumen del pedido:</h6>
+                    <div class="bg-dark p-3 rounded">
+                        ${currentOrder.items.map(item => `
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>${item.name}</span>
+                                <span>$${item.price.toFixed(2)}</span>
+                            </div>
+                        `).join('')}
+                        
+                        <div class="d-flex justify-content-between mt-3 pt-3 border-top">
+                            <strong>Total:</strong>
+                            <strong class="text-gradient">$${currentOrder.total.toFixed(2)}</strong>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h6>Información:</h6>
+                    <div class="small-muted">
+                        <div>Email: ${currentOrder.email}</div>
+                        <div>Método: ${currentOrder.paymentMethod}</div>
+                        <div>Orden: ${currentOrder.id}</div>
+                    </div>
+                </div>
+                
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="termsCheck">
+                    <label class="form-check-label small-muted" for="termsCheck">
+                        Acepto los <a href="#" onclick="showTerms()">términos y condiciones</a>
+                    </label>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary" onclick="processPayment()" id="processPaymentBtn">
+                        <i class="fas fa-lock me-2"></i>Confirmar y Pagar
+                    </button>
+                    <button class="btn btn-outline" onclick="showPaymentMethods()">
+                        Cambiar Método
+                    </button>
+                </div>
+            `;
+        }
 
-function exportOrders() {
-  const orders = JSON.parse(localStorage.getItem('optim_orders')) || [];
-  if (orders.length === 0) {
-    showNotification('No hay pedidos para exportar', 'warning');
-    return;
-  }
-  
-  const csv = 'ID,Email,Total,Método,Fecha,Estado,Token\n' +
-    orders.map(o => 
-      `"${o.id}","${o.email}",${o.total},"${o.method || ''}","${o.fecha}","${o.status}","${o.token || ''}"`
-    ).join('\n');
-  
-  const blob = new Blob([csv], {type:'text/csv'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'optim_orders.csv';
-  a.click();
-  URL.revokeObjectURL(url);
-  showNotification('Pedidos exportados', 'success');
-}
+        function processPayment() {
+            const termsChecked = document.getElementById('termsCheck');
+            if (!termsChecked || !termsChecked.checked) {
+                toastr.error('Debes aceptar los términos y condiciones');
+                return;
+            }
+            
+            const btn = document.getElementById('processPaymentBtn');
+            btn.innerHTML = '<div class="spinner-border spinner-border-sm me-2"></div> Procesando...';
+            btn.disabled = true;
+            
+            // Simular procesamiento de pago
+            setTimeout(() => {
+                completeOrder();
+            }, 2000);
+        }
 
-function clearTokens() { 
-  if(confirm('¿Borrar todos los tokens?')) { 
-    localStorage.removeItem('optim_tokens_v2'); 
-    loadTokensList(); 
-    showNotification('Tokens eliminados', 'info');
-  }
-}
+        function completeOrder() {
+            // Generar token
+            const token = generateToken();
+            
+            // Guardar orden
+            const orders = JSON.parse(localStorage.getItem('optim_orders')) || [];
+            currentOrder.status = 'completed';
+            currentOrder.token = token;
+            currentOrder.completedAt = new Date().toISOString();
+            orders.push(currentOrder);
+            localStorage.setItem('optim_orders', JSON.stringify(orders));
+            
+            // Guardar token
+            const tokens = JSON.parse(localStorage.getItem('optim_tokens')) || [];
+            tokens.push({
+                token: token,
+                email: currentOrder.email,
+                orderId: currentOrder.id,
+                date: new Date().toISOString(),
+                expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+            });
+            localStorage.setItem('optim_tokens', JSON.stringify(tokens));
+            
+            // Limpiar carrito
+            cart = [];
+            updateCart();
+            
+            // Mostrar confirmación
+            const content = document.getElementById('paymentModalContent');
+            content.innerHTML = `
+                <div class="text-center">
+                    <div class="success-check mb-4">
+                        <i class="fas fa-check-circle fa-4x text-success"></i>
+                    </div>
+                    
+                    <h4 class="mb-3">¡Pago Exitoso!</h4>
+                    <p class="small-muted mb-4">Tu pedido ha sido procesado correctamente.</p>
+                    
+                    <div class="alert alert-dark mb-4">
+                        <i class="fas fa-receipt me-2"></i>
+                        <strong>Orden #:</strong> ${currentOrder.id}
+                    </div>
+                    
+                    <div class="token-display mb-4">
+                        ${token}
+                    </div>
+                    
+                    <div class="alert alert-success mb-4">
+                        <i class="fas fa-envelope me-2"></i>
+                        El token ha sido enviado a: <strong>${currentOrder.email}</strong>
+                    </div>
+                    
+                    <div class="d-grid gap-2 mb-3">
+                        <button class="btn btn-primary" onclick="downloadInvoice('${currentOrder.id}')">
+                            <i class="fas fa-file-invoice me-2"></i>Descargar Factura
+                        </button>
+                        <button class="btn btn-outline" onclick="activateToken('${token}')">
+                            <i class="fas fa-rocket me-2"></i>Activar Token
+                        </button>
+                    </div>
+                    
+                    <button class="btn btn-outline w-100" onclick="closePaymentModal()">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+            
+            // Enviar email (simulación)
+            sendConfirmationEmail(currentOrder.email, token, currentOrder.id);
+            
+            toastr.success('¡Compra completada exitosamente!');
+        }
 
-function clearOrders() {
-  if(confirm('¿Borrar todos los pedidos?')) {
-    localStorage.removeItem('optim_orders');
-    loadOrdersList();
-    showNotification('Pedidos eliminados', 'info');
-  }
-}
+        function generateToken() {
+            const prefix = currentOrder.items.some(i => i.id.includes('elite')) ? 'OPTIM-ELITE' : 'OPTIM-PLUS';
+            const random = Math.random().toString(36).substr(2, 8).toUpperCase();
+            const timestamp = Date.now().toString(36).substr(-4).toUpperCase();
+            return `${prefix}-${random}-${timestamp}`;
+        }
 
-/* ========== INICIALIZACIÓN ========== */
-window.addEventListener('load', () => {
-  // Inicializar productos
-  renderProductos();
-  
-  // Inicializar carrito
-  actualizarCarrito();
-  
-  // Verificar acceso premium
-  const userAccess = JSON.parse(localStorage.getItem('optim_user_access'));
-  if (userAccess && userAccess.token) {
-    const tokens = JSON.parse(localStorage.getItem('optim_tokens_v2')) || [];
-    const tokenData = tokens.find(t => t.token === userAccess.token);
-    
-    if (tokenData) {
-      const expires = new Date(tokenData.expires);
-      if (new Date() <= expires) {
-        document.getElementById('premiumContent').style.display = 'block';
-        document.getElementById('currentToken').textContent = userAccess.token;
-        document.getElementById('currentPlan').textContent = userAccess.plan === 'plus' ? 'Plus' : 'Elite';
-        document.getElementById('expirationDate').textContent = new Date(tokenData.expires).toLocaleDateString('es-ES');
-      }
-    }
-  }
-  
-  // Event listeners
-  document.getElementById('openAdminBtn').addEventListener('click', openAdminPanel);
-  document.getElementById('openMemberBtn').addEventListener('click', () => {
-    document.getElementById('membresias').scrollIntoView({behavior:'smooth'});
-  });
-  document.getElementById('cartBtn').addEventListener('click', toggleCart);
-  document.getElementById('ctaLauncher').addEventListener('click', openLauncherUI);
-  document.getElementById('ctaExplore').addEventListener('click', () => {
-    document.getElementById('tienda').scrollIntoView({behavior:'smooth'});
-  });
-  
-  // Inicializar búsqueda
-  document.getElementById('searchInput').addEventListener('input', function(e) {
-    const query = e.target.value.toLowerCase();
-    const productos = document.querySelectorAll('.col-md-6.col-lg-3');
-    
-    productos.forEach(producto => {
-      const text = producto.textContent.toLowerCase();
-      producto.style.display = text.includes(query) ? 'block' : 'none';
-    });
-  });
-});
+        function sendConfirmationEmail(email, token, orderId) {
+            // En producción, aquí se integraría con un servicio de email como SendGrid, Mailchimp, etc.
+            console.log(`Email enviado a ${email}: Token ${token} para orden ${orderId}`);
+            
+            // Simulación de Shopify Email
+            const emailData = {
+                to: email,
+                subject: `Confirmación de compra - Orden #${orderId}`,
+                body: `
+                    <h1>¡Gracias por tu compra en OptiM Shop!</h1>
+                    <p>Tu pedido #${orderId} ha sido procesado exitosamente.</p>
+                    <p><strong>Token de activación:</strong> ${token}</p>
+                    <p>Guarda este token en un lugar seguro. Lo necesitarás para activar tus productos.</p>
+                    <p>Para descargar tu factura, visita: <a href="#" onclick="downloadInvoice('${orderId}')">Generar Factura</a></p>
+                    <p>Si tienes preguntas, contáctanos a ${CONFIG.adminEmail}</p>
+                    <br>
+                    <p>Saludos,<br>Equipo OptiM Shop</p>
+                `
+            };
+            
+            // Guardar email para historial
+            const emails = JSON.parse(localStorage.getItem('optim_emails')) || [];
+            emails.push({
+                ...emailData,
+                sent: new Date().toISOString(),
+                status: 'sent'
+            });
+            localStorage.setItem('optim_emails', JSON.stringify(emails));
+        }
 
-/* ========== FUNCIONES EXISTENTES (para compatibilidad) ========== */
-function openLauncherUI(){ 
-  document.getElementById('launcherUI').style.display='block'; 
-}
+        function downloadInvoice(orderId) {
+            const orders = JSON.parse(localStorage.getItem('optim_orders')) || [];
+            const order = orders.find(o => o.id === orderId);
+            
+            if (!order) {
+                toastr.error('Orden no encontrada');
+                return;
+            }
+            
+            // Generar factura en HTML
+            const invoiceHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Factura ${order.id} - OptiM Shop</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        .invoice { max-width: 800px; margin: 0 auto; }
+                        .header { text-align: center; margin-bottom: 40px; }
+                        .details { margin: 30px 0; }
+                        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                        th { background: #f5f5f5; }
+                        .total { font-weight: bold; font-size: 1.2em; }
+                        .footer { margin-top: 50px; text-align: center; color: #666; }
+                    </style>
+                </head>
+                <body>
+                    <div class="invoice">
+                        <div class="header">
+                            <h1>OptiM Shop</h1>
+                            <h2>Factura #${order.id}</h2>
+                            <p>Fecha: ${new Date(order.date).toLocaleDateString('es-ES')}</p>
+                        </div>
+                        
+                        <div class="details">
+                            <p><strong>Cliente:</strong> ${order.name || 'No especificado'}</p>
+                            <p><strong>Email:</strong> ${order.email}</p>
+                            <p><strong>Método de pago:</strong> ${order.paymentMethod}</p>
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${order.items.map(item => `
+                                    <tr>
+                                        <td>${item.name}</td>
+                                        <td>$${item.price.toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Subtotal</strong></td>
+                                    <td>$${order.subtotal.toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Descuento</strong></td>
+                                    <td>-$${order.discount.toFixed(2)}</td>
+                                </tr>
+                                <tr class="total">
+                                    <td><strong>Total</strong></td>
+                                    <td>$${order.total.toFixed(2)}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
+                        <div class="footer">
+                            <p>Gracias por tu compra en OptiM Shop</p>
+                            <p>Contacto: ${CONFIG.adminEmail} | ${CONFIG.adminPhone}</p>
+                            <p>Esta factura es válida como comprobante de pago.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Crear y descargar archivo
+            const blob = new Blob([invoiceHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `factura-${order.id}.html`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            toastr.success('Factura descargada');
+        }
 
-function closeLauncherUI(){ 
-  document.getElementById('launcherUI').style.display='none'; 
-}
+        function downloadDemo(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+            
+            // Generar factura para demo (gratis)
+            const demoInvoice = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Demo - ${product.name}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; text-align: center; }
+                        .demo { max-width: 600px; margin: 0 auto; }
+                        .download-btn { 
+                            background: linear-gradient(90deg, #ff6b6b, #feca57);
+                            color: black;
+                            padding: 15px 30px;
+                            border-radius: 50px;
+                            text-decoration: none;
+                            display: inline-block;
+                            margin: 20px 0;
+                            font-weight: bold;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="demo">
+                        <h1>Versión Demo - ${product.name}</h1>
+                        <p>Esta es una versión de demostración con funciones limitadas.</p>
+                        <p>Para desbloquear todas las funciones, adquiere la versión completa.</p>
+                        
+                        <a href="#" class="download-btn" onclick="alert('Descarga simulada - En producción aquí iría el link real')">
+                            <i class="fas fa-download"></i> Descargar Demo
+                        </a>
+                        
+                        <div style="margin-top: 40px; text-align: left;">
+                            <h3>Funciones incluidas en demo:</h3>
+                            <ul>
+                                ${product.features.slice(0, 2).map(f => `<li>${f} (limitado)</li>`).join('')}
+                                <li>Uso por 30 días</li>
+                                <li>Soporte básico</li>
+                            </ul>
+                            
+                            <h3>Funciones exclusivas de versión completa:</h3>
+                            <ul>
+                                ${product.features.map(f => `<li>${f} (completo)</li>`).join('')}
+                                <li>Actualizaciones gratis</li>
+                                <li>Soporte premium</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="margin-top: 40px;">
+                            <button onclick="window.close()">Cerrar</button>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            // Abrir demo en nueva ventana
+            const demoWindow = window.open('', '_blank');
+            demoWindow.document.write(demoInvoice);
+            
+            // Registrar descarga demo
+            const demos = JSON.parse(localStorage.getItem('optim_demos')) || [];
+            demos.push({
+                product: product.name,
+                date: new Date().toISOString(),
+                email: 'anonymous'
+            });
+            localStorage.setItem('optim_demos', JSON.stringify(demos));
+            
+            toastr.info('Demo abierta en nueva ventana');
+        }
 
-function optimizarSistema(){ 
-  alert('Optimizando sistema... (simulación).'); 
-}
-</script>
+        function generateInvoice() {
+            // Abrir generador de facturas
+            window.open('invoice.html', '_blank', 'width=800,height=600');
+        }
+
+        function accessUserPanel() {
+            const token = document.getElementById('userToken').value;
+            if (!token) {
+                toastr.warning('Ingresa un token');
+                return;
+            }
+            
+            const tokens = JSON.parse(localStorage.getItem('optim_tokens')) || [];
+            const tokenData = tokens.find(t => t.token === token);
+            
+            if (tokenData) {
+                // Abrir panel de usuario
+                const userPanel = `
+                    <html>
+                    <head>
+                        <title>Panel de Usuario - OptiM Shop</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            .panel { max-width: 800px; margin: 0 auto; }
+                            .token { font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 5px; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="panel">
+                            <h1>Panel de Usuario</h1>
+                            <p><strong>Token:</strong> <span class="token">${token}</span></p>
+                            <p><strong>Fecha de activación:</strong> ${new Date(tokenData.date).toLocaleDateString()}</p>
+                            <p><strong>Válido hasta:</strong> ${new Date(tokenData.expires).toLocaleDateString()}</p>
+                            
+                            <h2>Productos activados:</h2>
+                            <ul>
+                                <li>Grimoire Rev Pro</li>
+                                <li>Windows Optimizer Pro</li>
+                                <li>Todas las skins premium</li>
+                            </ul>
+                            
+                            <h2>Descargas:</h2>
+                            <button onclick="alert('Descarga iniciada')">Descargar Grimoire Rev Pro</button>
+                            <button onclick="alert('Descarga iniciada')">Descargar Windows Optimizer</button>
+                            
+                            <h2>Facturas:</h2>
+                            <button onclick="downloadInvoice('${tokenData.orderId}')">Descargar Factura</button>
+                        </div>
+                    </body>
+                    </html>
+                `;
+                
+                const userWindow = window.open('', '_blank');
+                userWindow.document.write(userPanel);
+            } else {
+                toastr.error('Token inválido');
+            }
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            currentOrder = null;
+        }
+
+        function selectPlan(planId) {
+            if (planId === 'free') {
+                window.location.href = '#programas';
+                toastr.info('Puedes descargar los programas básicos gratuitamente');
+            } else {
+                addToCart(planId);
+            }
+        }
+
+        function selectPayment(method) {
+            toastr.info(`Redirigiendo a ${method}...`);
+            // En producción aquí iría la integración real
+        }
+
+        function loadStats() {
+            const stats = JSON.parse(localStorage.getItem('optim_stats')) || {
+                total_users: 1250,
+                total_sales: 850,
+                satisfaction: 99
+            };
+            
+            document.getElementById('totalUsers').textContent = stats.total_users + '+';
+            document.getElementById('totalSales').textContent = stats.total_sales + '+';
+            document.getElementById('satisfactionRate').textContent = stats.satisfaction + '%';
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase();
+                const products = document.querySelectorAll('#productsContainer .col-md-6');
+                
+                products.forEach(product => {
+                    const text = product.textContent.toLowerCase();
+                    product.style.display = text.includes(query) ? 'block' : 'none';
+                });
+            });
+        }
+
+        function showTerms() {
+            alert('Términos y condiciones:\n\n1. Los tokens son personales e intransferibles.\n2. Garantía de 30 días en todos los productos.\n3. Soporte disponible según plan contratado.\n4. Precios sujetos a cambio sin previo aviso.\n5. El uso indebido puede resultar en revocación del token.');
+        }
+
+        function showPrivacy() {
+            alert('Política de privacidad:\n\n1. Solo recopilamos información necesaria para el servicio.\n2. No compartimos datos con terceros.\n3. Los pagos se procesan de forma segura.\n4. Puedes solicitar eliminación de datos en cualquier momento.');
+        }
+
+        function showRefund() {
+            alert('Política de reembolsos:\n\n1. 30 días de garantía en todos los productos.\n2. Reembolso 100% si no estás satisfecho.\n3. Proceso simple: email a matias.taibo2023@gmail.com\n4. Reembolso en 7-10 días hábiles.');
+        }
+
+        function showCookiePolicy() {
+            alert('Política de cookies:\n\nUsamos cookies para:\n1. Recordar tu carrito de compras\n2. Mejorar la experiencia de usuario\n3. Analizar tráfico del sitio\n\nPuedes desactivarlas en configuración del navegador.');
+        }
+
+        function activateToken(token) {
+            localStorage.setItem('optim_active_token', token);
+            toastr.success('Token activado correctamente');
+            closePaymentModal();
+            
+            // Mostrar sección premium
+            document.getElementById('premiumContent').style.display = 'block';
+            document.getElementById('currentToken').textContent = token;
+        }
+
+        // Exportar funciones globalmente
+        window.addToCart = addToCart;
+        window.removeFromCart = removeFromCart;
+        window.toggleCart = toggleCart;
+        window.clearCart = clearCart;
+        window.checkout = checkout;
+        window.selectPaymentOption = selectPaymentOption;
+        window.processPayment = processPayment;
+        window.closePaymentModal = closePaymentModal;
+        window.downloadInvoice = downloadInvoice;
+        window.downloadDemo = downloadDemo;
+        window.generateInvoice = generateInvoice;
+        window.accessUserPanel = accessUserPanel;
+        window.selectPlan = selectPlan;
+        window.selectPayment = selectPayment;
+        window.showTerms = showTerms;
+        window.showPrivacy = showPrivacy;
+        window.showRefund = showRefund;
+        window.showCookiePolicy = showCookiePolicy;
+        window.activateToken = activateToken;
+        window.filterProducts = filterProducts;
+    </script>
 </body>
 </html>
-
 
 
 
