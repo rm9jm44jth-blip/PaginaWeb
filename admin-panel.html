@@ -175,6 +175,11 @@
             color: white;
         }
         
+        .badge-completed {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            color: white;
+        }
+        
         /* Forms */
         .form-control, .form-select {
             background: #1e293b;
@@ -242,7 +247,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 2000;
@@ -259,12 +264,91 @@
             overflow-y: auto;
         }
         
+        .modal-header-admin {
+            padding: 20px;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body-admin {
+            padding: 20px;
+        }
+        
         /* Charts */
         .chart-container {
             background: #1e293b;
             border-radius: 10px;
             padding: 20px;
             border: 1px solid #334155;
+        }
+        
+        /* File Upload */
+        .file-upload-area {
+            border: 2px dashed #475569;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.02);
+        }
+        
+        .file-upload-area:hover {
+            border-color: var(--accent1);
+            background: rgba(255,107,107,0.05);
+        }
+        
+        .file-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .file-item {
+            background: #334155;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-weight: bold;
+            color: var(--accent2);
+        }
+        
+        .file-size {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        
+        /* Product Cards */
+        .product-card {
+            background: #1e293b;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+            transition: all 0.3s;
+        }
+        
+        .product-card:hover {
+            border-color: var(--accent1);
+            transform: translateY(-5px);
+        }
+        
+        .product-image {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 15px;
         }
         
         /* Responsive */
@@ -352,6 +436,138 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* File Actions */
+        .file-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .action-btn {
+            background: transparent;
+            border: 1px solid #475569;
+            color: #cbd5e1;
+            width: 32px;
+            height: 32px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            border-color: var(--accent1);
+            color: var(--accent1);
+        }
+        
+        .action-btn.delete:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+        
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        
+        .status-inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        /* Data Table */
+        .dataTables_wrapper {
+            margin-top: 20px;
+        }
+        
+        .dataTables_length select {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+        
+        .dataTables_filter input {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #475569;
+        }
+        
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #475569;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--accent1);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Pagination */
+        .pagination .page-link {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e2e8f0;
+        }
+        
+        .pagination .page-link:hover {
+            background: #334155;
+            border-color: var(--accent1);
+        }
+        
+        .pagination .active .page-link {
+            background: var(--accent1);
+            border-color: var(--accent1);
+            color: black;
+        }
     </style>
 </head>
 <body>
@@ -403,6 +619,7 @@
                 <li><a href="#" onclick="showSection('orders')"><i class="fas fa-shopping-cart"></i> Órdenes</a></li>
                 <li><a href="#" onclick="showSection('tokens')"><i class="fas fa-key"></i> Tokens</a></li>
                 <li><a href="#" onclick="showSection('products')"><i class="fas fa-box"></i> Productos</a></li>
+                <li><a href="#" onclick="showSection('files')"><i class="fas fa-file-upload"></i> Archivos</a></li>
                 <li><a href="#" onclick="showSection('users')"><i class="fas fa-users"></i> Usuarios</a></li>
                 <li><a href="#" onclick="showSection('emails')"><i class="fas fa-envelope"></i> Emails</a></li>
                 <li><a href="#" onclick="showSection('analytics')"><i class="fas fa-chart-line"></i> Analytics</a></li>
@@ -500,7 +717,7 @@
                         <div class="col-md-8">
                             <div class="btn-group" role="group">
                                 <button class="btn btn-outline-admin" onclick="filterOrders('all')">Todas</button>
-                                <button class="btn btn-outline-admin" onclick="filterOrders('paid')">Pagadas</button>
+                                <button class="btn btn-outline-admin" onclick="filterOrders('completed')">Completadas</button>
                                 <button class="btn btn-outline-admin" onclick="filterOrders('pending')">Pendientes</button>
                                 <button class="btn btn-outline-admin" onclick="filterOrders('refunded')">Reembolsadas</button>
                             </div>
@@ -508,6 +725,9 @@
                         <div class="col-md-4 text-end">
                             <button class="btn-admin" onclick="exportOrders()">
                                 <i class="fas fa-download me-2"></i>Exportar CSV
+                            </button>
+                            <button class="btn btn-outline-admin ms-2" onclick="refreshOrders()">
+                                <i class="fas fa-sync-alt"></i>
                             </button>
                         </div>
                     </div>
@@ -559,7 +779,14 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Duración (días)</label>
-                                <input type="number" id="tokenDuration" class="form-control" value="365">
+                                <input type="number" id="tokenDuration" class="form-control" value="365" min="1" max="3650">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Productos Asociados</label>
+                                <select id="tokenProducts" class="form-select" multiple>
+                                    <!-- Products loaded dynamically -->
+                                </select>
+                                <small class="text-muted">Mantén CTRL para seleccionar múltiples productos</small>
                             </div>
                             <button class="btn-admin w-100" onclick="generateToken()">
                                 <i class="fas fa-plus me-2"></i>Generar Token
@@ -568,7 +795,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="admin-card">
-                            <h5>Tokens Generados</h5>
+                            <h5>Tokens Generados (Últimos 10)</h5>
                             <div style="max-height: 300px; overflow-y: auto;" id="tokensList">
                                 <!-- Tokens loaded here -->
                             </div>
@@ -583,21 +810,24 @@
                 
                 <div class="admin-card">
                     <h5>Tokens Activos</h5>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Token</th>
-                                <th>Plan</th>
-                                <th>Email</th>
-                                <th>Generado</th>
-                                <th>Expira</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="activeTokensTable">
-                            <!-- Active tokens loaded here -->
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Token</th>
+                                    <th>Plan</th>
+                                    <th>Email</th>
+                                    <th>Generado</th>
+                                    <th>Expira</th>
+                                    <th>Productos</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activeTokensTable">
+                                <!-- Active tokens loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
@@ -619,6 +849,94 @@
                 </div>
             </div>
             
+            <!-- Files Section -->
+            <div id="filesSection" style="display: none;">
+                <div class="admin-header">
+                    <h2><i class="fas fa-file-upload me-2"></i>Gestión de Archivos</h2>
+                    <p class="text-muted mb-0">Sube y gestiona archivos para descarga</p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="admin-card">
+                            <h5>Subir Nuevo Archivo</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Seleccionar Producto</label>
+                                <select id="fileProduct" class="form-select">
+                                    <option value="">Sin producto específico</option>
+                                    <!-- Products loaded dynamically -->
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nombre del Archivo</label>
+                                <input type="text" id="fileName" class="form-control" placeholder="ej: Grimoire_Rev_Pro_v1.0.zip">
+                            </div>
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <i class="fas fa-cloud-upload-alt fa-3x mb-3" style="color: var(--accent2);"></i>
+                                <h5>Arrastra y suelta archivos aquí</h5>
+                                <p class="text-muted">o haz clic para seleccionar</p>
+                                <input type="file" id="fileInput" style="display: none;" onchange="handleFileSelect(event)">
+                                <p class="small text-muted mt-2">Tamaño máximo: 50MB</p>
+                            </div>
+                            <div id="filePreview" style="display: none;">
+                                <div class="file-item mt-3">
+                                    <div class="file-info">
+                                        <div class="file-name" id="selectedFileName"></div>
+                                        <div class="file-size" id="selectedFileSize"></div>
+                                    </div>
+                                    <div class="file-actions">
+                                        <button class="action-btn" onclick="clearFileSelection()">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn-admin w-100 mt-3" id="uploadButton" onclick="uploadFile()" disabled>
+                                <i class="fas fa-upload me-2"></i>Subir Archivo
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="admin-card">
+                            <h5>Archivos Subidos</h5>
+                            <div class="file-list" id="uploadedFilesList">
+                                <!-- Files loaded here -->
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-outline-admin w-100" onclick="refreshFiles()">
+                                    <i class="fas fa-sync-alt me-2"></i>Actualizar Lista
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h5>Estadísticas de Descargas</h5>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="stat-number" id="totalDownloads">0</div>
+                                <div class="stat-label">Total Descargas</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="stat-number" id="totalFiles">0</div>
+                                <div class="stat-label">Archivos Totales</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3">
+                                <div class="stat-number" id="totalSize">0 MB</div>
+                                <div class="stat-label">Espacio Utilizado</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <!-- Users Section -->
             <div id="usersSection" style="display: none;">
                 <div class="admin-header">
@@ -628,22 +946,26 @@
                 
                 <div class="admin-card">
                     <h5>Usuarios Registrados</h5>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Email</th>
-                                <th>Plan</th>
-                                <th>Token</th>
-                                <th>Registro</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTable">
-                            <!-- Users loaded here -->
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Email</th>
+                                    <th>Nombre</th>
+                                    <th>País</th>
+                                    <th>Plan</th>
+                                    <th>Registro</th>
+                                    <th>Último Acceso</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <!-- Users loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             
@@ -661,6 +983,9 @@
                             <div class="list-group" id="emailTemplates">
                                 <!-- Templates loaded here -->
                             </div>
+                            <button class="btn btn-outline-admin w-100 mt-3" onclick="createEmailTemplate()">
+                                <i class="fas fa-plus me-2"></i>Nueva Plantilla
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-8 mb-4">
@@ -673,6 +998,7 @@
                                             <th>Fecha</th>
                                             <th>Destinatario</th>
                                             <th>Asunto</th>
+                                            <th>Tipo</th>
                                             <th>Estado</th>
                                         </tr>
                                     </thead>
@@ -775,7 +1101,7 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">IVA/Tax Rate</label>
+                                <label class="form-label">IVA/Tax Rate (%)</label>
                                 <input type="number" class="form-control" id="taxRateSetting" value="21" step="0.1">
                             </div>
                         </div>
@@ -786,22 +1112,62 @@
                     <h5>Opciones Avanzadas</h5>
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="autoEmails">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="autoEmails" checked>
                                 <label class="form-check-label">Emails Automáticos</label>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="autoTokens">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="autoTokens" checked>
                                 <label class="form-check-label">Tokens Automáticos</label>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="form-check">
+                            <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="maintenanceMode">
                                 <label class="form-check-label">Modo Mantenimiento</label>
                             </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="debugMode">
+                                <label class="form-check-label">Modo Debug</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="autoBackup">
+                                <label class="form-check-label">Backup Automático</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="requireLogin">
+                                <label class="form-check-label">Requiere Login</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6>Método de Descarga</h6>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="downloadMethod" id="downloadDirect" value="direct" checked>
+                            <label class="form-check-label" for="downloadDirect">
+                                Descarga Directa
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="downloadMethod" id="downloadLink" value="link">
+                            <label class="form-check-label" for="downloadLink">
+                                Enlace de Descarga
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="downloadMethod" id="downloadBoth" value="both">
+                            <label class="form-check-label" for="downloadBoth">
+                                Ambos Métodos
+                            </label>
                         </div>
                     </div>
                     
@@ -811,6 +1177,12 @@
                         </button>
                         <button class="btn btn-outline-admin ms-2" onclick="backupData()">
                             <i class="fas fa-download me-2"></i>Backup de Datos
+                        </button>
+                        <button class="btn btn-outline-admin ms-2" onclick="restoreData()">
+                            <i class="fas fa-upload me-2"></i>Restaurar Datos
+                        </button>
+                        <button class="btn btn-outline-admin ms-2" onclick="clearAllData()">
+                            <i class="fas fa-trash me-2"></i>Limpiar Todo
                         </button>
                     </div>
                 </div>
@@ -827,4 +1199,2817 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="input-group">
-                                <input type="text
+                                <input type="text" class="form-control" id="invoiceSearch" placeholder="Buscar factura por ID, email o token">
+                                <button class="btn btn-outline-admin" onclick="searchInvoices()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button class="btn-admin" onclick="generateAllInvoices()">
+                                <i class="fas fa-file-pdf me-2"></i>Generar Todas
+                            </button>
+                            <button class="btn btn-outline-admin ms-2" onclick="exportInvoices()">
+                                <i class="fas fa-download me-2"></i>Exportar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h5>Facturas Generadas</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID Factura</th>
+                                    <th>Cliente</th>
+                                    <th>Email</th>
+                                    <th>Monto</th>
+                                    <th>Fecha</th>
+                                    <th>Token</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoicesTable">
+                                <!-- Invoices loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Product Modal -->
+    <div id="addProductModal" class="admin-modal">
+        <div class="modal-content-admin">
+            <div class="modal-header-admin">
+                <h5 class="modal-title"><i class="fas fa-plus me-2"></i>Agregar Nuevo Producto</h5>
+                <button type="button" class="btn-close btn-close-white" onclick="closeModal('addProductModal')"></button>
+            </div>
+            <div class="modal-body-admin">
+                <form id="addProductForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre del Producto *</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Precio (USD) *</label>
+                            <input type="number" class="form-control" id="productPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Descripción *</label>
+                            <textarea class="form-control" id="productDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Categoría *</label>
+                            <select class="form-select" id="productCategory" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="premium">Premium</option>
+                                <option value="optimization">Optimización</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="tools">Herramientas</option>
+                                <option value="membership">Membresía</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tipo *</label>
+                            <select class="form-select" id="productType" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="software">Software</option>
+                                <option value="content">Contenido</option>
+                                <option value="service">Servicio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Características (separadas por comas)</label>
+                            <input type="text" class="form-control" id="productFeatures" placeholder="ej: Optimización, Skins, Auto-update">
+                            <small class="text-muted">Escribe las características separadas por comas</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Emoji/Icono</label>
+                            <input type="text" class="form-control" id="productImage" placeholder="🎮, ⚡, 💻">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Estado</label>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="productActive" checked>
+                                <label class="form-check-label">Producto Activo</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="productPopular">
+                                <label class="form-check-label">Marcar como Popular</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn-admin">
+                            <i class="fas fa-save me-2"></i>Guardar Producto
+                        </button>
+                        <button type="button" class="btn btn-outline-admin ms-2" onclick="closeModal('addProductModal')">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Product Modal -->
+    <div id="editProductModal" class="admin-modal">
+        <div class="modal-content-admin">
+            <div class="modal-header-admin">
+                <h5 class="modal-title"><i class="fas fa-edit me-2"></i>Editar Producto</h5>
+                <button type="button" class="btn-close btn-close-white" onclick="closeModal('editProductModal')"></button>
+            </div>
+            <div class="modal-body-admin">
+                <form id="editProductForm">
+                    <input type="hidden" id="editProductId">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre del Producto *</label>
+                            <input type="text" class="form-control" id="editProductName" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Precio (USD) *</label>
+                            <input type="number" class="form-control" id="editProductPrice" step="0.01" min="0" required>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Descripción *</label>
+                            <textarea class="form-control" id="editProductDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Categoría *</label>
+                            <select class="form-select" id="editProductCategory" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="premium">Premium</option>
+                                <option value="optimization">Optimización</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="tools">Herramientas</option>
+                                <option value="membership">Membresía</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Tipo *</label>
+                            <select class="form-select" id="editProductType" required>
+                                <option value="">Seleccionar tipo</option>
+                                <option value="software">Software</option>
+                                <option value="content">Contenido</option>
+                                <option value="service">Servicio</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Características (separadas por comas)</label>
+                            <input type="text" class="form-control" id="editProductFeatures">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Emoji/Icono</label>
+                            <input type="text" class="form-control" id="editProductImage">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Estado</label>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="editProductActive">
+                                <label class="form-check-label">Producto Activo</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="editProductPopular">
+                                <label class="form-check-label">Marcar como Popular</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button type="submit" class="btn-admin">
+                            <i class="fas fa-save me-2"></i>Actualizar Producto
+                        </button>
+                        <button type="button" class="btn btn-outline-admin ms-2" onclick="closeModal('editProductModal')">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-outline-admin ms-2" onclick="deleteProduct()" style="color: #ef4444; border-color: #ef4444;">
+                            <i class="fas fa-trash me-2"></i>Eliminar Producto
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Details Modal -->
+    <div id="orderDetailsModal" class="admin-modal">
+        <div class="modal-content-admin">
+            <div class="modal-header-admin">
+                <h5 class="modal-title"><i class="fas fa-receipt me-2"></i>Detalles de Orden</h5>
+                <button type="button" class="btn-close btn-close-white" onclick="closeModal('orderDetailsModal')"></button>
+            </div>
+            <div class="modal-body-admin">
+                <div id="orderDetailsContent">
+                    <!-- Order details loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Backup/Restore Modal -->
+    <div id="backupModal" class="admin-modal">
+        <div class="modal-content-admin" style="max-width: 500px;">
+            <div class="modal-header-admin">
+                <h5 class="modal-title"><i class="fas fa-database me-2"></i>Gestión de Datos</h5>
+                <button type="button" class="btn-close btn-close-white" onclick="closeModal('backupModal')"></button>
+            </div>
+            <div class="modal-body-admin">
+                <div class="mb-4">
+                    <h6>Backup de Datos</h6>
+                    <p class="small-muted mb-3">Descarga una copia de seguridad de todos los datos del sistema.</p>
+                    <button class="btn-admin w-100" onclick="downloadBackup()">
+                        <i class="fas fa-download me-2"></i>Descargar Backup
+                    </button>
+                </div>
+                
+                <div class="mb-4">
+                    <h6>Restaurar Datos</h6>
+                    <p class="small-muted mb-3">Sube un archivo de backup para restaurar los datos.</p>
+                    <div class="file-upload-area" onclick="document.getElementById('restoreFile').click()">
+                        <i class="fas fa-upload fa-2x mb-3"></i>
+                        <p>Haz clic para seleccionar archivo de backup</p>
+                        <input type="file" id="restoreFile" accept=".json" style="display: none;" onchange="handleRestoreFile(event)">
+                    </div>
+                    <div id="restoreFileInfo" style="display: none;" class="mt-3">
+                        <div class="alert alert-dark">
+                            <i class="fas fa-file me-2"></i>
+                            <span id="restoreFileName"></span>
+                            <button class="btn btn-sm btn-outline float-end" onclick="clearRestoreFile()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-admin w-100 mt-3" id="restoreButton" onclick="restoreBackup()" disabled>
+                        <i class="fas fa-upload me-2"></i>Restaurar Backup
+                    </button>
+                </div>
+                
+                <div class="mt-4 pt-4 border-top border-secondary">
+                    <h6>Herramientas Avanzadas</h6>
+                    <button class="btn btn-outline-admin w-100 mb-2" onclick="exportAllData()">
+                        <i class="fas fa-file-export me-2"></i>Exportar Todos los Datos
+                    </button>
+                    <button class="btn btn-outline-admin w-100" onclick="resetDemoData()">
+                        <i class="fas fa-redo me-2"></i>Restablecer Datos Demo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script>
+        // ============================================
+        // SISTEMA DE ADMINISTRACIÓN 100% FUNCIONAL
+        // ============================================
+        
+        // Configuración
+        const ADMIN_CREDENTIALS = {
+            username: 'admin',
+            password: 'admin-optim-2025'
+        };
+        
+        let currentAdmin = null;
+        let isLoggedIn = false;
+        
+        // Sistema de base de datos (usa el mismo del index.html)
+        let db = null;
+        let fileSystem = null;
+        let tokenSystem = null;
+        let emailSystem = null;
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar toastr
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "timeOut": "5000"
+            };
+            
+            // Verificar si estamos en el mismo dominio que la tienda
+            try {
+                // Intentar acceder a las funciones del sistema desde la tienda
+                if (window.opener && window.opener.getDatabase) {
+                    db = window.opener.getDatabase();
+                    fileSystem = window.opener.getFileSystem();
+                    tokenSystem = window.opener.getTokenSystem();
+                    emailSystem = window.opener.getEmailSystem();
+                } else {
+                    // Crear instancia local si no hay acceso a la tienda
+                    initLocalDatabase();
+                }
+            } catch (e) {
+                console.log('Creando base de datos local para admin:', e.message);
+                initLocalDatabase();
+            }
+            
+            // Configurar eventos
+            setupEventListeners();
+        });
+        
+        function initLocalDatabase() {
+            // Clase Database local para el panel de admin
+            class LocalDatabase {
+                constructor() {
+                    this.initDatabase();
+                }
+                
+                initDatabase() {
+                    const collections = [
+                        'products', 'orders', 'tokens', 'users', 'emails', 
+                        'settings', 'files', 'downloads', 'stats', 'invoices'
+                    ];
+                    
+                    collections.forEach(collection => {
+                        if (!localStorage.getItem(`optim_${collection}`)) {
+                            localStorage.setItem(`optim_${collection}`, JSON.stringify([]));
+                        }
+                    });
+                    
+                    // Inicializar configuración
+                    if (!localStorage.getItem('optim_settings')) {
+                        this.saveSettings({
+                            paypalEmail: "matias.taibo2023@gmail.com",
+                            bankInfo: "grimoire.tokens",
+                            siteName: "OptiM Shop",
+                            currency: "USD",
+                            taxRate: 0.21,
+                            autoEmails: true,
+                            autoTokens: true,
+                            maintenanceMode: false,
+                            downloadMethod: 'direct'
+                        });
+                    }
+                }
+                
+                // Métodos CRUD
+                getCollection(name) {
+                    return JSON.parse(localStorage.getItem(`optim_${name}`)) || [];
+                }
+                
+                saveCollection(name, data) {
+                    localStorage.setItem(`optim_${name}`, JSON.stringify(data));
+                    return true;
+                }
+                
+                addToCollection(name, item) {
+                    const collection = this.getCollection(name);
+                    collection.push({
+                        ...item,
+                        id: item.id || this.generateId(),
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString()
+                    });
+                    return this.saveCollection(name, collection);
+                }
+                
+                updateCollection(name, id, updates) {
+                    const collection = this.getCollection(name);
+                    const index = collection.findIndex(item => item.id === id);
+                    if (index !== -1) {
+                        collection[index] = {
+                            ...collection[index],
+                            ...updates,
+                            updatedAt: new Date().toISOString()
+                        };
+                        return this.saveCollection(name, collection);
+                    }
+                    return false;
+                }
+                
+                deleteFromCollection(name, id) {
+                    const collection = this.getCollection(name);
+                    const filtered = collection.filter(item => item.id !== id);
+                    return this.saveCollection(name, filtered);
+                }
+                
+                // Métodos específicos
+                saveSettings(settings) {
+                    return this.saveCollection('settings', [settings]);
+                }
+                
+                getSettings() {
+                    const settings = this.getCollection('settings');
+                    return settings[0] || {};
+                }
+                
+                saveStats(stats) {
+                    return this.saveCollection('stats', [stats]);
+                }
+                
+                getStats() {
+                    const stats = this.getCollection('stats');
+                    return stats[0] || {};
+                }
+                
+                updateStats(updates) {
+                    const stats = this.getStats();
+                    return this.saveStats({ ...stats, ...updates });
+                }
+                
+                generateId() {
+                    return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+                }
+                
+                getProducts() {
+                    return this.getCollection('products');
+                }
+                
+                saveProduct(product) {
+                    return this.addToCollection('products', product);
+                }
+                
+                updateProduct(id, updates) {
+                    return this.updateCollection('products', id, updates);
+                }
+                
+                deleteProduct(id) {
+                    return this.deleteFromCollection('products', id);
+                }
+                
+                getOrders() {
+                    return this.getCollection('orders');
+                }
+                
+                saveOrder(order) {
+                    return this.addToCollection('orders', order);
+                }
+                
+                updateOrderStatus(orderId, status) {
+                    return this.updateCollection('orders', orderId, { status });
+                }
+                
+                getTokens() {
+                    return this.getCollection('tokens');
+                }
+                
+                saveToken(token) {
+                    return this.addToCollection('tokens', token);
+                }
+                
+                getUsers() {
+                    return this.getCollection('users');
+                }
+                
+                getFiles() {
+                    return this.getCollection('files');
+                }
+                
+                saveFile(file) {
+                    return this.addToCollection('files', file);
+                }
+                
+                deleteFile(fileId) {
+                    return this.deleteFromCollection('files', fileId);
+                }
+                
+                getDownloads() {
+                    return this.getCollection('downloads');
+                }
+            }
+            
+            // Clase FileSystem local
+            class LocalFileSystem {
+                async uploadFile(file, productId = null, fileName = null) {
+                    return new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        
+                        reader.onload = (e) => {
+                            const fileData = {
+                                id: this.generateFileId(),
+                                name: fileName || file.name,
+                                type: file.type,
+                                size: file.size,
+                                productId: productId,
+                                uploadedAt: new Date().toISOString(),
+                                data: e.target.result,
+                                downloads: 0
+                            };
+                            
+                            if (db.saveFile(fileData)) {
+                                resolve(fileData);
+                            } else {
+                                reject('Error al guardar el archivo');
+                            }
+                        };
+                        
+                        reader.onerror = () => reject('Error al leer el archivo');
+                        reader.readAsDataURL(file);
+                    });
+                }
+                
+                generateFileId() {
+                    return 'FILE-' + Date.now() + '-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                }
+                
+                getProductFiles(productId) {
+                    const files = db.getFiles();
+                    return files.filter(file => file.productId === productId);
+                }
+                
+                deleteFile(fileId) {
+                    return db.deleteFile(fileId);
+                }
+            }
+            
+            // Clase TokenSystem local
+            class LocalTokenSystem {
+                generateToken(plan = 'plus') {
+                    const prefix = plan === 'elite' ? 'OPTIM-ELITE' : 'OPTIM-PLUS';
+                    const random = Math.random().toString(36).substr(2, 8).toUpperCase();
+                    const timestamp = Date.now().toString(36).substr(-4).toUpperCase();
+                    return `${prefix}-${random}-${timestamp}`;
+                }
+                
+                saveToken(token, email, orderId = null, plan = 'standard', products = []) {
+                    const tokenData = {
+                        token: token,
+                        email: email,
+                        orderId: orderId,
+                        plan: plan,
+                        products: products,
+                        generatedAt: new Date().toISOString(),
+                        expires: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
+                        active: true
+                    };
+                    
+                    return db.saveToken(tokenData);
+                }
+            }
+            
+            // Inicializar instancias locales
+            db = new LocalDatabase();
+            fileSystem = new LocalFileSystem();
+            tokenSystem = new LocalTokenSystem();
+        }
+        
+        function setupEventListeners() {
+            // Configurar drag and drop para archivos
+            const fileUploadArea = document.getElementById('fileUploadArea');
+            if (fileUploadArea) {
+                fileUploadArea.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '#ff6b6b';
+                    fileUploadArea.style.background = 'rgba(255,107,107,0.1)';
+                });
+                
+                fileUploadArea.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '';
+                    fileUploadArea.style.background = '';
+                });
+                
+                fileUploadArea.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    fileUploadArea.style.borderColor = '';
+                    fileUploadArea.style.background = '';
+                    
+                    const files = e.dataTransfer.files;
+                    if (files.length > 0) {
+                        handleFileSelect({ target: { files: files } });
+                    }
+                });
+                
+                fileUploadArea.addEventListener('click', () => {
+                    document.getElementById('fileInput').click();
+                });
+            }
+            
+            // Configurar formularios
+            const addProductForm = document.getElementById('addProductForm');
+            if (addProductForm) {
+                addProductForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveNewProduct();
+                });
+            }
+            
+            const editProductForm = document.getElementById('editProductForm');
+            if (editProductForm) {
+                editProductForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    updateProduct();
+                });
+            }
+        }
+        
+        // ============================================
+        // SISTEMA DE AUTENTICACIÓN
+        // ============================================
+        
+        function login() {
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+            
+            if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
+                currentAdmin = {
+                    username: username,
+                    loginTime: new Date().toISOString(),
+                    sessionId: 'ADMIN-' + Date.now()
+                };
+                
+                isLoggedIn = true;
+                
+                // Guardar sesión
+                localStorage.setItem('admin_session', JSON.stringify({
+                    ...currentAdmin,
+                    expires: Date.now() + 8 * 60 * 60 * 1000 // 8 horas
+                }));
+                
+                // Mostrar panel de admin
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                
+                // Actualizar información de admin
+                document.getElementById('adminName').textContent = username;
+                document.getElementById('loginTime').textContent = new Date().toLocaleTimeString('es-ES');
+                
+                // Cargar datos iniciales
+                loadDashboard();
+                
+                toastr.success('Sesión iniciada correctamente');
+            } else {
+                toastr.error('Credenciales incorrectas');
+            }
+        }
+        
+        function checkSession() {
+            const session = JSON.parse(localStorage.getItem('admin_session'));
+            if (session && session.expires > Date.now()) {
+                currentAdmin = session;
+                isLoggedIn = true;
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('adminPanel').style.display = 'block';
+                document.getElementById('adminName').textContent = session.username;
+                loadDashboard();
+                return true;
+            }
+            return false;
+        }
+        
+        function logout() {
+            if (confirm('¿Estás seguro de cerrar sesión?')) {
+                localStorage.removeItem('admin_session');
+                currentAdmin = null;
+                isLoggedIn = false;
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('adminPanel').style.display = 'none';
+                toastr.info('Sesión cerrada');
+            }
+        }
+        
+        // ============================================
+        // FUNCIONES DE INTERFAZ
+        // ============================================
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+        
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = [
+                'dashboardSection', 'ordersSection', 'tokensSection', 
+                'productsSection', 'filesSection', 'usersSection', 
+                'emailsSection', 'analyticsSection', 'settingsSection', 
+                'invoicesSection'
+            ];
+            
+            sections.forEach(section => {
+                const el = document.getElementById(section);
+                if (el) el.style.display = 'none';
+            });
+            
+            // Mostrar la sección seleccionada
+            const selectedSection = document.getElementById(sectionId + 'Section');
+            if (selectedSection) {
+                selectedSection.style.display = 'block';
+            }
+            
+            // Actualizar menú activo
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Cargar datos de la sección
+            switch(sectionId) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'orders':
+                    loadOrders();
+                    break;
+                case 'tokens':
+                    loadTokens();
+                    break;
+                case 'products':
+                    loadProducts();
+                    break;
+                case 'files':
+                    loadFiles();
+                    break;
+                case 'users':
+                    loadUsers();
+                    break;
+                case 'emails':
+                    loadEmails();
+                    break;
+                case 'analytics':
+                    loadAnalytics();
+                    break;
+                case 'settings':
+                    loadSettings();
+                    break;
+                case 'invoices':
+                    loadInvoices();
+                    break;
+            }
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        // ============================================
+        // DASHBOARD
+        // ============================================
+        
+        function loadDashboard() {
+            // Cargar estadísticas
+            const stats = db.getStats();
+            const orders = db.getOrders();
+            const products = db.getProducts();
+            const users = db.getUsers();
+            const files = db.getFiles();
+            
+            // Actualizar estadísticas
+            document.getElementById('totalRevenue').textContent = '$' + (stats.totalRevenue || 0).toFixed(2);
+            document.getElementById('totalOrders').textContent = orders.length;
+            document.getElementById('activeUsers').textContent = users.filter(u => u.status !== 'inactive').length;
+            document.getElementById('conversionRate').textContent = (stats.conversionRate || 0).toFixed(1) + '%';
+            
+            // Cargar productos populares
+            loadPopularProducts();
+            
+            // Cargar actividad reciente
+            loadRecentActivity();
+            
+            // Inicializar gráficos
+            initCharts();
+        }
+        
+        function loadPopularProducts() {
+            const container = document.getElementById('popularProducts');
+            const products = db.getProducts();
+            
+            // Ordenar por popularidad (simulada)
+            const popularProducts = products
+                .filter(p => p.popular)
+                .slice(0, 5);
+            
+            if (popularProducts.length === 0) {
+                container.innerHTML = '<p class="text-muted">No hay productos populares</p>';
+                return;
+            }
+            
+            let html = '';
+            popularProducts.forEach(product => {
+                const files = fileSystem.getProductFiles(product.id);
+                const fileCount = files.length;
+                
+                html += `
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-bottom border-secondary">
+                        <div>
+                            <div class="fw-bold">${product.name}</div>
+                            <div class="small-muted">$${product.price.toFixed(2)} • ${fileCount} archivo(s)</div>
+                        </div>
+                        <div>
+                            <span class="badge ${product.active ? 'bg-success' : 'bg-secondary'}">
+                                ${product.active ? 'Activo' : 'Inactivo'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function loadRecentActivity() {
+            const container = document.getElementById('recentActivity');
+            const orders = db.getOrders();
+            const downloads = db.getDownloads();
+            
+            // Combinar y ordenar actividad reciente
+            const recentOrders = orders
+                .slice(-5)
+                .reverse()
+                .map(order => ({
+                    type: 'order',
+                    date: order.date,
+                    description: `Nueva orden #${order.orderId || order.id}`,
+                    amount: `$${order.total?.toFixed(2) || '0.00'}`,
+                    status: order.status
+                }));
+            
+            const recentDownloads = downloads
+                .slice(-5)
+                .reverse()
+                .map(download => ({
+                    type: 'download',
+                    date: download.downloadedAt,
+                    description: `Descarga: ${download.fileName}`,
+                    amount: '',
+                    status: 'completed'
+                }));
+            
+            const recentActivity = [...recentOrders, ...recentDownloads]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 8);
+            
+            if (recentActivity.length === 0) {
+                container.innerHTML = '<p class="text-muted">No hay actividad reciente</p>';
+                return;
+            }
+            
+            let html = '';
+            recentActivity.forEach(activity => {
+                const date = new Date(activity.date);
+                const timeAgo = getTimeAgo(date);
+                
+                html += `
+                    <div class="d-flex justify-content-between align-items-center mb-3 p-2 border-bottom border-secondary">
+                        <div>
+                            <div class="fw-bold">${activity.description}</div>
+                            <div class="small-muted">
+                                <i class="fas fa-clock me-1"></i>${timeAgo}
+                            </div>
+                        </div>
+                        <div>
+                            ${activity.amount ? `<span class="text-gradient">${activity.amount}</span>` : ''}
+                            <span class="badge ${getStatusBadgeClass(activity.status)} ms-2">
+                                ${activity.type === 'order' ? 'Orden' : 'Descarga'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function initCharts() {
+            // Gráfico de ingresos mensuales
+            const revenueCtx = document.getElementById('revenueChart');
+            if (revenueCtx) {
+                const orders = db.getOrders();
+                const monthlyRevenue = {};
+                
+                orders.forEach(order => {
+                    if (order.status === 'completed' && order.total) {
+                        const date = new Date(order.date);
+                        const monthYear = `${date.getMonth() + 1}/${date.getFullYear()}`;
+                        monthlyRevenue[monthYear] = (monthlyRevenue[monthYear] || 0) + order.total;
+                    }
+                });
+                
+                const labels = Object.keys(monthlyRevenue).slice(-6);
+                const data = labels.map(label => monthlyRevenue[label]);
+                
+                new Chart(revenueCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Ingresos ($)',
+                            data: data,
+                            borderColor: '#ff6b6b',
+                            backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#e2e8f0'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#94a3b8'
+                                },
+                                grid: {
+                                    color: '#334155'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#94a3b8'
+                                },
+                                grid: {
+                                    color: '#334155'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de métodos de pago
+            const paymentCtx = document.getElementById('paymentMethodsChart');
+            if (paymentCtx) {
+                const orders = db.getOrders();
+                const paymentMethods = {};
+                
+                orders.forEach(order => {
+                    if (order.paymentMethod) {
+                        paymentMethods[order.paymentMethod] = (paymentMethods[order.paymentMethod] || 0) + 1;
+                    }
+                });
+                
+                new Chart(paymentCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(paymentMethods),
+                        datasets: [{
+                            data: Object.values(paymentMethods),
+                            backgroundColor: [
+                                '#ff6b6b',
+                                '#feca57',
+                                '#3b82f6',
+                                '#10b981',
+                                '#8b5cf6'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#e2e8f0'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // ============================================
+        // GESTIÓN DE ÓRDENES
+        // ============================================
+        
+        function loadOrders() {
+            const container = document.getElementById('ordersTableBody');
+            const orders = db.getOrders();
+            
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-5">
+                            <i class="fas fa-shopping-cart fa-3x mb-3 text-muted"></i>
+                            <p class="text-muted">No hay órdenes registradas</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            orders.reverse().forEach(order => {
+                const date = new Date(order.date);
+                const formattedDate = date.toLocaleDateString('es-ES');
+                
+                html += `
+                    <tr>
+                        <td><code>${order.orderId || order.id}</code></td>
+                        <td>
+                            <div>${order.email || 'No especificado'}</div>
+                            <small class="text-muted">${order.name || 'Cliente'}</small>
+                        </td>
+                        <td>
+                            <div>${order.items?.length || 0} producto(s)</div>
+                            <small class="text-muted">
+                                ${order.items?.map(item => item.name).slice(0, 2).join(', ')}
+                                ${order.items?.length > 2 ? '...' : ''}
+                            </small>
+                        </td>
+                        <td class="fw-bold">$${order.total?.toFixed(2) || '0.00'}</td>
+                        <td>
+                            <span class="badge bg-dark">
+                                ${order.paymentMethod || 'No especificado'}
+                            </span>
+                        </td>
+                        <td>${formattedDate}</td>
+                        <td>
+                            <span class="badge ${getStatusBadgeClass(order.status)}">
+                                ${order.status || 'pending'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="action-btn" onclick="viewOrderDetails('${order.orderId || order.id}')" title="Ver detalles">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn" onclick="updateOrderStatus('${order.orderId || order.id}', 'completed')" title="Marcar como completada">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="refundOrder('${order.orderId || order.id}')" title="Reembolsar">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Inicializar DataTable si existe
+            if ($.fn.DataTable) {
+                $('#ordersTable').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                    },
+                    pageLength: 10,
+                    order: [[5, 'desc']]
+                });
+            }
+        }
+        
+        function filterOrders(status) {
+            const rows = document.querySelectorAll('#ordersTableBody tr');
+            
+            rows.forEach(row => {
+                if (status === 'all') {
+                    row.style.display = '';
+                } else {
+                    const statusCell = row.cells[6];
+                    const rowStatus = statusCell.textContent.trim().toLowerCase();
+                    row.style.display = rowStatus.includes(status) ? '' : 'none';
+                }
+            });
+        }
+        
+        function refreshOrders() {
+            loadOrders();
+            toastr.success('Órdenes actualizadas');
+        }
+        
+        function viewOrderDetails(orderId) {
+            const orders = db.getOrders();
+            const order = orders.find(o => o.orderId === orderId || o.id === orderId);
+            
+            if (!order) {
+                toastr.error('Orden no encontrada');
+                return;
+            }
+            
+            const container = document.getElementById('orderDetailsContent');
+            const date = new Date(order.date);
+            
+            container.innerHTML = `
+                <div class="mb-4">
+                    <h6>Información de la Orden</h6>
+                    <div class="bg-dark p-3 rounded">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>ID:</strong> ${order.orderId || order.id}</p>
+                                <p><strong>Fecha:</strong> ${date.toLocaleString('es-ES')}</p>
+                                <p><strong>Estado:</strong> <span class="badge ${getStatusBadgeClass(order.status)}">${order.status}</span></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Cliente:</strong> ${order.name || 'No especificado'}</p>
+                                <p><strong>Email:</strong> ${order.email || 'No especificado'}</p>
+                                <p><strong>Método de pago:</strong> ${order.paymentMethod || 'No especificado'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <h6>Productos</h6>
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Precio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${order.items?.map(item => `
+                                    <tr>
+                                        <td>${item.name}</td>
+                                        <td>$${item.price?.toFixed(2) || '0.00'}</td>
+                                    </tr>
+                                `).join('') || '<tr><td colspan="2">No hay productos</td></tr>'}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Subtotal</th>
+                                    <th>$${order.subtotal?.toFixed(2) || '0.00'}</th>
+                                </tr>
+                                <tr>
+                                    <th>Descuento</th>
+                                    <th>-$${order.discount?.toFixed(2) || '0.00'}</th>
+                                </tr>
+                                <tr>
+                                    <th>Total</th>
+                                    <th class="text-gradient">$${order.total?.toFixed(2) || '0.00'}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                
+                ${order.token ? `
+                <div class="mb-4">
+                    <h6>Token Generado</h6>
+                    <div class="token-display">
+                        ${order.token}
+                    </div>
+                </div>
+                ` : ''}
+                
+                ${order.paymentResult ? `
+                <div class="mb-4">
+                    <h6>Información de Pago</h6>
+                    <div class="bg-dark p-3 rounded">
+                        <pre class="text-muted" style="white-space: pre-wrap;">${JSON.stringify(order.paymentResult, null, 2)}</pre>
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div class="mt-4">
+                    <button class="btn-admin" onclick="downloadOrderInvoice('${order.orderId || order.id}')">
+                        <i class="fas fa-file-invoice me-2"></i>Descargar Factura
+                    </button>
+                    <button class="btn btn-outline-admin ms-2" onclick="resendOrderEmail('${order.orderId || order.id}')">
+                        <i class="fas fa-envelope me-2"></i>Reenviar Email
+                    </button>
+                </div>
+            `;
+            
+            showModal('orderDetailsModal');
+        }
+        
+        function updateOrderStatus(orderId, status) {
+            if (db.updateOrderStatus(orderId, status)) {
+                toastr.success('Estado actualizado');
+                loadOrders();
+            } else {
+                toastr.error('Error al actualizar el estado');
+            }
+        }
+        
+        function refundOrder(orderId) {
+            if (confirm('¿Estás seguro de reembolsar esta orden? Esta acción no se puede deshacer.')) {
+                if (db.updateOrderStatus(orderId, 'refunded')) {
+                    // Actualizar estadísticas
+                    const stats = db.getStats();
+                    stats.refundRate = ((stats.refundRate || 0) + 1);
+                    db.saveStats(stats);
+                    
+                    toastr.success('Orden marcada como reembolsada');
+                    loadOrders();
+                } else {
+                    toastr.error('Error al reembolsar la orden');
+                }
+            }
+        }
+        
+        function exportOrders() {
+            const orders = db.getOrders();
+            const csv = convertToCSV(orders);
+            downloadCSV(csv, 'ordenes_optim_shop.csv');
+            toastr.success('Órdenes exportadas');
+        }
+        
+        // ============================================
+        // GESTIÓN DE TOKENS
+        // ============================================
+        
+        function loadTokens() {
+            // Cargar lista de tokens recientes
+            loadRecentTokens();
+            
+            // Cargar tabla de tokens activos
+            loadActiveTokens();
+            
+            // Cargar productos para el selector
+            loadTokenProducts();
+        }
+        
+        function loadRecentTokens() {
+            const container = document.getElementById('tokensList');
+            const tokens = db.getTokens();
+            
+            const recentTokens = tokens.slice(-10).reverse();
+            
+            if (recentTokens.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center py-3">No hay tokens generados</p>';
+                return;
+            }
+            
+            let html = '';
+            recentTokens.forEach(token => {
+                const date = new Date(token.generatedAt);
+                const timeAgo = getTimeAgo(date);
+                
+                html += `
+                    <div class="d-flex justify-content-between align-items-center mb-2 p-2 border-bottom border-secondary">
+                        <div style="flex: 1; overflow: hidden;">
+                            <div class="small fw-bold text-truncate">${token.token}</div>
+                            <div class="small text-muted">${token.email}</div>
+                        </div>
+                        <div class="text-end">
+                            <div class="small">${timeAgo}</div>
+                            <span class="badge ${token.active ? 'bg-success' : 'bg-secondary'}">
+                                ${token.active ? 'Activo' : 'Inactivo'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function loadActiveTokens() {
+            const container = document.getElementById('activeTokensTable');
+            const tokens = db.getTokens();
+            
+            const activeTokens = tokens.filter(t => t.active);
+            
+            if (activeTokens.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center py-5">
+                            <i class="fas fa-key fa-3x mb-3 text-muted"></i>
+                            <p class="text-muted">No hay tokens activos</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            activeTokens.forEach(token => {
+                const generated = new Date(token.generatedAt);
+                const expires = new Date(token.expires);
+                
+                html += `
+                    <tr>
+                        <td><code class="small">${token.token}</code></td>
+                        <td>
+                            <span class="badge ${token.plan === 'elite' ? 'bg-warning' : 'bg-info'}">
+                                ${token.plan}
+                            </span>
+                        </td>
+                        <td>${token.email}</td>
+                        <td>${generated.toLocaleDateString('es-ES')}</td>
+                        <td>
+                            ${expires.toLocaleDateString('es-ES')}
+                            <br>
+                            <small class="text-muted">(${getDaysRemaining(expires)} días restantes)</small>
+                        </td>
+                        <td>
+                            ${token.products?.length || 0} producto(s)
+                        </td>
+                        <td>
+                            <button class="action-btn" onclick="copyToken('${token.token}')" title="Copiar token">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="revokeToken('${token.token}')" title="Revocar token">
+                                <i class="fas fa-ban"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function loadTokenProducts() {
+            const select = document.getElementById('tokenProducts');
+            const products = db.getProducts().filter(p => p.active);
+            
+            select.innerHTML = '<option value="">Seleccionar productos...</option>';
+            products.forEach(product => {
+                select.innerHTML += `<option value="${product.id}">${product.name} ($${product.price})</option>`;
+            });
+        }
+        
+        function generateToken() {
+            const plan = document.getElementById('tokenPlan').value;
+            const email = document.getElementById('tokenEmail').value;
+            const duration = parseInt(document.getElementById('tokenDuration').value);
+            const productSelect = document.getElementById('tokenProducts');
+            const selectedProducts = Array.from(productSelect.selectedOptions).map(opt => opt.value);
+            
+            if (!email || !email.includes('@')) {
+                toastr.error('Ingresa un email válido');
+                return;
+            }
+            
+            // Generar token
+            const token = tokenSystem.generateToken(plan);
+            
+            // Calcular fecha de expiración
+            const expires = new Date(Date.now() + duration * 24 * 60 * 60 * 1000);
+            
+            // Guardar token
+            const tokenData = {
+                token: token,
+                email: email,
+                plan: plan,
+                products: selectedProducts,
+                generatedAt: new Date().toISOString(),
+                expires: expires.toISOString(),
+                active: true,
+                manuallyGenerated: true
+            };
+            
+            if (db.saveToken(tokenData)) {
+                // Limpiar formulario
+                document.getElementById('tokenEmail').value = '';
+                document.getElementById('tokenDuration').value = '365';
+                productSelect.selectedIndex = -1;
+                
+                // Recargar listas
+                loadRecentTokens();
+                loadActiveTokens();
+                
+                // Mostrar token generado
+                toastr.success(`
+                    <div>
+                        <strong>Token generado:</strong><br>
+                        <code class="d-block mt-2 p-2 bg-dark rounded">${token}</code>
+                    </div>
+                `, '', {
+                    timeOut: 10000,
+                    closeButton: true
+                });
+                
+                // Enviar email si está configurado
+                const settings = db.getSettings();
+                if (settings.autoEmails) {
+                    sendTokenEmail(email, token, plan, duration);
+                }
+            } else {
+                toastr.error('Error al generar el token');
+            }
+        }
+        
+        function sendTokenEmail(email, token, plan, duration) {
+            // Simular envío de email
+            const emailData = {
+                to: email,
+                subject: `Tu token de acceso ${plan} - OptiM Shop`,
+                body: `
+                    <h2>¡Tu token ha sido generado!</h2>
+                    <p><strong>Token:</strong> ${token}</p>
+                    <p><strong>Plan:</strong> ${plan}</p>
+                    <p><strong>Duración:</strong> ${duration} días</p>
+                    <p>Usa este token en el Panel de Usuario para acceder a tus productos.</p>
+                `,
+                sentAt: new Date().toISOString(),
+                status: 'sent',
+                type: 'token_generation'
+            };
+            
+            db.addToCollection('emails', emailData);
+            console.log('Email de token enviado a:', email);
+        }
+        
+        function copyToken(token) {
+            navigator.clipboard.writeText(token).then(() => {
+                toastr.success('Token copiado al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar:', err);
+                toastr.error('Error al copiar el token');
+            });
+        }
+        
+        function revokeToken(token) {
+            if (confirm('¿Estás seguro de revocar este token? El usuario ya no podrá acceder a los productos.')) {
+                const tokens = db.getTokens();
+                const tokenIndex = tokens.findIndex(t => t.token === token);
+                
+                if (tokenIndex !== -1) {
+                    tokens[tokenIndex].active = false;
+                    tokens[tokenIndex].revokedAt = new Date().toISOString();
+                    db.saveCollection('tokens', tokens);
+                    
+                    toastr.success('Token revocado');
+                    loadActiveTokens();
+                    loadRecentTokens();
+                }
+            }
+        }
+        
+        function exportTokens() {
+            const tokens = db.getTokens();
+            const csv = convertToCSV(tokens);
+            downloadCSV(csv, 'tokens_optim_shop.csv');
+            toastr.success('Tokens exportados');
+        }
+        
+        // ============================================
+        // GESTIÓN DE PRODUCTOS
+        // ============================================
+        
+        function loadProducts() {
+            const container = document.getElementById('productsList');
+            const products = db.getProducts();
+            
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-box fa-3x mb-3 text-muted"></i>
+                        <h4 class="text-muted">No hay productos</h4>
+                        <p class="text-muted">Agrega tu primer producto para comenzar</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            products.forEach(product => {
+                const files = fileSystem.getProductFiles(product.id);
+                const fileCount = files.length;
+                
+                html += `
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="product-card">
+                            <div class="product-image">
+                                ${product.image || '📦'}
+                            </div>
+                            <h5>${product.name}</h5>
+                            <p class="small-muted mb-3">${product.description}</p>
+                            <div class="mb-3">
+                                ${(product.features || []).map(f => 
+                                    `<span class="badge bg-dark me-1 mb-1">${f}</span>`
+                                ).join('')}
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <div class="price-tag" style="font-size: 1.5rem;">$${product.price.toFixed(2)}</div>
+                                    <span class="badge bg-secondary">${product.category}</span>
+                                </div>
+                                <div>
+                                    <span class="badge ${product.active ? 'bg-success' : 'bg-secondary'}">
+                                        ${product.active ? 'Activo' : 'Inactivo'}
+                                    </span>
+                                    ${product.popular ? '<span class="badge bg-warning ms-1">Popular</span>' : ''}
+                                </div>
+                            </div>
+                            <div class="small-muted mb-3">
+                                <i class="fas fa-file me-1"></i> ${fileCount} archivo(s) asociado(s)
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn-admin" onclick="editProduct('${product.id}')">
+                                    <i class="fas fa-edit me-2"></i>Editar
+                                </button>
+                                <button class="btn btn-outline-admin" onclick="manageProductFiles('${product.id}')">
+                                    <i class="fas fa-file-upload me-2"></i>Gestionar Archivos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function showAddProductModal() {
+            // Limpiar formulario
+            document.getElementById('addProductForm').reset();
+            showModal('addProductModal');
+        }
+        
+        function saveNewProduct() {
+            const productData = {
+                name: document.getElementById('productName').value,
+                description: document.getElementById('productDescription').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                category: document.getElementById('productCategory').value,
+                type: document.getElementById('productType').value,
+                features: document.getElementById('productFeatures').value.split(',').map(f => f.trim()).filter(f => f),
+                image: document.getElementById('productImage').value || '📦',
+                active: document.getElementById('productActive').checked,
+                popular: document.getElementById('productPopular').checked
+            };
+            
+            if (db.saveProduct(productData)) {
+                toastr.success('Producto guardado correctamente');
+                closeModal('addProductModal');
+                loadProducts();
+            } else {
+                toastr.error('Error al guardar el producto');
+            }
+        }
+        
+        function editProduct(productId) {
+            const products = db.getProducts();
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) {
+                toastr.error('Producto no encontrado');
+                return;
+            }
+            
+            // Llenar formulario
+            document.getElementById('editProductId').value = productId;
+            document.getElementById('editProductName').value = product.name;
+            document.getElementById('editProductDescription').value = product.description;
+            document.getElementById('editProductPrice').value = product.price;
+            document.getElementById('editProductCategory').value = product.category;
+            document.getElementById('editProductType').value = product.type;
+            document.getElementById('editProductFeatures').value = (product.features || []).join(', ');
+            document.getElementById('editProductImage').value = product.image || '';
+            document.getElementById('editProductActive').checked = product.active !== false;
+            document.getElementById('editProductPopular').checked = !!product.popular;
+            
+            showModal('editProductModal');
+        }
+        
+        function updateProduct() {
+            const productId = document.getElementById('editProductId').value;
+            const updates = {
+                name: document.getElementById('editProductName').value,
+                description: document.getElementById('editProductDescription').value,
+                price: parseFloat(document.getElementById('editProductPrice').value),
+                category: document.getElementById('editProductCategory').value,
+                type: document.getElementById('editProductType').value,
+                features: document.getElementById('editProductFeatures').value.split(',').map(f => f.trim()).filter(f => f),
+                image: document.getElementById('editProductImage').value || '📦',
+                active: document.getElementById('editProductActive').checked,
+                popular: document.getElementById('editProductPopular').checked,
+                updatedAt: new Date().toISOString()
+            };
+            
+            if (db.updateProduct(productId, updates)) {
+                toastr.success('Producto actualizado');
+                closeModal('editProductModal');
+                loadProducts();
+            } else {
+                toastr.error('Error al actualizar el producto');
+            }
+        }
+        
+        function deleteProduct() {
+            const productId = document.getElementById('editProductId').value;
+            
+            if (confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.')) {
+                if (db.deleteProduct(productId)) {
+                    toastr.success('Producto eliminado');
+                    closeModal('editProductModal');
+                    loadProducts();
+                } else {
+                    toastr.error('Error al eliminar el producto');
+                }
+            }
+        }
+        
+        function manageProductFiles(productId) {
+            // Por ahora, simplemente mostrar mensaje
+            toastr.info('Función de gestión de archivos por producto en desarrollo');
+            // En una versión futura, esto abriría un modal para gestionar archivos específicos del producto
+        }
+        
+        // ============================================
+        // GESTIÓN DE ARCHIVOS
+        // ============================================
+        
+        function loadFiles() {
+            // Cargar lista de archivos
+            loadUploadedFiles();
+            
+            // Cargar productos para el selector
+            loadFileProducts();
+            
+            // Cargar estadísticas
+            loadFileStats();
+        }
+        
+        function loadUploadedFiles() {
+            const container = document.getElementById('uploadedFilesList');
+            const files = db.getFiles();
+            
+            if (files.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="fas fa-cloud-upload-alt fa-3x mb-3 text-muted"></i>
+                        <p class="text-muted">No hay archivos subidos</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            files.reverse().forEach(file => {
+                const sizeMB = (file.size / 1024 / 1024).toFixed(2);
+                const date = new Date(file.uploadedAt);
+                
+                html += `
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-size">
+                                ${sizeMB} MB • ${file.downloads || 0} descargas • ${date.toLocaleDateString('es-ES')}
+                            </div>
+                            ${file.productId ? `<div class="small text-muted">Producto: ${file.productId}</div>` : ''}
+                        </div>
+                        <div class="file-actions">
+                            <button class="action-btn" onclick="downloadAdminFile('${file.id}')" title="Descargar">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="deleteUploadedFile('${file.id}')" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function loadFileProducts() {
+            const select = document.getElementById('fileProduct');
+            const products = db.getProducts().filter(p => p.active);
+            
+            let options = '<option value="">Sin producto específico</option>';
+            products.forEach(product => {
+                options += `<option value="${product.id}">${product.name}</option>`;
+            });
+            
+            select.innerHTML = options;
+        }
+        
+        function loadFileStats() {
+            const files = db.getFiles();
+            const downloads = db.getDownloads();
+            
+            const totalDownloads = downloads.length;
+            const totalFiles = files.length;
+            const totalSize = files.reduce((sum, file) => sum + (file.size || 0), 0);
+            const totalSizeMB = (totalSize / 1024 / 1024).toFixed(2);
+            
+            document.getElementById('totalDownloads').textContent = totalDownloads;
+            document.getElementById('totalFiles').textContent = totalFiles;
+            document.getElementById('totalSize').textContent = totalSizeMB + ' MB';
+        }
+        
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const fileNameInput = document.getElementById('fileName');
+            if (!fileNameInput.value) {
+                fileNameInput.value = file.name;
+            }
+            
+            // Mostrar preview
+            const preview = document.getElementById('filePreview');
+            const fileName = document.getElementById('selectedFileName');
+            const fileSize = document.getElementById('selectedFileSize');
+            const uploadButton = document.getElementById('uploadButton');
+            
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            preview.style.display = 'block';
+            uploadButton.disabled = false;
+            
+            // Scroll a la preview
+            preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function clearFileSelection() {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('fileName').value = '';
+            document.getElementById('filePreview').style.display = 'none';
+            document.getElementById('uploadButton').disabled = true;
+        }
+        
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameInput = document.getElementById('fileName');
+            const productId = document.getElementById('fileProduct').value;
+            
+            if (!fileInput.files[0]) {
+                toastr.error('Selecciona un archivo primero');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const fileName = fileNameInput.value || file.name;
+            
+            // Validar tamaño (50MB máximo)
+            if (file.size > 50 * 1024 * 1024) {
+                toastr.error('El archivo es demasiado grande (máximo 50MB)');
+                return;
+            }
+            
+            const uploadButton = document.getElementById('uploadButton');
+            const originalText = uploadButton.innerHTML;
+            uploadButton.innerHTML = '<div class="spinner-border spinner-border-sm me-2"></div> Subiendo...';
+            uploadButton.disabled = true;
+            
+            try {
+                const fileData = await fileSystem.uploadFile(file, productId, fileName);
+                
+                toastr.success(`Archivo "${fileData.name}" subido correctamente`);
+                clearFileSelection();
+                loadUploadedFiles();
+                loadFileStats();
+                
+                // Si hay un producto asociado, actualizar la lista de productos
+                if (productId) {
+                    loadProducts();
+                }
+                
+            } catch (error) {
+                console.error('Error al subir archivo:', error);
+                toastr.error('Error al subir el archivo: ' + error);
+            } finally {
+                uploadButton.innerHTML = originalText;
+                uploadButton.disabled = false;
+            }
+        }
+        
+        function downloadAdminFile(fileId) {
+            const files = db.getFiles();
+            const file = files.find(f => f.id === fileId);
+            
+            if (!file) {
+                toastr.error('Archivo no encontrado');
+                return;
+            }
+            
+            // Crear enlace de descarga
+            const link = document.createElement('a');
+            link.href = file.data;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Registrar descarga
+            file.downloads = (file.downloads || 0) + 1;
+            db.updateCollection('files', fileId, { downloads: file.downloads });
+            
+            toastr.success('Descarga iniciada: ' + file.name);
+            loadUploadedFiles();
+        }
+        
+        function deleteUploadedFile(fileId) {
+            if (confirm('¿Estás seguro de eliminar este archivo? Esta acción no se puede deshacer.')) {
+                if (fileSystem.deleteFile(fileId)) {
+                    toastr.success('Archivo eliminado');
+                    loadUploadedFiles();
+                    loadFileStats();
+                } else {
+                    toastr.error('Error al eliminar el archivo');
+                }
+            }
+        }
+        
+        function refreshFiles() {
+            loadUploadedFiles();
+            loadFileStats();
+            toastr.success('Archivos actualizados');
+        }
+        
+        // ============================================
+        // GESTIÓN DE USUARIOS
+        // ============================================
+        
+        function loadUsers() {
+            const container = document.getElementById('usersTable');
+            const users = db.getUsers();
+            const orders = db.getOrders();
+            const tokens = db.getTokens();
+            
+            if (users.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="9" class="text-center py-5">
+                            <i class="fas fa-users fa-3x mb-3 text-muted"></i>
+                            <p class="text-muted">No hay usuarios registrados</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            users.forEach(user => {
+                const userOrders = orders.filter(o => o.email === user.email);
+                const userTokens = tokens.filter(t => t.email === user.email && t.active);
+                const lastOrder = userOrders[userOrders.length - 1];
+                const totalSpent = userOrders.reduce((sum, order) => sum + (order.total || 0), 0);
+                
+                html += `
+                    <tr>
+                        <td><code class="small">${user.id?.substr(0, 8) || 'N/A'}</code></td>
+                        <td>${user.email}</td>
+                        <td>${user.name || 'No especificado'}</td>
+                        <td>${user.country || 'No especificado'}</td>
+                        <td>
+                            ${userTokens.length > 0 ? 
+                                `<span class="badge bg-warning">${userTokens[0].plan || 'Standard'}</span>` : 
+                                '<span class="badge bg-secondary">Sin plan</span>'
+                            }
+                        </td>
+                        <td>${new Date(user.joinedAt).toLocaleDateString('es-ES')}</td>
+                        <td>${user.lastLogin ? new Date(user.lastLogin).toLocaleDateString('es-ES') : 'Nunca'}</td>
+                        <td>
+                            <span class="status-indicator ${user.status === 'active' ? 'status-active' : 'status-inactive'}">
+                                <i class="fas fa-circle"></i> ${user.status || 'active'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="action-btn" onclick="viewUserDetails('${user.email}')" title="Ver detalles">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn" onclick="editUser('${user.email}')" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="deactivateUser('${user.email}')" title="${user.status === 'active' ? 'Desactivar' : 'Activar'}">
+                                <i class="fas ${user.status === 'active' ? 'fa-user-slash' : 'fa-user-check'}"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function viewUserDetails(email) {
+            const users = db.getUsers();
+            const orders = db.getOrders();
+            const tokens = db.getTokens();
+            
+            const user = users.find(u => u.email === email);
+            if (!user) {
+                toastr.error('Usuario no encontrado');
+                return;
+            }
+            
+            const userOrders = orders.filter(o => o.email === email);
+            const userTokens = tokens.filter(t => t.email === email);
+            const activeTokens = userTokens.filter(t => t.active);
+            
+            let details = `
+                <h5>Información del Usuario</h5>
+                <div class="bg-dark p-3 rounded mb-4">
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Nombre:</strong> ${user.name || 'No especificado'}</p>
+                    <p><strong>País:</strong> ${user.country || 'No especificado'}</p>
+                    <p><strong>Registro:</strong> ${new Date(user.joinedAt).toLocaleString('es-ES')}</p>
+                    <p><strong>Último acceso:</strong> ${user.lastLogin ? new Date(user.lastLogin).toLocaleString('es-ES') : 'Nunca'}</p>
+                    <p><strong>Estado:</strong> <span class="badge ${user.status === 'active' ? 'bg-success' : 'bg-secondary'}">${user.status}</span></p>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">${userOrders.length}</div>
+                            <div class="stat-label">Órdenes</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">${activeTokens.length}</div>
+                            <div class="stat-label">Tokens Activos</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stat-card">
+                            <div class="stat-number">$${userOrders.reduce((sum, o) => sum + (o.total || 0), 0).toFixed(2)}</div>
+                            <div class="stat-label">Total Gastado</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            if (userTokens.length > 0) {
+                details += `
+                    <h5>Tokens del Usuario</h5>
+                    <div class="table-responsive mb-4">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Token</th>
+                                    <th>Plan</th>
+                                    <th>Generado</th>
+                                    <th>Expira</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${userTokens.map(token => `
+                                    <tr>
+                                        <td><code class="small">${token.token}</code></td>
+                                        <td>${token.plan}</td>
+                                        <td>${new Date(token.generatedAt).toLocaleDateString('es-ES')}</td>
+                                        <td>${new Date(token.expires).toLocaleDateString('es-ES')}</td>
+                                        <td>
+                                            <span class="badge ${token.active ? 'bg-success' : 'bg-secondary'}">
+                                                ${token.active ? 'Activo' : 'Inactivo'}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+            
+            // Mostrar en modal
+            const modalContent = document.getElementById('orderDetailsContent');
+            modalContent.innerHTML = details;
+            document.getElementById('orderDetailsModal').querySelector('.modal-title').innerHTML = '<i class="fas fa-user me-2"></i>Detalles de Usuario';
+            showModal('orderDetailsModal');
+        }
+        
+        function editUser(email) {
+            toastr.info('Función de edición de usuario en desarrollo');
+            // En una versión futura, esto abriría un modal para editar usuario
+        }
+        
+        function deactivateUser(email) {
+            const users = db.getUsers();
+            const userIndex = users.findIndex(u => u.email === email);
+            
+            if (userIndex !== -1) {
+                const currentStatus = users[userIndex].status;
+                const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+                
+                users[userIndex].status = newStatus;
+                db.saveCollection('users', users);
+                
+                toastr.success(`Usuario ${newStatus === 'active' ? 'activado' : 'desactivado'}`);
+                loadUsers();
+            }
+        }
+        
+        // ============================================
+        // GESTIÓN DE EMAILS
+        // ============================================
+        
+        function loadEmails() {
+            loadEmailTemplates();
+            loadEmailHistory();
+        }
+        
+        function loadEmailTemplates() {
+            const container = document.getElementById('emailTemplates');
+            
+            const templates = [
+                { id: 1, name: 'Confirmación de Compra', type: 'confirmation', editable: true },
+                { id: 2, name: 'Token Generado', type: 'token', editable: true },
+                { id: 3, name: 'Recordatorio de Expiración', type: 'reminder', editable: true },
+                { id: 4, name: 'Bienvenida', type: 'welcome', editable: true }
+            ];
+            
+            let html = '';
+            templates.forEach(template => {
+                html += `
+                    <a href="#" class="list-group-item list-group-item-action bg-dark border-secondary text-white" onclick="editEmailTemplate(${template.id})">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">${template.name}</h6>
+                                <small class="text-muted">${template.type}</small>
+                            </div>
+                            <div>
+                                ${template.editable ? '<i class="fas fa-edit"></i>' : ''}
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function loadEmailHistory() {
+            const container = document.getElementById('emailHistory');
+            const emails = db.getCollection('emails');
+            
+            if (emails.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <p class="text-muted">No hay historial de emails</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            emails.reverse().slice(0, 20).forEach(email => {
+                const date = new Date(email.sentAt);
+                
+                html += `
+                    <tr>
+                        <td>${date.toLocaleDateString('es-ES')}</td>
+                        <td>${email.to}</td>
+                        <td>${email.subject || 'Sin asunto'}</td>
+                        <td>${email.type || 'general'}</td>
+                        <td>
+                            <span class="badge ${email.status === 'sent' ? 'bg-success' : 'bg-secondary'}">
+                                ${email.status || 'unknown'}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function createEmailTemplate() {
+            toastr.info('Función de creación de plantillas de email en desarrollo');
+        }
+        
+        function editEmailTemplate(templateId) {
+            toastr.info(`Editando plantilla ${templateId} - Función en desarrollo`);
+        }
+        
+        // ============================================
+        // ANALYTICS
+        // ============================================
+        
+        function loadAnalytics() {
+            const stats = db.getStats();
+            const orders = db.getOrders();
+            
+            // Calcular valor promedio de orden
+            const avgOrderValue = orders.length > 0 
+                ? orders.reduce((sum, order) => sum + (order.total || 0), 0) / orders.length 
+                : 0;
+            
+            // Actualizar estadísticas
+            document.getElementById('avgOrderValue').textContent = '$' + avgOrderValue.toFixed(2);
+            document.getElementById('monthlyGrowth').textContent = (stats.monthlyGrowth || 0).toFixed(1) + '%';
+            document.getElementById('refundRate').textContent = (stats.refundRate || 0).toFixed(1) + '%';
+            
+            // Inicializar gráficos
+            initAnalyticsCharts();
+        }
+        
+        function initAnalyticsCharts() {
+            // Gráfico de ventas por día
+            const salesCtx = document.getElementById('salesChart');
+            if (salesCtx) {
+                const orders = db.getOrders();
+                const dailySales = {};
+                
+                orders.forEach(order => {
+                    if (order.status === 'completed' && order.date) {
+                        const date = new Date(order.date);
+                        const dayKey = date.toISOString().split('T')[0];
+                        dailySales[dayKey] = (dailySales[dayKey] || 0) + 1;
+                    }
+                });
+                
+                const labels = Object.keys(dailySales).slice(-14);
+                const data = labels.map(label => dailySales[label]);
+                
+                new Chart(salesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels.map(label => label.substr(5)), // Mostrar solo mes-día
+                        datasets: [{
+                            label: 'Ventas por día',
+                            data: data,
+                            backgroundColor: '#feca57',
+                            borderColor: '#feca57',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: {
+                                    color: '#e2e8f0'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#94a3b8'
+                                },
+                                grid: {
+                                    color: '#334155'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#94a3b8'
+                                },
+                                grid: {
+                                    color: '#334155'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de conversiones
+            const conversionCtx = document.getElementById('conversionChart');
+            if (conversionCtx) {
+                // Datos de ejemplo para conversiones
+                const conversionData = {
+                    labels: ['Visitas', 'Carrito', 'Checkout', 'Completadas'],
+                    datasets: [{
+                        data: [1000, 150, 50, 32],
+                        backgroundColor: [
+                            '#ff6b6b',
+                            '#feca57',
+                            '#3b82f6',
+                            '#10b981'
+                        ]
+                    }]
+                };
+                
+                new Chart(conversionCtx, {
+                    type: 'pie',
+                    data: conversionData,
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: {
+                                    color: '#e2e8f0'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // ============================================
+        // CONFIGURACIÓN
+        // ============================================
+        
+        function loadSettings() {
+            const settings = db.getSettings();
+            
+            // Cargar valores en formularios
+            document.getElementById('paypalEmailSetting').value = settings.paypalEmail || 'matias.taibo2023@gmail.com';
+            document.getElementById('bankInfoSetting').value = settings.bankInfo || 'grimoire.tokens';
+            document.getElementById('mpTokenSetting').value = settings.mpToken || '';
+            document.getElementById('siteNameSetting').value = settings.siteName || 'OptiM Shop';
+            document.getElementById('currencySetting').value = settings.currency || 'USD';
+            document.getElementById('taxRateSetting').value = (settings.taxRate || 0.21) * 100;
+            
+            // Checkboxes
+            document.getElementById('autoEmails').checked = settings.autoEmails !== false;
+            document.getElementById('autoTokens').checked = settings.autoTokens !== false;
+            document.getElementById('maintenanceMode').checked = settings.maintenanceMode || false;
+            document.getElementById('debugMode').checked = settings.debugMode || false;
+            document.getElementById('autoBackup').checked = settings.autoBackup || false;
+            document.getElementById('requireLogin').checked = settings.requireLogin || false;
+            
+            // Radio buttons
+            const downloadMethod = settings.downloadMethod || 'direct';
+            document.getElementById(`download${downloadMethod.charAt(0).toUpperCase() + downloadMethod.slice(1)}`).checked = true;
+        }
+        
+        function saveSettings() {
+            const settings = {
+                paypalEmail: document.getElementById('paypalEmailSetting').value,
+                bankInfo: document.getElementById('bankInfoSetting').value,
+                mpToken: document.getElementById('mpTokenSetting').value,
+                siteName: document.getElementById('siteNameSetting').value,
+                currency: document.getElementById('currencySetting').value,
+                taxRate: parseFloat(document.getElementById('taxRateSetting').value) / 100,
+                autoEmails: document.getElementById('autoEmails').checked,
+                autoTokens: document.getElementById('autoTokens').checked,
+                maintenanceMode: document.getElementById('maintenanceMode').checked,
+                debugMode: document.getElementById('debugMode').checked,
+                autoBackup: document.getElementById('autoBackup').checked,
+                requireLogin: document.getElementById('requireLogin').checked,
+                downloadMethod: document.querySelector('input[name="downloadMethod"]:checked').value
+            };
+            
+            if (db.saveSettings(settings)) {
+                toastr.success('Configuración guardada');
+                
+                // Si la tienda está abierta, actualizar su configuración
+                if (window.opener && window.opener.getDatabase) {
+                    try {
+                        window.opener.db.saveSettings(settings);
+                    } catch (e) {
+                        console.log('No se pudo actualizar la configuración de la tienda');
+                    }
+                }
+            } else {
+                toastr.error('Error al guardar la configuración');
+            }
+        }
+        
+        function backupData() {
+            showModal('backupModal');
+        }
+        
+        function downloadBackup() {
+            const backup = {};
+            const collections = [
+                'products', 'orders', 'tokens', 'users', 'emails', 
+                'settings', 'files', 'downloads', 'stats', 'invoices'
+            ];
+            
+            collections.forEach(collection => {
+                backup[collection] = db.getCollection(collection);
+            });
+            
+            backup.metadata = {
+                exportedAt: new Date().toISOString(),
+                version: '1.0.0',
+                totalRecords: Object.values(backup).reduce((sum, collection) => sum + collection.length, 0)
+            };
+            
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `optim_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            toastr.success('Backup descargado');
+        }
+        
+        function handleRestoreFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const info = document.getElementById('restoreFileInfo');
+            const fileName = document.getElementById('restoreFileName');
+            const restoreButton = document.getElementById('restoreButton');
+            
+            fileName.textContent = file.name + ' (' + formatFileSize(file.size) + ')';
+            info.style.display = 'block';
+            restoreButton.disabled = false;
+        }
+        
+        function clearRestoreFile() {
+            document.getElementById('restoreFile').value = '';
+            document.getElementById('restoreFileInfo').style.display = 'none';
+            document.getElementById('restoreButton').disabled = true;
+        }
+        
+        function restoreBackup() {
+            const fileInput = document.getElementById('restoreFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                toastr.error('Selecciona un archivo primero');
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    
+                    // Validar backup
+                    if (!backup.metadata || !backup.metadata.version) {
+                        throw new Error('Archivo de backup inválido');
+                    }
+                    
+                    // Restaurar cada colección
+                    Object.keys(backup).forEach(key => {
+                        if (key !== 'metadata') {
+                            localStorage.setItem(`optim_${key}`, JSON.stringify(backup[key]));
+                        }
+                    });
+                    
+                    toastr.success('Backup restaurado correctamente');
+                    closeModal('backupModal');
+                    clearRestoreFile();
+                    
+                    // Recargar todas las secciones
+                    if (isLoggedIn) {
+                        loadDashboard();
+                        loadOrders();
+                        loadTokens();
+                        loadProducts();
+                        loadFiles();
+                        loadUsers();
+                        loadSettings();
+                    }
+                    
+                } catch (error) {
+                    console.error('Error al restaurar backup:', error);
+                    toastr.error('Error al restaurar backup: ' + error.message);
+                }
+            };
+            
+            reader.onerror = function() {
+                toastr.error('Error al leer el archivo');
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        function restoreData() {
+            backupData(); // Reutiliza el mismo modal
+        }
+        
+        function exportAllData() {
+            const allData = {};
+            const collections = [
+                'products', 'orders', 'tokens', 'users', 'emails', 
+                'settings', 'files', 'downloads', 'stats', 'invoices'
+            ];
+            
+            collections.forEach(collection => {
+                allData[collection] = db.getCollection(collection);
+            });
+            
+            const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `optim_export_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            toastr.success('Todos los datos exportados');
+        }
+        
+        function resetDemoData() {
+            if (confirm('¿Estás seguro de restablecer los datos de demostración? Se perderán todos los datos actuales.')) {
+                // Limpiar localStorage
+                const collections = [
+                    'products', 'orders', 'tokens', 'users', 'emails', 
+                    'settings', 'files', 'downloads', 'stats', 'invoices'
+                ];
+                
+                collections.forEach(collection => {
+                    localStorage.removeItem(`optim_${collection}`);
+                });
+                
+                // Reinicializar base de datos
+                initLocalDatabase();
+                
+                toastr.success('Datos de demostración restablecidos');
+                
+                // Recargar todas las secciones
+                if (isLoggedIn) {
+                    loadDashboard();
+                    loadOrders();
+                    loadTokens();
+                    loadProducts();
+                    loadFiles();
+                    loadUsers();
+                    loadSettings();
+                }
+            }
+        }
+        
+        function clearAllData() {
+            if (confirm('¿ESTÁS ABSOLUTAMENTE SEGURO? Esto eliminará TODOS los datos permanentemente.')) {
+                // Limpiar todo el localStorage relacionado con OptiM
+                Object.keys(localStorage).forEach(key => {
+                    if (key.startsWith('optim_') || key.startsWith('admin_')) {
+                        localStorage.removeItem(key);
+                    }
+                });
+                
+                toastr.success('Todos los datos han sido eliminados');
+                location.reload();
+            }
+        }
+        
+        // ============================================
+        // FACTURAS
+        // ============================================
+        
+        function loadInvoices() {
+            const container = document.getElementById('invoicesTable');
+            const orders = db.getOrders();
+            
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center py-5">
+                            <i class="fas fa-file-invoice fa-3x mb-3 text-muted"></i>
+                            <p class="text-muted">No hay facturas generadas</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            orders.reverse().forEach(order => {
+                const date = new Date(order.date);
+                
+                html += `
+                    <tr>
+                        <td><code>${order.orderId || order.id}</code></td>
+                        <td>${order.name || 'Cliente'}</td>
+                        <td>${order.email || 'No especificado'}</td>
+                        <td>$${order.total?.toFixed(2) || '0.00'}</td>
+                        <td>${date.toLocaleDateString('es-ES')}</td>
+                        <td>
+                            ${order.token ? `<code class="small">${order.token.substr(0, 15)}...</code>` : 'No generado'}
+                        </td>
+                        <td>
+                            <span class="badge ${getStatusBadgeClass(order.status)}">
+                                ${order.status}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="action-btn" onclick="downloadOrderInvoice('${order.orderId || order.id}')" title="Descargar factura">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button class="action-btn" onclick="sendInvoiceEmail('${order.orderId || order.id}')" title="Enviar por email">
+                                <i class="fas fa-envelope"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        function searchInvoices() {
+            const searchTerm = document.getElementById('invoiceSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('#invoicesTable tr');
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        }
+        
+        function downloadOrderInvoice(orderId) {
+            // Reutilizar la función del index.html
+            if (window.opener && window.opener.downloadInvoice) {
+                window.opener.downloadInvoice(orderId);
+            } else {
+                // Implementación local
+                const orders = db.getOrders();
+                const order = orders.find(o => o.orderId === orderId || o.id === orderId);
+                
+                if (!order) {
+                    toastr.error('Orden no encontrada');
+                    return;
+                }
+                
+                // Generar factura HTML (similar a la función del index.html)
+                const invoiceHTML = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Factura ${order.orderId || order.id} - OptiM Shop</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 40px; }
+                            .invoice { max-width: 800px; margin: 0 auto; }
+                            .header { text-align: center; margin-bottom: 40px; }
+                            .details { margin: 30px 0; }
+                            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                            th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                            th { background: #f5f5f5; }
+                            .total { font-weight: bold; font-size: 1.2em; }
+                            .footer { margin-top: 50px; text-align: center; color: #666; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="invoice">
+                            <div class="header">
+                                <h1>OptiM Shop</h1>
+                                <h2>Factura #${order.orderId || order.id}</h2>
+                                <p>Fecha: ${new Date(order.date).toLocaleDateString('es-ES')}</p>
+                            </div>
+                            
+                            <div class="details">
+                                <p><strong>Cliente:</strong> ${order.name || 'No especificado'}</p>
+                                <p><strong>Email:</strong> ${order.email}</p>
+                                <p><strong>Método de pago:</strong> ${order.paymentMethod}</p>
+                                <p><strong>Estado:</strong> ${order.status}</p>
+                            </div>
+                            
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${order.items?.map(item => `
+                                        <tr>
+                                            <td>${item.name}</td>
+                                            <td>$${item.price?.toFixed(2) || '0.00'}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td><strong>Subtotal</strong></td>
+                                        <td>$${order.subtotal?.toFixed(2) || '0.00'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Descuento</strong></td>
+                                        <td>-$${order.discount?.toFixed(2) || '0.00'}</td>
+                                    </tr>
+                                    <tr class="total">
+                                        <td><strong>Total</strong></td>
+                                        <td>$${order.total?.toFixed(2) || '0.00'}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            
+                            ${order.token ? `
+                            <div class="details">
+                                <h3>Token de Activación</h3>
+                                <div style="font-family: monospace; background: #f0f0f0; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                                    ${order.token}
+                                </div>
+                                <p><small>Usa este token para acceder a tus productos en el Panel de Usuario.</small></p>
+                            </div>
+                            ` : ''}
+                            
+                            <div class="footer">
+                                <p>Gracias por tu compra en OptiM Shop</p>
+                                <p>Contacto: matias.taibo2023@gmail.com | 3872252758</p>
+                                <p>Esta factura es válida como comprobante de pago.</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `;
+                
+                // Crear y descargar archivo
+                const blob = new Blob([invoiceHTML], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `factura-${order.orderId || order.id}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+            
+            toastr.success('Factura descargada');
+        }
+        
+        function generateAllInvoices() {
+            const orders = db.getOrders();
+            
+            if (orders.length === 0) {
+                toastr.warning('No hay órdenes para generar facturas');
+                return;
+            }
+            
+            // Crear archivo ZIP con todas las facturas
+            toastr.info('Generando todas las facturas...');
+            
+            // Por simplicidad, descargaremos la primera factura
+            if (orders.length > 0) {
+                downloadOrderInvoice(orders[0].orderId || orders[0].id);
+            }
+        }
+        
+        function exportInvoices() {
+            const orders = db.getOrders();
+            const csv = convertToCSV(orders.map(order => ({
+                ID: order.orderId || order.id,
+                Cliente: order.name || 'Cliente',
+                Email: order.email || '',
+                Total: `$${order.total?.toFixed(2) || '0.00'}`,
+                Fecha: new Date(order.date).toLocaleDateString('es-ES'),
+                Estado: order.status,
+                Token: order.token || ''
+            })));
+            
+            downloadCSV(csv, 'facturas_optim_shop.csv');
+            toastr.success('Facturas exportadas');
+        }
+        
+        function sendInvoiceEmail(orderId) {
+            const orders = db.getOrders();
+            const order = orders.find(o => o.orderId === orderId || o.id === orderId);
+            
+            if (!order || !order.email) {
+                toastr.error('No se puede enviar el email: orden o email no encontrado');
+                return;
+            }
+            
+            // Simular envío de email
+            const emailData = {
+                to: order.email,
+                subject: `Tu factura #${order.orderId || order.id} - OptiM Shop`,
+                body: `Adjunto encontrarás la factura de tu compra #${order.orderId || order.id}`,
+                sentAt: new Date().toISOString(),
+                status: 'sent',
+                type: 'invoice'
+            };
+            
+            db.addToCollection('emails', emailData);
+            toastr.success(`Factura enviada a ${order.email}`);
+            loadEmails();
+        }
+        
+        function resendOrderEmail(orderId) {
+            sendInvoiceEmail(orderId); // Reutilizar función
+        }
+        
+        // ============================================
+        // FUNCIONES UTILITARIAS
+        // ============================================
+        
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 60) {
+                return `Hace ${diffMins} minuto${diffMins !== 1 ? 's' : ''}`;
+            } else if (diffHours < 24) {
+                return `Hace ${diffHours} hora${diffHours !== 1 ? 's' : ''}`;
+            } else if (diffDays < 7) {
+                return `Hace ${diffDays} día${diffDays !== 1 ? 's' : ''}`;
+            } else {
+                return date.toLocaleDateString('es-ES');
+            }
+        }
+        
+        function getStatusBadgeClass(status) {
+            switch(status?.toLowerCase()) {
+                case 'completed':
+                case 'paid':
+                case 'sent':
+                    return 'badge-paid';
+                case 'pending':
+                case 'processing':
+                    return 'badge-pending';
+                case 'refunded':
+                case 'cancelled':
+                    return 'badge-refunded';
+                default:
+                    return 'badge-completed';
+            }
+        }
+        
+        function getDaysRemaining(date) {
+            const now = new Date();
+            const diffMs = date - now;
+            return Math.max(0, Math.floor(diffMs / 86400000));
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function convertToCSV(data) {
+            if (data.length === 0) return '';
+            
+            const headers = Object.keys(data[0]);
+            const rows = data.map(row => 
+                headers.map(header => {
+                    const value = row[header];
+                    return typeof value === 'string' && value.includes(',') 
+                        ? `"${value}"` 
+                        : value;
+                }).join(',')
+            );
+            
+            return [headers.join(','), ...rows].join('\n');
+        }
+        
+        function downloadCSV(csv, filename) {
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // ============================================
+        // INICIALIZACIÓN FINAL
+        // ============================================
+        
+        // Verificar sesión al cargar
+        if (!checkSession()) {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+        
+        // Exportar funciones globales
+        window.login = login;
+        window.logout = logout;
+        window.toggleSidebar = toggleSidebar;
+        window.showSection = showSection;
+        window.closeModal = closeModal;
+        window.showModal = showModal;
+        window.filterOrders = filterOrders;
+        window.refreshOrders = refreshOrders;
+        window.viewOrderDetails = viewOrderDetails;
+        window.updateOrderStatus = updateOrderStatus;
+        window.refundOrder = refundOrder;
+        window.exportOrders = exportOrders;
+        window.generateToken = generateToken;
+        window.copyToken = copyToken;
+        window.revokeToken = revokeToken;
+        window.exportTokens = exportTokens;
+        window.showAddProductModal = showAddProductModal;
+        window.saveNewProduct = saveNewProduct;
+        window.editProduct = editProduct;
+        window.updateProduct = updateProduct;
+        window.deleteProduct = deleteProduct;
+        window.manageProductFiles = manageProductFiles;
+        window.handleFileSelect = handleFileSelect;
+        window.clearFileSelection = clearFileSelection;
+        window.uploadFile = uploadFile;
+        window.downloadAdminFile = downloadAdminFile;
+        window.deleteUploadedFile = deleteUploadedFile;
+        window.refreshFiles = refreshFiles;
+        window.viewUserDetails = viewUserDetails;
+        window.editUser = editUser;
+        window.deactivateUser = deactivateUser;
+        window.createEmailTemplate = createEmailTemplate;
+        window.editEmailTemplate = editEmailTemplate;
+        window.saveSettings = saveSettings;
+        window.backupData = backupData;
+        window.downloadBackup = downloadBackup;
+        window.handleRestoreFile = handleRestoreFile;
+        window.clearRestoreFile = clearRestoreFile;
+        window.restoreBackup = restoreBackup;
+        window.restoreData = restoreData;
+        window.exportAllData = exportAllData;
+        window.resetDemoData = resetDemoData;
+        window.clearAllData = clearAllData;
+        window.searchInvoices = searchInvoices;
+        window.downloadOrderInvoice = downloadOrderInvoice;
+        window.generateAllInvoices = generateAllInvoices;
+        window.exportInvoices = exportInvoices;
+        window.sendInvoiceEmail = sendInvoiceEmail;
+        window.resendOrderEmail = resendOrderEmail;
+        
+    </script>
+</body>
+</html>
