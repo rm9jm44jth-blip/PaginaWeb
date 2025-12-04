@@ -1,160 +1,191 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mis Programas para Windows - Ultra Moderna 2025 | Creador: Matías Taibo</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mis Programas Windows 2025 - Ultra Moderna | Creador: Matías Taibo</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 <style>
+/* ====== ESTILO GLOBAL ULTRA MODERNO 2025 ====== */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #5b86e5 0%, #36d1dc 100%);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: #222;
     transition: 0.4s ease-in-out;
 }
 .dark-mode {
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: #f1f1f1;
+    background: linear-gradient(135deg, #0f0f0f, #1a1a1a 100%);
+    color: #eaeaea;
 }
 .navbar {
-    background: rgba(0,0,0,0.6);
-    backdrop-filter: blur(12px);
-    padding: 15px 0;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 15px;
+    backdrop-filter: blur(10px);
 }
 .hero {
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 25px;
-    padding: 90px 20px;
-    margin: 30px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-    animation: fadeIn 1s ease-in-out;
+    margin: 40px auto;
+    padding: 100px 20px;
+    text-align: center;
+    width: 90%;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    animation: fadeIn 1.2s ease-in-out;
 }
 .card {
-    border-radius: 18px;
-    background: rgba(255,255,255,0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(14px);
+    border-radius: 20px;
+    border: none;
+    padding: 25px;
+    color: #fff;
     transition: 0.4s;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
 }
 .card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    transform: translateY(-12px) scale(1.03);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 .btn-primary {
     border-radius: 30px;
-    background: linear-gradient(45deg, #ff6b6b, #feca57);
-    border: none;
     padding: 12px 25px;
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    border: none;
+    font-size: 1.1rem;
     font-weight: bold;
     transition: 0.3s;
 }
 .btn-primary:hover {
     transform: scale(1.08);
-    background: linear-gradient(45deg, #feca57, #ff6b6b);
+    background: linear-gradient(45deg, #fad0c4, #ff9a9e);
 }
 footer {
-    background: rgba(0,0,0,0.85);
+    margin-top: 60px;
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
-    padding: 25px 0;
+    padding: 30px 0;
     color: #eee;
-    margin-top: 50px;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px);} 
-    to { opacity: 1; transform: translateY(0);} 
-}
-.search-container {
-    margin-top: 25px;
+    text-align: center;
 }
 .section-title {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     font-weight: bold;
-    margin-top: 50px;
+    margin-top: 30px;
+    text-shadow: 0 3px 10px rgba(0,0,0,0.35);
 }
 .no-results {
+    color: #ff4444;
     display: none;
-    font-weight: bold;
-    color: #ff3b3b;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* ====== LAUNCHER ESPECIAL: GRIMOIRE REV ====== */
+.launcher {
+    background: linear-gradient(135deg, #1f005c, #5b0060, #870160, #ac255e, #ca485c);
+    padding: 40px;
+    border-radius: 25px;
+    margin-top: 50px;
+    color: white;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+    animation: fadeIn 1.4s ease-in-out;
+    text-align: center;
+}
+.launcher h3 {
+    font-size: 2.2rem;
+    margin-bottom: 15px;
 }
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-dark fixed-top">
+<nav class="navbar navbar-dark">
     <div class="container d-flex justify-content-between align-items-center">
         <a class="navbar-brand fw-bold fs-3 text-light"><i class="fas fa-desktop"></i> Mis Programas 2025</a>
-        <button id="darkModeToggle" class="btn btn-outline-light rounded-pill"><i class="fas fa-moon"></i> Modo Oscuro</button>
+        <button id="darkModeToggle" class="btn btn-outline-light rounded-pill">
+            <i class="fas fa-moon"></i> Modo Oscuro
+        </button>
     </div>
 </nav>
 
 <!-- HERO -->
-<section class="hero text-center mt-5">
-    <div class="container">
-        <h1 class="display-4 fw-bold"><i class="fas fa-rocket"></i> Programas Ultra Modernos para Windows 10 y 11</h1>
-        <p class="lead mt-3">Creaciones 2025 por <strong>Matías Taibo</strong>. Optimiza tu PC con herramientas avanzadas, IA integrada y diseño futurista.</p>
+<section class="hero">
+    <h1 class="display-4 fw-bold text-white"><i class="fas fa-rocket"></i> Programas Ultra Modernos 2025</h1>
+    <p class="lead text-light">Creado por <strong>Matías Taibo</strong>. Optimización completa con diseño futurista & IA avanzada.</p>
 
-        <div class="search-container">
-            <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Buscar programas...">
-            <p id="noResults" class="no-results mt-2">No se encontraron resultados.</p>
-        </div>
+    <div class="search-container mt-4">
+        <input type="text" id="searchInput" class="form-control form-control-lg" placeholder="Buscar programas...">
+        <p id="noResults" class="no-results mt-2">No se encontraron resultados.</p>
     </div>
 </section>
+
+<!-- LAUNCHER GRIMOIRE REV -->
+<div class="container">
+    <div class="launcher">
+        <h3><i class="fas fa-magic"></i> Grimoire Rev - Launcher Ultra Moderno 2025</h3>
+        <p>Un launcher avanzado para organizar, ejecutar y optimizar tus herramientas y juegos desde un solo lugar. Interfaz futurista, IA integrada, sistema rápido y sin errores.</p>
+        <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Descargar Launcher</a>
+    </div>
+</div>
 
 <!-- PROGRAMAS -->
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center section-title"><i class="fas fa-list"></i> Programas Disponibles</h2>
+        <h2 class="text-center section-title text-white"><i class="fas fa-list"></i> Programas Disponibles</h2>
         <div class="row mt-4" id="programasContainer">
 
-            <!-- SWF -->
+            <!-- 1: SWF -->
             <div class="col-md-6 col-lg-4 mb-4 programa-item" data-nombre="Descompresor de SWF">
-                <div class="card h-100 text-center p-3">
-                    <i class="fas fa-file-archive fa-3x text-warning mb-3"></i>
-                    <h5 class="card-title">Descompresor de SWF</h5>
-                    <p>Extrae y analiza archivos Flash con tecnología moderna 2025.</p>
-                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card h-100 text-center">
+                    <i class="fas fa-file-archive fa-3x mb-3"></i>
+                    <h5>Descompresor de SWF</h5>
+                    <p>Extrae, analiza y optimiza archivos Flash con sistema 2025 libre de errores.</p>
+                    <a href="#" class="btn btn-primary">Descargar</a>
                 </div>
             </div>
 
-            <!-- Optimizador Windows -->
+            <!-- 2: Optimizador Windows -->
             <div class="col-md-6 col-lg-4 mb-4 programa-item" data-nombre="Optimizador y Organizador de Windows">
-                <div class="card h-100 text-center p-3">
-                    <i class="fas fa-cogs fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">Optimizador y Organizador de Windows</h5>
-                    <p>Mejora rendimiento con algoritmos de IA inteligente 2025.</p>
-                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card h-100 text-center">
+                    <i class="fas fa-cogs fa-3x mb-3"></i>
+                    <h5>Optimizador y Organizador de Windows</h5>
+                    <p>Optimiza tu PC con IA, limpieza profunda, orden automático y turbo rendimiento 2025.</p>
+                    <a href="#" class="btn btn-primary">Descargar</a>
                 </div>
             </div>
 
-            <!-- Flash Games -->
+            <!-- 3: Flash Games -->
             <div class="col-md-6 col-lg-4 mb-4 programa-item" data-nombre="Optimizador de Juegos Flash">
-                <div class="card h-100 text-center p-3">
-                    <i class="fas fa-gamepad fa-3x text-danger mb-3"></i>
-                    <h5 class="card-title">Optimizador de Juegos Flash</h5>
-                    <p>Aceleración avanzada 2025 para juegos Flash.</p>
-                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card h-100 text-center">
+                    <i class="fas fa-gamepad fa-3x mb-3"></i>
+                    <h5>Optimizador de Juegos Flash</h5>
+                    <p>Mejora FPS y reduce lag en juegos Flash con la tecnología Grimoire Rev.</p>
+                    <a href="#" class="btn btn-primary">Descargar</a>
                 </div>
             </div>
 
-            <!-- AQW -->
+            <!-- 4: AQW -->
             <div class="col-md-6 col-lg-4 mb-4 programa-item" data-nombre="Optimizador de AQW">
-                <div class="card h-100 text-center p-3">
-                    <i class="fas fa-dungeon fa-3x text-success mb-3"></i>
-                    <h5 class="card-title">Optimizador de AQW</h5>
-                    <p>Mejora FPS, reduce lag y optimiza quests.</p>
-                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card h-100 text-center">
+                    <i class="fas fa-dungeon fa-3x mb-3"></i>
+                    <h5>Optimizador de AQW</h5>
+                    <p>FPS estables, menos lag, carga rápida y mejor experiencia en AQW.</p>
+                    <a href="#" class="btn btn-primary">Descargar</a>
                 </div>
             </div>
 
-            <!-- Organizador Moderno -->
+            <!-- 5: Organizador Moderno -->
             <div class="col-md-6 col-lg-4 mb-4 programa-item" data-nombre="Organizador de Archivos Moderno">
-                <div class="card h-100 text-center p-3">
-                    <i class="fas fa-folder-open fa-3x text-info mb-3"></i>
-                    <h5 class="card-title">Organizador de Archivos Moderno</h5>
-                    <p>Sistema de clasificación automática basado en IA 2025.</p>
-                    <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Descargar</a>
+                <div class="card h-100 text-center">
+                    <i class="fas fa-folder-open fa-3x mb-3"></i>
+                    <h5>Organizador de Archivos Moderno</h5>
+                    <p>Sistema de clasificación inteligente con IA totalmente automática.</p>
+                    <a href="#" class="btn btn-primary">Descargar</a>
                 </div>
             </div>
 
@@ -163,47 +194,42 @@ footer {
 </section>
 
 <!-- FOOTER -->
-<footer class="text-center">
+<footer>
     <p>© 2025 Creado por <strong>Matías Taibo</strong>. Todos los derechos reservados.</p>
-    <div class="social-icons mt-2">
-        <a href="#" class="text-light me-3"><i class="fab fa-github fa-2x"></i></a>
-        <a href="#" class="text-light"><i class="fab fa-twitter fa-2x"></i></a>
-    </div>
 </footer>
 
 <script>
 // MODO OSCURO
-const toggle = document.getElementById('darkModeToggle');
-toggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    toggle.innerHTML = document.body.classList.contains('dark-mode')
+const toggle = document.getElementById("darkModeToggle");
+toggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+    toggle.innerHTML = document.body.classList.contains("dark-mode")
         ? '<i class="fas fa-sun"></i> Modo Claro'
         : '<i class="fas fa-moon"></i> Modo Oscuro';
 });
 
 // BUSCADOR
-const searchInput = document.getElementById('searchInput');
-const items = document.querySelectorAll('.programa-item');
-const noResults = document.getElementById('noResults');
+const searchInput = document.getElementById("searchInput");
+const items = document.querySelectorAll(".programa-item");
+const noResults = document.getElementById("noResults");
 
-searchInput.addEventListener('input', () => {
+searchInput.addEventListener("input", () => {
     const query = searchInput.value.toLowerCase();
     let found = false;
 
-    items.forEach(item => {
-        const name = item.getAttribute('data-nombre').toLowerCase();
+    items.forEach((item) => {
+        const name = item.getAttribute("data-nombre").toLowerCase();
         if (name.includes(query)) {
-            item.style.display = 'block';
+            item.style.display = "block";
             found = true;
         } else {
-            item.style.display = 'none';
+            item.style.display = "none";
         }
     });
 
-    noResults.style.display = found ? 'none' : 'block';
+    noResults.style.display = found ? "none" : "block";
 });
 </script>
-
 </body>
 </html>
 
