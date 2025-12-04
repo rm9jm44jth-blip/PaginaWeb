@@ -28,7 +28,12 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
 .login-card{width:480px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));padding:20px;border-radius:12px}
 .muted{color:rgba(255,255,255,0.65)}
 .small-muted{color:rgba(255,255,255,0.5);font-size:0.9rem}
-@media (max-width:768px){.hero{padding:40px 12px}.login-card{width:100%}}
+.payment-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px}
+.payment-card{width:100%;max-width:500px;background:linear-gradient(180deg,rgba(30,30,40,0.95),rgba(15,15,25,0.98));border-radius:16px;padding:25px;border:1px solid rgba(255,255,255,0.05)}
+.token-display{background:linear-gradient(90deg,rgba(255,107,107,0.1),rgba(254,202,87,0.1));padding:15px;border-radius:10px;margin:15px 0;font-family:monospace;font-size:1.1rem;text-align:center;letter-spacing:1px}
+.success-check{color:#4caf50;font-size:3rem;margin:20px 0}
+.payment-step{padding:12px;border-left:3px solid var(--accent1);margin:10px 0;background:rgba(255,255,255,0.02)}
+@media (max-width:768px){.hero{padding:40px 12px}.login-card{width:100%}.payment-card{padding:15px}}
 </style>
 </head>
 <body>
@@ -94,37 +99,125 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
       <div class="glass-card">
         <h4>Planes</h4>
         <div class="mt-3">
-          <div class="d-flex justify-content-between align-items-center mb-2"><div><strong>Free</strong><div class="small-muted">Acceso básico</div></div><button class="btn btn-outline text-light" onclick="seleccionarPlan('free')">Seleccionar</button></div>
-          <div class="d-flex justify-content-between align-items-center mb-2"><div><strong>Plus</strong><div class="small-muted">Contenido beta + skins</div></div><button class="btn btn-primary" onclick="seleccionarPlan('plus')">Suscribirme</button></div>
-          <div class="d-flex justify-content-between align-items-center"><div><strong>Elite</strong><div class="small-muted">Acceso completo + soporte</div></div><button class="btn btn-primary" onclick="seleccionarPlan('elite')">Suscribirme</button></div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <strong>Free</strong>
+              <div class="small-muted">Acceso básico a programas</div>
+              <div class="small-muted">Soporte básico</div>
+            </div>
+            <button class="btn btn-outline text-light" onclick="seleccionarPlan('free')">Seleccionar</button>
+          </div>
+          
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div>
+              <strong>Plus</strong>
+              <div class="small-muted">$9.99 USD / mes</div>
+              <div class="small-muted">Contenido beta + skins exclusivas</div>
+              <div class="small-muted">Soporte prioritario</div>
+            </div>
+            <button class="btn btn-primary" onclick="iniciarPago('plus')">Suscribirme</button>
+          </div>
+          
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <strong>Elite</strong>
+              <div class="small-muted">$19.99 USD / mes</div>
+              <div class="small-muted">Acceso completo + todas las funciones</div>
+              <div class="small-muted">Soporte VIP 24/7</div>
+            </div>
+            <button class="btn btn-primary" onclick="iniciarPago('elite')">Suscribirme</button>
+          </div>
         </div>
       </div>
     </div>
+    
     <div class="col-md-6">
       <div class="glass-card">
-        <h4>Métodos de Pago</h4>
-        <p class="small-muted">Seleccioná uno y seguí la instrucción. Tras confirmar el pago, subí el comprobante para generar tu token.</p>
-        <div class="d-grid gap-2">
-          <button class="btn btn-primary" onclick="startPayment('paypal')"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
-          <button class="btn btn-primary" onclick="startPayment('mercadopago')"><i class="fas fa-dollar-sign"></i> Pagar con Mercado Pago</button>
-          <button class="btn btn-outline" onclick="startPayment('brubank')">Brubank (transferencia) — Alias: <strong>grimoire.tokens</strong></button>
-          <button class="btn btn-outline" onclick="startPayment('lemon')">Lemon Cash (crypto) — Contactar para wallet</button>
+        <h4>Verificar Token</h4>
+        <p class="small-muted mb-3">Si ya recibiste tu token, ingrésalo aquí para acceder al contenido premium:</p>
+        <div class="input-group mb-3">
+          <input type="text" id="tokenInput" class="form-control" placeholder="Ej: OPTIM-ELITE-ABC123">
+          <button class="btn btn-primary" onclick="verificarToken()">Verificar</button>
         </div>
-        <div class="mt-3">
-          <label class="small-muted">¿Ya pagaste? Subí el comprobante:</label>
-          <input id="receiptInput" type="file" class="form-control mb-2" accept="image/*,application/pdf" />
-          <button class="btn btn-primary" onclick="uploadReceipt()">Subir comprobante y solicitar token</button>
-          <p id="paymentMsg" class="small-muted mt-2"></p>
+        <p id="tokenMsg" class="small-muted"></p>
+        
+        <div class="mt-4">
+          <h5>¿Problemas con el pago?</h5>
+          <p class="small-muted">Contacta directamente para pagos alternativos:</p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-outline" onclick="contactarPago('brubank')">
+              <i class="fas fa-university"></i> Brubank: <strong>grimoire.tokens</strong>
+            </button>
+            <button class="btn btn-outline" onclick="contactarPago('lemon')">
+              <i class="fas fa-coins"></i> Lemon Cash (Crypto)
+            </button>
+            <button class="btn btn-outline" onclick="contactarPago('paypal')">
+              <i class="fab fa-paypal"></i> PayPal Manual
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- MODAL DE PAGO -->
+<div id="paymentModal" class="payment-modal" style="display:none;">
+  <div class="payment-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4><i class="fas fa-lock"></i> Completar Pago</h4>
+      <button class="btn btn-sm btn-outline text-light" onclick="cerrarModalPago()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div id="paymentSteps">
+      <!-- Los pasos se cargan dinámicamente -->
+    </div>
+    
+    <div id="paymentResult" style="display:none;">
+      <!-- Resultado del pago se muestra aquí -->
+    </div>
+  </div>
+</div>
+
 <!-- PREMIUM CONTENT -->
 <section class="container py-4" id="premiumContent" style="display:none">
-  <h3 class="section-title">Contenido Exclusivo</h3>
-  <div class="row"><div class="col-md-4"><div class="card p-3"> <h5>Grimoire Rev Pro</h5><p class="muted">Módulos 3D y skins exclusivos.</p></div></div><div class="col-md-4"><div class="card p-3"> <h5>Acceso Anticipado</h5><p class="muted">Prueba apps alpha y betas.</p></div></div><div class="col-md-4"><div class="card p-3"> <h5>Experiencias Interactivas</h5><p class="muted">Mini apps WebGL y visualizaciones premium.</p></div></div></div>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="section-title mb-0">Contenido Exclusivo</h3>
+    <div class="badge bg-success px-3 py-2">
+      <i class="fas fa-crown me-2"></i>Premium Activo
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4"><div class="card p-3"> <h5>Grimoire Rev Pro</h5><p class="muted">Módulos 3D y skins exclusivos.</p></div></div>
+    <div class="col-md-4"><div class="card p-3"> <h5>Acceso Anticipado</h5><p class="muted">Prueba apps alpha y betas.</p></div></div>
+    <div class="col-md-4"><div class="card p-3"> <h5>Experiencias Interactivas</h5><p class="muted">Mini apps WebGL y visualizaciones premium.</p></div></div>
+  </div>
+  
+  <div class="mt-4">
+    <h5>Tu Información Premium</h5>
+    <div class="glass-card mt-3">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-2">
+            <small class="small-muted">Token:</small>
+            <div id="currentToken" class="token-display">-</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-2">
+            <small class="small-muted">Plan:</small>
+            <div id="currentPlan" class="fs-5">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3">
+        <small class="small-muted">Expiración:</small>
+        <div id="expirationDate" class="fs-6">-</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ADMIN PANEL (full frontend demo) -->
@@ -132,27 +225,38 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
   <div class="login-card p-4">
     <div class="d-flex justify-content-between align-items-center mb-3"><h4>Panel Admin — OptiM</h4><small class="small-muted">Demo frontend</small></div>
     <div id="adminLoginArea">
-      <input id="adminPass" class="form-control mb-2" placeholder="Contraseña admin" />
+      <input id="adminPass" class="form-control mb-2" placeholder="Contraseña admin" type="password" />
       <div class="d-flex gap-2 mb-3"><button class="btn btn-primary" onclick="loginAdmin()">Ingresar</button><button class="btn btn-outline" onclick="closeAdmin()">Cerrar</button></div>
     </div>
 
     <div id="adminActions" style="display:none">
       <h6>Generador de Tokens</h6>
-      <div class="d-flex gap-2 mb-2"><input id="newTokenInput" class="form-control" placeholder="Etiqueta (ej: OPTIM-ELITE-2025)"/><button class="btn btn-primary" onclick="generarToken()">Generar</button></div>
+      <div class="d-flex gap-2 mb-2">
+        <input id="newTokenInput" class="form-control" placeholder="Etiqueta (ej: OPTIM-ELITE-2025)"/>
+        <select id="tokenPlan" class="form-control" style="max-width:120px">
+          <option value="plus">Plus</option>
+          <option value="elite">Elite</option>
+        </select>
+        <button class="btn btn-primary" onclick="generarToken()">Generar</button>
+      </div>
       <small class="small-muted">Tokens guardados en local (demo). Recomendado: backend para producción.</small>
       <pre id="tokensList" style="max-height:120px;overflow:auto;background:rgba(0,0,0,0.15);padding:10px;border-radius:8px;margin-top:8px"></pre>
 
       <hr />
-      <h6>Usuarios Premium (simulado)</h6>
+      <h6>Usuarios Premium</h6>
       <div id="usersList" style="max-height:140px;overflow:auto;background:rgba(0,0,0,0.05);padding:10px;border-radius:8px"></div>
       <div class="d-flex gap-2 mt-2"><button class="btn btn-outline" onclick="exportUsers()">Exportar CSV</button><button class="btn btn-outline" onclick="clearUsers()">Limpiar</button></div>
 
       <hr />
-      <h6>Pagos</h6>
-      <div class="small-muted mb-2">Ver comprobantes subidos y marcar como aceptados.</div>
+      <h6>Pagos Recientes</h6>
+      <div class="small-muted mb-2">Pagos procesados automáticamente.</div>
       <div id="paymentsList" style="max-height:120px;overflow:auto;background:rgba(0,0,0,0.05);padding:8px;border-radius:8px"></div>
 
-      <div class="d-flex gap-2 mt-3"><button class="btn btn-outline" onclick="exportTokens()">Exportar Tokens</button><button class="btn btn-outline" onclick="clearTokens()">Limpiar Tokens</button></div>
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-outline" onclick="exportTokens()">Exportar Tokens</button>
+        <button class="btn btn-outline" onclick="clearTokens()">Limpiar Tokens</button>
+        <button class="btn btn-primary" onclick="simularPagoBackend()">Simular Pago Backend</button>
+      </div>
     </div>
   </div>
 </div>
@@ -168,28 +272,34 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
 <section id="contacto-info" class="py-5 text-center">
   <h2 class="section-title">Contacto Oficial</h2>
   <p class="small-muted mb-1">Consultas generales o soporte técnico:</p>
-  <p class="font-weight-bold">📧 <a href="mailto:matias.taibo2023@gmail.com">matias.taibo2023@gmail.com</a></p>
+  <p class="font-weight-bold">📧 <a href="mailto:matias.taibo2023@gmail.com" class="text-light">matias.taibo2023@gmail.com</a></p>
   <p class="font-weight-bold">📞 3872252758 (solo emergencias o problemas no solucionables)</p>
+  <p class="small-muted mt-3">Para problemas con pagos, incluir ID de transacción y correo usado.</p>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container d-flex justify-content-between align-items-center">
     <div>© 2025 OptiM — v1 Beta — Matías Taibo</div>
-    <div><a class="text-light me-2" href="#"><i class="fab fa-github"></i></a><a class="text-light" href="#"><i class="fab fa-twitter"></i></a></div>
+    <div>
+      <a class="text-light me-2" href="#"><i class="fab fa-github"></i></a>
+      <a class="text-light" href="#"><i class="fab fa-twitter"></i></a>
+    </div>
   </div>
 </footer>
 
 <script>
-/* ========== PWA service worker (inline demo) ========== */
-if ('serviceWorker' in navigator) {
-  const swCode = `self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open('optim-v1').then(c => c.addAll(['/','/index.html']))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
-  const blob = new Blob([swCode], {type: 'application/javascript'});
-  const swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).catch(()=>{});
-}
+/* ========== CONFIGURACIÓN DEL SISTEMA ========== */
+const CONFIG = {
+  precios: {
+    plus: 9.99,
+    elite: 19.99
+  },
+  paypalEmail: "matias.taibo2023@gmail.com", // Reemplazar con email real de PayPal
+  mercadopagoLink: "https://mpago.la/..." // Reemplazar con link real de MercadoPago
+};
 
-/* ========== APP DATA & Storage KEYS ========== */
+/* ========== DATOS Y ALMACENAMIENTO ========== */
 const APPS = [
   {id:'swf',name:'Descompresor de SWF',desc:'Extrae y optimiza archivos Flash',icon:'fa-file-archive'},
   {id:'optwin',name:'Optimizador y Organizador de Windows',desc:'Limpieza profunda, IA y turbo rendimiento',icon:'fa-cogs'},
@@ -197,12 +307,291 @@ const APPS = [
   {id:'aqw',name:'Optimizador de AQW',desc:'Mejora FPS y estabilidad',icon:'fa-dungeon'},
   {id:'organ',name:'Organizador de Archivos Moderno',desc:'Clasificación automática con IA',icon:'fa-folder-open'}
 ];
-const TOKEN_KEY = 'optim_tokens';
-const USERS_KEY = 'optim_users';
-const PAYMENTS_KEY = 'optim_payments';
-const ADMIN_PASS = 'admin-optim-2025'; // CAMBIAR en producción
 
-/* ========== RENDER PROGRAMS ========== */
+const TOKEN_KEY = 'optim_tokens_v2';
+const USERS_KEY = 'optim_users_v2';
+const PAYMENTS_KEY = 'optim_payments_v2';
+const USER_ACCESS_KEY = 'optim_user_access';
+const ADMIN_PASS = 'admin-optim-2025'; // CAMBIAR EN PRODUCCIÓN
+
+/* ========== FUNCIONES DEL SISTEMA DE PAGO ========== */
+let currentPayment = null;
+
+function iniciarPago(plan) {
+  currentPayment = {
+    plan: plan,
+    id: 'pay_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+    amount: CONFIG.precios[plan],
+    currency: 'USD',
+    status: 'pending',
+    timestamp: new Date().toISOString()
+  };
+  
+  mostrarModalPago(plan);
+}
+
+function mostrarModalPago(plan) {
+  const modal = document.getElementById('paymentModal');
+  const steps = document.getElementById('paymentSteps');
+  
+  const planName = plan === 'plus' ? 'Plus' : 'Elite';
+  const amount = CONFIG.precios[plan];
+  
+  steps.innerHTML = `
+    <div class="payment-step">
+      <h6><i class="fas fa-shopping-cart me-2"></i>Resumen del Pedido</h6>
+      <div class="d-flex justify-content-between mt-2">
+        <div>
+          <div>Plan ${planName}</div>
+          <small class="small-muted">Renovación mensual</small>
+        </div>
+        <div class="fw-bold">$${amount} USD</div>
+      </div>
+    </div>
+    
+    <div class="payment-step mt-3">
+      <h6><i class="fas fa-credit-card me-2"></i>Seleccionar Método de Pago</h6>
+      <div class="d-grid gap-2 mt-3">
+        <button class="btn btn-primary" onclick="procesarPago('paypal')">
+          <i class="fab fa-paypal me-2"></i>Pagar con PayPal
+        </button>
+        <button class="btn btn-primary" onclick="procesarPago('mercadopago')">
+          <i class="fas fa-dollar-sign me-2"></i>Pagar con Mercado Pago
+        </button>
+        <button class="btn btn-outline" onclick="procesarPago('manual')">
+          <i class="fas fa-exchange-alt me-2"></i>Transferencia Manual
+        </button>
+      </div>
+    </div>
+    
+    <div class="alert alert-dark mt-3" style="background:rgba(255,255,255,0.03)">
+      <small><i class="fas fa-shield-alt me-2"></i>Pago 100% seguro. Los tokens se generan automáticamente tras confirmación.</small>
+    </div>
+  `;
+  
+  modal.style.display = 'flex';
+  document.getElementById('paymentResult').style.display = 'none';
+}
+
+function procesarPago(metodo) {
+  if (!currentPayment) return;
+  
+  const steps = document.getElementById('paymentSteps');
+  steps.innerHTML = `
+    <div class="text-center py-4">
+      <div class="spinner-border text-primary mb-3" role="status"></div>
+      <h6>Procesando pago...</h6>
+      <p class="small-muted">Redirigiendo a ${metodo === 'paypal' ? 'PayPal' : 'Mercado Pago'}...</p>
+    </div>
+  `;
+  
+  // Simulación de procesamiento de pago
+  setTimeout(() => {
+    finalizarPago(metodo);
+  }, 2000);
+}
+
+function finalizarPago(metodo) {
+  if (!currentPayment) return;
+  
+  const email = prompt("Por favor, ingresa tu email para enviar el token:");
+  if (!email) {
+    alert("Email requerido para enviar el token.");
+    mostrarModalPago(currentPayment.plan);
+    return;
+  }
+  
+  // Generar token único
+  const token = generarTokenUnico(currentPayment.plan);
+  
+  // Guardar pago
+  const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]');
+  currentPayment.email = email;
+  currentPayment.method = metodo;
+  currentPayment.status = 'completed';
+  currentPayment.token = token;
+  currentPayment.completedAt = new Date().toISOString();
+  payments.push(currentPayment);
+  localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments));
+  
+  // Guardar token
+  const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  tokens.push({
+    token: token,
+    plan: currentPayment.plan,
+    email: email,
+    created: new Date().toISOString(),
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 días
+  });
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens));
+  
+  // Guardar usuario
+  const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+  users.push({
+    email: email,
+    plan: currentPayment.plan,
+    token: token,
+    joined: new Date().toISOString(),
+    status: 'active'
+  });
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  
+  // Mostrar resultado
+  const resultDiv = document.getElementById('paymentResult');
+  resultDiv.innerHTML = `
+    <div class="text-center py-4">
+      <div class="success-check">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h4 class="mb-3">¡Pago Exitoso!</h4>
+      <p class="small-muted">Tu membresía ${currentPayment.plan.toUpperCase()} ha sido activada.</p>
+      
+      <div class="token-display mt-3 mb-4">
+        ${token}
+      </div>
+      
+      <div class="alert alert-dark mb-3">
+        <small>
+          <i class="fas fa-envelope me-2"></i>
+          El token también ha sido enviado a: <strong>${email}</strong>
+        </small>
+      </div>
+      
+      <div class="d-grid gap-2">
+        <button class="btn btn-primary" onclick="activarPremium('${token}')">
+          <i class="fas fa-rocket me-2"></i>Activar Ahora
+        </button>
+        <button class="btn btn-outline" onclick="cerrarModalPago()">
+          Cerrar
+        </button>
+      </div>
+      
+      <div class="mt-4 small-muted">
+        <i class="fas fa-info-circle me-1"></i>
+        Guarda este token en un lugar seguro. Lo necesitarás para futuros accesos.
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('paymentSteps').style.display = 'none';
+  resultDiv.style.display = 'block';
+  
+  // Actualizar listas en admin
+  if (document.getElementById('adminActions').style.display === 'block') {
+    loadTokensList();
+    loadUsersList();
+    refreshPaymentsList();
+  }
+}
+
+function generarTokenUnico(plan) {
+  const prefix = plan === 'plus' ? 'OPTIM-PLUS' : 'OPTIM-ELITE';
+  const random = Math.random().toString(36).substr(2, 6).toUpperCase();
+  const timestamp = Date.now().toString(36).substr(-4).toUpperCase();
+  return `${prefix}-${random}-${timestamp}`;
+}
+
+function cerrarModalPago() {
+  document.getElementById('paymentModal').style.display = 'none';
+  currentPayment = null;
+}
+
+function contactarPago(metodo) {
+  const mensajes = {
+    brubank: "Para pagar por Brubank, realiza una transferencia al alias: grimoire.tokens. Luego envía el comprobante a matias.taibo2023@gmail.com",
+    lemon: "Para pagos con crypto (Lemon Cash), contacta a matias.taibo2023@gmail.com para obtener la dirección de wallet.",
+    paypal: "Para pagos manuales por PayPal, envía a: matias.taibo2023@gmail.com. Incluye tu email en la nota."
+  };
+  
+  alert(mensajes[metodo] || "Contacta a matias.taibo2023@gmail.com para instrucciones de pago.");
+}
+
+/* ========== SISTEMA DE TOKENS ========== */
+function verificarToken() {
+  const tokenInput = document.getElementById('tokenInput');
+  const tokenMsg = document.getElementById('tokenMsg');
+  const token = tokenInput.value.trim().toUpperCase();
+  
+  if (!token) {
+    tokenMsg.innerHTML = '<span class="text-warning">Ingresa un token</span>';
+    return;
+  }
+  
+  const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  const tokenData = tokens.find(t => t.token === token);
+  
+  if (tokenData) {
+    // Verificar expiración
+    const expires = new Date(tokenData.expires);
+    const now = new Date();
+    
+    if (now > expires) {
+      tokenMsg.innerHTML = '<span class="text-danger">Token expirado</span>';
+      return;
+    }
+    
+    // Activar premium
+    activarPremium(token);
+    tokenMsg.innerHTML = '<span class="text-success"><i class="fas fa-check-circle"></i> Token válido</span>';
+  } else {
+    tokenMsg.innerHTML = '<span class="text-danger"><i class="fas fa-times-circle"></i> Token inválido</span>';
+  }
+}
+
+function activarPremium(token) {
+  const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  const tokenData = tokens.find(t => t.token === token);
+  
+  if (!tokenData) return;
+  
+  // Guardar acceso del usuario
+  localStorage.setItem(USER_ACCESS_KEY, JSON.stringify({
+    token: token,
+    plan: tokenData.plan,
+    activated: new Date().toISOString(),
+    email: tokenData.email
+  }));
+  
+  // Mostrar contenido premium
+  document.getElementById('premiumContent').style.display = 'block';
+  
+  // Actualizar información del usuario
+  document.getElementById('currentToken').textContent = token;
+  document.getElementById('currentPlan').textContent = tokenData.plan === 'plus' ? 'Plus' : 'Elite';
+  document.getElementById('expirationDate').textContent = new Date(tokenData.expires).toLocaleDateString('es-ES');
+  
+  // Scroll a la sección premium
+  document.getElementById('premiumContent').scrollIntoView({ behavior: 'smooth' });
+  
+  // Mostrar notificación
+  mostrarNotificacion('Premium activado correctamente!', 'success');
+}
+
+function mostrarNotificacion(mensaje, tipo = 'info') {
+  const notif = document.createElement('div');
+  notif.className = `alert alert-${tipo} position-fixed`;
+  notif.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10001;
+    min-width: 300px;
+    backdrop-filter: blur(10px);
+    background: rgba(30,30,40,0.9);
+    border: 1px solid rgba(255,255,255,0.1);
+  `;
+  notif.innerHTML = `
+    <div class="d-flex justify-content-between align-items-center">
+      <span>${mensaje}</span>
+      <button type="button" class="btn-close btn-close-white" onclick="this.parentElement.parentElement.remove()"></button>
+    </div>
+  `;
+  
+  document.body.appendChild(notif);
+  setTimeout(() => notif.remove(), 5000);
+}
+
+/* ========== FUNCIONES EXISTENTES (modificadas) ========== */
 function renderPrograms(filter=''){
   const cont = document.getElementById('programasContainer'); cont.innerHTML='';
   APPS.filter(a=>a.name.toLowerCase().includes(filter.toLowerCase())).forEach(a=>{
@@ -211,106 +600,290 @@ function renderPrograms(filter=''){
     cont.appendChild(col);
   });
 }
+
+// Inicializar programas
 renderPrograms();
 
-/* ========== SEARCH ========== */
+// Búsqueda
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', e=> renderPrograms(e.target.value));
 
-/* ========== DOWNLOAD / LAUNCH ACTIONS (simulated) ========== */
-function descargar(id){ alert('Simulado: Iniciando descarga del paquete: '+id+' (reemplaza URL en el HTML).'); }
-function abrirEnLauncher(id){ openLauncherUI(); const l = document.getElementById('launcherApps'); const a = APPS.find(x=>x.id===id); const el = document.createElement('div'); el.className='p-2 mb-2'; el.innerHTML = `<strong>${a.name}</strong><div class='small-muted'>${a.desc}</div>`; l.prepend(el); }
-
-/* ========== LAUNCHER UI ========== */
-function openLauncherUI(){ document.getElementById('launcherUI').style.display='block'; }
-function closeLauncherUI(){ document.getElementById('launcherUI').style.display='none'; }
-
-/* ========== OPTIMIZAR (simulado) ========== */
-function optimizarSistema(){ alert('Optimizando sistema... (simulación).'); }
-
-/* ========== MEMBERSHIP / PAYMENTS FLOW (frontend-only) ========== */
-function startPayment(method){ const msg = document.getElementById('paymentMsg'); msg.textContent = 'Instrucciones: seleccionaste '+method+". Realizá el pago y luego subí el comprobante. Para PayPal/MercadoPago se mostrará un botón de pago real aquí en producción."; window.scrollTo({top:document.getElementById('membresiaSection').offsetTop,behavior:'smooth'}); }
-
-function uploadReceipt(){ const file = document.getElementById('receiptInput').files[0]; const msg = document.getElementById('paymentMsg'); if(!file){ msg.textContent='Subí primero el comprobante.'; return; }
-  const reader = new FileReader(); reader.onload = ()=>{
-    const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]');
-    const id = 'pay-'+Date.now();
-    payments.push({id:id, name:file.name, data:reader.result, status:'pending', date:new Date().toISOString()});
-    localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments));
-    msg.textContent = 'Comprobante subido. El admin revisará y generará el token. ID pago: '+id;
-    refreshPaymentsList();
-  };
-  reader.readAsDataURL(file);
+// Funciones de programas
+function descargar(id){ 
+  const userAccess = JSON.parse(localStorage.getItem(USER_ACCESS_KEY));
+  if (!userAccess && (id === 'aqw' || id === 'optwin')) {
+    if (!confirm("Esta función requiere membresía Plus. ¿Deseas suscribirte?")) {
+      iniciarPago('plus');
+    }
+    return;
+  }
+  alert('Simulado: Iniciando descarga del paquete: '+id); 
 }
 
-function refreshPaymentsList(){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); const el = document.getElementById('paymentsList'); if(!el) return; el.innerHTML=''; payments.forEach(p=>{ const d = document.createElement('div'); d.className='p-2 mb-1'; d.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${p.id}</strong><div class='small-muted'>${p.name} — ${p.status}</div></div><div><button class='btn btn-sm btn-outline' onclick='viewPayment("${p.id}")'>Ver</button></div></div>`; el.appendChild(d); }); }
+function abrirEnLauncher(id){ 
+  openLauncherUI(); 
+  const l = document.getElementById('launcherApps'); 
+  const a = APPS.find(x=>x.id===id); 
+  const el = document.createElement('div'); 
+  el.className='p-2 mb-2'; 
+  el.innerHTML = `<strong>${a.name}</strong><div class='small-muted'>${a.desc}</div>`; 
+  l.prepend(el); 
+}
 
-function viewPayment(id){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); const p = payments.find(x=>x.id===id); if(!p) return alert('No encontrado'); const w = window.open(); w.document.write(`<h3>Comprobante ${p.id}</h3><p>${p.name}</p><img src='${p.data}' style='max-width:90%;height:auto'/>`); }
+function openLauncherUI(){ document.getElementById('launcherUI').style.display='block'; }
+function closeLauncherUI(){ document.getElementById('launcherUI').style.display='none'; }
+function optimizarSistema(){ alert('Optimizando sistema... (simulación).'); }
 
-/* ========== ADMIN PANEL LOGIC ========== */
+/* ========== ADMIN PANEL (actualizado) ========== */
 function openAdminPanel(){ document.getElementById('adminPanel').style.display='flex'; }
 function closeAdmin(){ document.getElementById('adminPanel').style.display='none'; document.getElementById('adminActions').style.display='none'; }
-function loginAdmin(){ const pass = document.getElementById('adminPass').value; if(pass===ADMIN_PASS){ document.getElementById('adminActions').style.display='block'; loadTokensList(); loadUsersList(); refreshPaymentsList(); } else { alert('Contraseña admin incorrecta'); }}
 
-function generarToken(){ const label = document.getElementById('newTokenInput').value.trim() || ('OPTIM-'+Math.random().toString(36).slice(2,10).toUpperCase()); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); tokens.push(label); localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens)); loadTokensList(); alert('Token generado: '+label); }
+function loginAdmin(){ 
+  const pass = document.getElementById('adminPass').value; 
+  if(pass===ADMIN_PASS){
+    document.getElementById('adminActions').style.display='block'; 
+    loadTokensList(); 
+    loadUsersList(); 
+    refreshPaymentsList(); 
+  } else { 
+    alert('Contraseña admin incorrecta'); 
+  }
+}
 
-function loadTokensList(){ const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); document.getElementById('tokensList').textContent = tokens.join('
-') || '(vacío)'; }
+function generarToken(){ 
+  const label = document.getElementById('newTokenInput').value.trim() || generarTokenUnico('plus');
+  const plan = document.getElementById('tokenPlan').value;
+  
+  const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  tokens.push({
+    token: label,
+    plan: plan,
+    email: 'admin-generated',
+    created: new Date().toISOString(),
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+  });
+  
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens));
+  loadTokensList();
+  alert('Token generado: '+label);
+}
 
-function exportTokens(){ const tokens = localStorage.getItem(TOKEN_KEY) || '[]'; const blob = new Blob([tokens], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'optim_tokens.json'; a.click(); URL.revokeObjectURL(url); }
-function clearTokens(){ if(confirm('Borrar todos los tokens?')){ localStorage.removeItem(TOKEN_KEY); loadTokensList(); }}
+function loadTokensList(){ 
+  const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  const list = tokens.map(t => `${t.token} (${t.plan}) - ${t.email}`).join('\n');
+  document.getElementById('tokensList').textContent = list || '(vacío)'; 
+}
 
-/* ========== Users (assign tokens to users) ========== */
-function loadUsersList(){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); const el = document.getElementById('usersList'); el.innerHTML=''; users.forEach(u=>{ const d = document.createElement('div'); d.className='p-2 mb-1'; d.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${u.name||u.email||u.token}</strong><div class='small-muted'>${u.email||''} • ${u.plan||'--'} • ${u.token}</div></div><div><button class='btn btn-sm btn-outline' onclick='revokeUser("${u.token}")'>Revocar</button><button class='btn btn-sm btn-primary ms-1' onclick='invoiceUser("${u.token}")'>Factura</button></div></div>`; el.appendChild(d); }); }
+function exportTokens(){ 
+  const tokens = localStorage.getItem(TOKEN_KEY) || '[]'; 
+  const blob = new Blob([tokens], {type:'application/json'}); 
+  const url = URL.createObjectURL(blob); 
+  const a = document.createElement('a'); 
+  a.href = url; 
+  a.download = 'optim_tokens.json'; 
+  a.click(); 
+  URL.revokeObjectURL(url); 
+}
 
-function addUserFromPayment(token,email,name,plan){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); users.push({token:token,email:email,name:name,plan:plan,created:new Date().toISOString()}); localStorage.setItem(USERS_KEY,JSON.stringify(users)); loadUsersList(); }
+function clearTokens(){ 
+  if(confirm('¿Borrar todos los tokens?')){ 
+    localStorage.removeItem(TOKEN_KEY); 
+    loadTokensList(); 
+  }
+}
 
-function revokeUser(token){ if(!confirm('Revocar acceso para '+token+'?')) return; let users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); users = users.filter(u=>u.token!==token); localStorage.setItem(USERS_KEY,JSON.stringify(users)); loadUsersList(); alert('Revocado'); }
+function loadUsersList(){ 
+  const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); 
+  const el = document.getElementById('usersList'); 
+  el.innerHTML=''; 
+  users.forEach(u=>{ 
+    const d = document.createElement('div'); 
+    d.className='p-2 mb-1'; 
+    d.innerHTML = `
+      <div class='d-flex justify-content-between align-items-center'>
+        <div>
+          <strong>${u.email}</strong>
+          <div class='small-muted'>${u.plan} • ${u.token}</div>
+        </div>
+        <div>
+          <button class='btn btn-sm btn-outline' onclick='revokeUser("${u.token}")'>Revocar</button>
+        </div>
+      </div>`; 
+    el.appendChild(d); 
+  }); 
+}
 
-function exportUsers(){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); if(!users.length) return alert('No hay usuarios'); const csv = users.map(u=>`${u.token},${u.email||''},${u.name||''},${u.plan||''},${u.created||''}`).join('
-'); const blob = new Blob([csv],{type:'text/csv'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='optim_users.csv'; a.click(); URL.revokeObjectURL(url); }
-function clearUsers(){ if(confirm('Borrar todos los usuarios?')){ localStorage.removeItem(USERS_KEY); loadUsersList(); }}
+function revokeUser(token){ 
+  if(!confirm('¿Revocar acceso para token '+token+'?')) return; 
+  let users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); 
+  users = users.filter(u=>u.token!==token); 
+  localStorage.setItem(USERS_KEY,JSON.stringify(users)); 
+  
+  let tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  tokens = tokens.filter(t => t.token !== token);
+  localStorage.setItem(TOKEN_KEY,JSON.stringify(tokens));
+  
+  loadUsersList(); 
+  loadTokensList();
+  alert('Acceso revocado'); 
+}
 
-/* ========== Payments admin actions: accept payment and generate token for user ======== */
-function acceptPaymentAndIssueToken(paymentId, email, name, plan){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); const p = payments.find(x=>x.id===paymentId); if(!p) return alert('Pago no encontrado'); // change status
-  p.status='accepted'; localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments)); refreshPaymentsList(); // generate token
-  const token = 'OPTIM-'+Math.random().toString(36).slice(2,10).toUpperCase(); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); tokens.push(token); localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens)); // create user
-  addUserFromPayment(token,email,name,plan);
-  alert('Pago aceptado. Token emitido: '+token);
-  loadTokensList(); }
+function refreshPaymentsList(){ 
+  const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); 
+  const el = document.getElementById('paymentsList'); 
+  if(!el) return; 
+  el.innerHTML=''; 
+  payments.forEach(p=>{ 
+    const d = document.createElement('div'); 
+    d.className='p-2 mb-1'; 
+    d.innerHTML = `
+      <div class='d-flex justify-content-between align-items-center'>
+        <div>
+          <strong>${p.id}</strong>
+          <div class='small-muted'>${p.email} — $${p.amount} — ${p.status}</div>
+        </div>
+        <div>
+          <span class='badge ${p.status==='completed'?'bg-success':'bg-warning'}'>${p.status}</span>
+        </div>
+      </div>`; 
+    el.appendChild(d); 
+  }); 
+}
 
-/* Simple UI helper to accept a payment (for admin) via prompt */
-function adminAcceptPrompt(){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); if(!payments.length) return alert('No hay comprobantes pendientes'); const id = prompt('ID de pago a aceptar (ej: pay-...):'); if(!id) return; const email = prompt('Email del usuario:'); const name = prompt('Nombre (opcional):'); const plan = prompt('Plan (Plus/Elite):'); acceptPaymentAndIssueToken(id,email,name,plan); }
+function exportUsers(){ 
+  const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); 
+  if(!users.length) return alert('No hay usuarios'); 
+  const csv = users.map(u=>`${u.token},${u.email||''},${u.plan||''},${u.joined||''},${u.status||''}`).join('\n'); 
+  const blob = new Blob([csv],{type:'text/csv'}); 
+  const url = URL.createObjectURL(blob); 
+  const a = document.createElement('a'); 
+  a.href=url; 
+  a.download='optim_users.csv'; 
+  a.click(); 
+  URL.revokeObjectURL(url); 
+}
 
-/* ========== Invoice generation (simple text/pdf download) ========== */
-function invoiceUser(token){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); const u = users.find(x=>x.token===token); if(!u) return alert('Usuario no encontrado'); const invoice = `Factura OptiM
-Fecha: ${new Date().toLocaleString()}
-Cliente: ${u.name||u.email||'--'}
-Token: ${u.token}
-Plan: ${u.plan||'--'}
-Emitida por: Matías Taibo (OptiM)`; const blob = new Blob([invoice], {type:'text/plain'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `factura_${token}.txt`; a.click(); URL.revokeObjectURL(url); }
+function clearUsers(){ 
+  if(confirm('¿Borrar todos los usuarios?')){ 
+    localStorage.removeItem(USERS_KEY); 
+    loadUsersList(); 
+  }
+}
 
-/* ========== Tokens validation for users */
-function validarToken(){ const t = document.getElementById('premiumToken')?.value.trim(); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); const msg = document.getElementById('tokenMsg'); if(!t){ if(msg) msg.textContent='Ingresá un token'; return; } if(tokens.includes(t)){ if(msg) msg.textContent='✔ Token válido — Bienvenido premium'; if(document.getElementById('premiumContent')) document.getElementById('premiumContent').style.display='block'; localStorage.setItem('optim_access','premium'); } else { if(msg) msg.textContent='✖ Token inválido'; if(document.getElementById('premiumContent')) document.getElementById('premiumContent').style.display='none'; localStorage.removeItem('optim_access'); }}
+function simularPagoBackend() {
+  const email = prompt("Email del usuario para simular pago:");
+  if (!email) return;
+  
+  const plan = prompt("Plan (plus/elite):");
+  if (!['plus', 'elite'].includes(plan)) return;
+  
+  // Simular pago
+  const token = generarTokenUnico(plan);
+  
+  // Guardar en todas las listas
+  const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]');
+  payments.push({
+    id: 'sim_'+Date.now(),
+    plan: plan,
+    amount: CONFIG.precios[plan],
+    email: email,
+    method: 'simulated',
+    status: 'completed',
+    token: token,
+    timestamp: new Date().toISOString()
+  });
+  localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments));
+  
+  const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+  tokens.push({
+    token: token,
+    plan: plan,
+    email: email,
+    created: new Date().toISOString(),
+    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+  });
+  localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens));
+  
+  const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+  users.push({
+    email: email,
+    plan: plan,
+    token: token,
+    joined: new Date().toISOString(),
+    status: 'active'
+  });
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  
+  // Actualizar vistas
+  loadTokensList();
+  loadUsersList();
+  refreshPaymentsList();
+  
+  alert(`Pago simulado exitoso!\nToken generado: ${token}\nEnviado a: ${email}`);
+}
 
-/* ========== Helpers: export/clear payments/tokens ======== */
-function loadInitialData(){ loadTokensList(); loadUsersList(); refreshPaymentsList(); }
-function exportPayments(){ const payments = localStorage.getItem(PAYMENTS_KEY)||'[]'; const blob = new Blob([payments],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='optim_payments.json'; a.click(); URL.revokeObjectURL(url); }
+/* ========== INICIALIZACIÓN ========== */
+window.addEventListener('load', ()=>{
+  // Inicializar launcher
+  const l = document.getElementById('launcherApps'); 
+  APPS.forEach(a=>{ 
+    const el = document.createElement('div'); 
+    el.className='p-2 mb-1'; 
+    el.innerHTML = `
+      <div class='d-flex justify-content-between align-items-center'>
+        <div>
+          <strong>${a.name}</strong>
+          <div class='small-muted'>${a.desc}</div>
+        </div>
+        <div>
+          <button class='btn btn-sm btn-primary' onclick="abrirEnLauncher('${a.id}')">Abrir</button>
+        </div>
+      </div>`; 
+    l.appendChild(el);
+  });
+  
+  // Verificar si el usuario ya tiene acceso premium
+  const userAccess = JSON.parse(localStorage.getItem(USER_ACCESS_KEY));
+  if (userAccess && userAccess.token) {
+    // Verificar si el token aún es válido
+    const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]');
+    const tokenData = tokens.find(t => t.token === userAccess.token);
+    
+    if (tokenData) {
+      const expires = new Date(tokenData.expires);
+      const now = new Date();
+      
+      if (now <= expires) {
+        // Token válido, activar premium
+        document.getElementById('premiumContent').style.display = 'block';
+        document.getElementById('currentToken').textContent = userAccess.token;
+        document.getElementById('currentPlan').textContent = userAccess.plan === 'plus' ? 'Plus' : 'Elite';
+        document.getElementById('expirationDate').textContent = new Date(tokenData.expires).toLocaleDateString('es-ES');
+      } else {
+        // Token expirado
+        localStorage.removeItem(USER_ACCESS_KEY);
+      }
+    }
+  }
+  
+  // Cargar datos iniciales
+  loadTokensList();
+  loadUsersList();
+  refreshPaymentsList();
+});
 
-/* ========== Init & UI hooks ========== */
-window.addEventListener('load', ()=>{ const l = document.getElementById('launcherApps'); APPS.forEach(a=>{ const el = document.createElement('div'); el.className='p-2 mb-1'; el.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${a.name}</strong><div class='small-muted'>${a.desc}</div></div><div><button class='btn btn-sm btn-primary' onclick="abrirEnLauncher('${a.id}')">Abrir</button></div></div>`; l.appendChild(el);} ); if(localStorage.getItem('optim_access')==='premium'){ document.getElementById('premiumContent').style.display='block'; } loadInitialData(); });
-
+// Event listeners
 document.getElementById('openAdminBtn').addEventListener('click', openAdminPanel);
-document.getElementById('openMemberBtn').addEventListener('click', ()=>{ document.getElementById('membresiaSection').scrollIntoView({behavior:'smooth'}); });
+document.getElementById('openMemberBtn').addEventListener('click', ()=>{ 
+  document.getElementById('membresiaSection').scrollIntoView({behavior:'smooth'}); 
+});
 document.getElementById('ctaLauncher').addEventListener('click', openLauncherUI);
-document.getElementById('ctaExplore').addEventListener('click', ()=>{ document.getElementById('programas').scrollIntoView({behavior:'smooth'}); });
-
-// quick admin accept helper binding
-window.adminAcceptPrompt = adminAcceptPrompt;
+document.getElementById('ctaExplore').addEventListener('click', ()=>{ 
+  document.getElementById('programas').scrollIntoView({behavior:'smooth'}); 
+});
 </script>
 </body>
 </html>
-
 
 
 
