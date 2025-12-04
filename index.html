@@ -3,44 +3,32 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mis Programas Windows v1 Beta - Grimoire Ecosystem 2025 | Matías Taibo</title>
+<title>OptiM v1 Beta - Programas y Launcher AQW (Grimoire Rev) | Matías Taibo</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 <meta name="theme-color" content="#0f1724">
 <style>
-:root{
-  --accent1:#ff6b6b;
-  --accent2:#feca57;
-  --glass-bg: rgba(255,255,255,0.06);
-}
+:root{--accent1:#ff6b6b;--accent2:#feca57}
 *{box-sizing:border-box}
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;background:linear-gradient(135deg,#0f1724 0%,#102a43 100%);color:#e6eef8;min-height:100vh}
-.navbar{backdrop-filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,0.03),transparent)}
-.brand{font-weight:700}
-.hero{padding:100px 20px;text-align:center;background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:18px;margin:24px auto;width:92%;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;background:linear-gradient(135deg,#081421 0%,#072033 100%);color:#e6eef8;min-height:100vh}
+.navbar{backdrop-filter:blur(8px);background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent)}
+.brand{font-weight:800}
+.hero{padding:80px 20px;text-align:center;background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:18px;margin:24px auto;width:92%;box-shadow:0 20px 60px rgba(2,6,23,0.6)}
 .lead{color:var(--accent2)}
 .search-container{max-width:820px;margin:20px auto}
-.section-title{font-size:2rem;margin-bottom:18px}
-.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:16px;border:1px solid rgba(255,255,255,0.04);color:#eaf6ff}
+.section-title{font-size:1.8rem;margin-bottom:18px}
+.card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:12px;border:1px solid rgba(255,255,255,0.03);color:#eaf6ff}
 .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));border:none;border-radius:999px;padding:10px 20px;font-weight:700}
 .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);border-radius:999px}
-.launcher{background:linear-gradient(135deg,#1f005c,#5b0060);padding:30px;border-radius:16px;margin-top:22px}
+.launcher{background:linear-gradient(135deg,#1f005c,#5b0060);padding:24px;border-radius:12px;margin-top:22px}
 .pulse{animation:pulse 2.2s infinite}
 @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.02)}100%{transform:scale(1)}}
 .footer{background:linear-gradient(180deg,rgba(0,0,0,0.6),rgba(0,0,0,0.9));padding:30px;text-align:center;margin-top:40px}
-/* MEMBERSHIP & ADMIN */
-.glass-card{background:rgba(255,255,255,0.03);padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
-.badge-plan{background:linear-gradient(90deg,#ffd89b,#19547b);color:#041726;padding:6px 10px;border-radius:999px;font-weight:700}
-.toggle-switch{cursor:pointer}
-/* LOGIN ANIM */
-.login-wrap{display:flex;justify-content:center;align-items:center}
-.login-card{width:420px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));padding:24px;border-radius:14px;backdrop-filter:blur(6px)}
-/* responsive */
-@media (max-width:768px){.hero{padding:60px 12px}.login-card{width:100%}}
-/* small helpers */
-.muted{color:rgba(255,255,255,0.6)}
-.kv{font-weight:700}
+.glass-card{background:rgba(255,255,255,0.02);padding:16px;border-radius:12px}
+.login-card{width:480px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.15));padding:20px;border-radius:12px}
+.muted{color:rgba(255,255,255,0.65)}
+.small-muted{color:rgba(255,255,255,0.5);font-size:0.9rem}
+@media (max-width:768px){.hero{padding:40px 12px}.login-card{width:100%}}
 </style>
 </head>
 <body>
@@ -48,19 +36,19 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
 <!-- NAV -->
 <nav class="navbar navbar-expand-lg navbar-dark px-4">
   <div class="container-fluid">
-    <a class="navbar-brand brand text-light"><i class="fas fa-book-spells"></i> Grimoire Ecosystem</a>
+    <a class="navbar-brand brand text-light"><i class="fas fa-bolt"></i> OptiM</a>
     <div class="d-flex gap-2">
       <button class="btn btn-outline text-light" id="openAdminBtn"><i class="fas fa-tools"></i> Admin</button>
       <button class="btn btn-outline text-light" id="openMemberBtn"><i class="fas fa-crown"></i> Membresía</button>
-      <button class="btn btn-outline text-light" id="installBtn" style="display:none"><i class="fas fa-download"></i> Instalar</button>
+      <a class="btn btn-outline text-light" href="#contacto-info"><i class="fas fa-envelope"></i> Contacto</a>
     </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero container">
-  <h1 class="display-5">Mis Programas Windows - <span class="kv">v1 Beta</span> <small class="muted">(2025) — Creado por Matías Taibo</small></h1>
-  <p class="lead">Ecosistema ultra moderno: Grimoire Rev (launcher), apps multimedia, red social, toolkit y membresías. Compatible con GitHub Pages (frontend-first).</p>
+  <h1 class="display-5">OptiM — v1 Beta <small class="small-muted">(2025) — Creado por Matías Taibo</small></h1>
+  <p class="lead">Tu hub de utilidades para Windows: optimizadores, herramientas y el launcher <strong>Grimoire Rev</strong> (para AQW). Sitio & sistema listo para aceptar pagos y emitir tokens.</p>
   <div class="search-container">
     <input id="searchInput" class="form-control form-control-lg" placeholder="Buscar programas, apps o funciones..." aria-label="Buscar programas">
   </div>
@@ -72,13 +60,12 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
 
 <!-- LAUNCHER -->
 <div class="container mt-4">
-  <div class="launcher d-flex flex-column align-items-center">
-    <h3 class="text-white"><i class="fas fa-rocket"></i> Grimoire Rev <small class="muted">Launcher v1 Beta</small></h3>
-    <p class="text-light">Panel centralizado para lanzar, optimizar o actualizar tus apps con una UI moderna y módulos 3D (previsualización).</p>
+  <div class="launcher d-flex flex-column align-items-center text-light">
+    <h3><i class="fas fa-rocket"></i> Grimoire Rev — Launcher (AQW)</h3>
+    <p class="small-muted">Launcher dedicado para mejorar la experiencia de AQW: módulos de optimización, skins y arranque rápido. (Integrado en OptiM).</p>
     <div class="d-flex gap-2 flex-wrap justify-content-center mt-3">
       <button class="btn btn-primary" id="openLauncherUI"><i class="fas fa-desktop"></i> Abrir Launcher</button>
       <button class="btn btn-outline text-light" id="openSettings"><i class="fas fa-sliders-h"></i> Ajustes</button>
-      <button class="btn btn-outline text-light" id="togglePWA"><i class="fas fa-globe"></i> Offline / PWA</button>
     </div>
   </div>
 </div>
@@ -86,87 +73,48 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
 <!-- PROGRAMAS GRID -->
 <section class="container py-5" id="programas">
   <h2 class="section-title">Programas & Apps</h2>
-  <div class="row g-4" id="programasContainer">
-    <!-- Cards will be injected -->
-  </div>
+  <div class="row g-4" id="programasContainer"></div>
 </section>
 
 <!-- APPS FUTURAS -->
 <section class="container py-3">
   <h2 class="section-title">Apps Futuras</h2>
   <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card p-3">
-        <h5><i class="fas fa-headphones"></i> Reproductor de Música Ultra</h5>
-        <p class="muted">Ecualizador, playlists IA, visualizadores WebGL, integrable con servicios.</p>
-        <div class="d-flex gap-2 mt-2"><span class="badge-plan">Próximamente</span></div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card p-3">
-        <h5><i class="fas fa-share-alt"></i> NeoConnect (Red Social)</h5>
-        <p class="muted">Feed inteligente, mensajes, perfiles y creación de contenido multimedia.</p>
-        <div class="d-flex gap-2 mt-2"><span class="badge-plan">Pre-Alpha</span></div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card p-3">
-        <h5><i class="fas fa-toolbox"></i> Toolkit Universal</h5>
-        <p class="muted">Editor, capturador, gestor de procesos, kit de optimización y dev tools.</p>
-        <div class="d-flex gap-2 mt-2"><span class="badge-plan">Beta</span></div>
-      </div>
-    </div>
+    <div class="col-md-4"><div class="card p-3"><h5><i class="fas fa-headphones"></i> Reproductor de Música Ultra</h5><p class="muted">Ecualizador, playlists IA y visualizadores WebGL.</p></div></div>
+    <div class="col-md-4"><div class="card p-3"><h5><i class="fas fa-share-alt"></i> NeoConnect (Red Social)</h5><p class="muted">Feed inteligente y mensajes.</p></div></div>
+    <div class="col-md-4"><div class="card p-3"><h5><i class="fas fa-toolbox"></i> Toolkit Universal</h5><p class="muted">Editor, capturador, gestor de procesos y optimizadores.</p></div></div>
   </div>
 </section>
 
-<!-- MEMBERSHIP SECTION (standalone & modal) -->
+<!-- MEMBERSHIP & PAYMENTS -->
 <section class="container py-5" id="membresiaSection">
-  <h2 class="section-title">Membresía — Grimoire Access</h2>
+  <h2 class="section-title">Membresía — OptiM Access</h2>
   <div class="row">
     <div class="col-md-6">
       <div class="glass-card">
-        <h4>Planes Disponibles</h4>
-        <p class="muted">Compatibles con GitHub Pages: verificación local y soporte para tokens (ideal para demo y distribución pública sin backend).</p>
+        <h4>Planes</h4>
         <div class="mt-3">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <strong>Free</strong>
-              <div class="muted">Acceso básico, descargas públicas</div>
-            </div>
-            <button class="btn btn-outline text-light" onclick="seleccionarPlan('free')">Seleccionar</button>
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <div>
-              <strong>Plus</strong>
-              <div class="muted">Acceso a contenido beta, temas exclusivos</div>
-            </div>
-            <button class="btn btn-primary" onclick="seleccionarPlan('plus')">Suscribirme</button>
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <div>
-              <strong>Grimoire Elite</strong>
-              <div class="muted">Acceso total, launcher Pro, paquetes y soporte</div>
-            </div>
-            <button class="btn btn-primary" onclick="seleccionarPlan('elite')">Suscribirme</button>
-          </div>
+          <div class="d-flex justify-content-between align-items-center mb-2"><div><strong>Free</strong><div class="small-muted">Acceso básico</div></div><button class="btn btn-outline text-light" onclick="seleccionarPlan('free')">Seleccionar</button></div>
+          <div class="d-flex justify-content-between align-items-center mb-2"><div><strong>Plus</strong><div class="small-muted">Contenido beta + skins</div></div><button class="btn btn-primary" onclick="seleccionarPlan('plus')">Suscribirme</button></div>
+          <div class="d-flex justify-content-between align-items-center"><div><strong>Elite</strong><div class="small-muted">Acceso completo + soporte</div></div><button class="btn btn-primary" onclick="seleccionarPlan('elite')">Suscribirme</button></div>
         </div>
-
       </div>
     </div>
     <div class="col-md-6">
       <div class="glass-card">
-        <h4>Acceso Premium</h4>
-        <p class="muted">Ingresá un token o usa el generador (solo admin). En GitHub Pages recomendamos gestionar tokens externamente y pegarlos aquí para demos.</p>
-        <div class="mb-2">
-          <input id="premiumToken" class="form-control mb-2" placeholder="Ingresá token premium" />
-          <button class="btn btn-primary w-100" onclick="validarToken()">Validar Token</button>
-          <p id="tokenMsg" class="mt-2 muted"></p>
+        <h4>Métodos de Pago</h4>
+        <p class="small-muted">Seleccioná uno y seguí la instrucción. Tras confirmar el pago, subí el comprobante para generar tu token.</p>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary" onclick="startPayment('paypal')"><i class="fab fa-paypal"></i> Pagar con PayPal</button>
+          <button class="btn btn-primary" onclick="startPayment('mercadopago')"><i class="fas fa-dollar-sign"></i> Pagar con Mercado Pago</button>
+          <button class="btn btn-outline" onclick="startPayment('brubank')">Brubank (transferencia) — Alias: <strong>grimoire.tokens</strong></button>
+          <button class="btn btn-outline" onclick="startPayment('lemon')">Lemon Cash (crypto) — Contactar para wallet</button>
         </div>
-        <div>
-          <button class="btn btn-outline text-light me-2" onclick="mostrarGenerador()">Abrir Generador (Admin)</button>
-          <button class="btn btn-outline text-light" onclick="mostrarAdminPanel()">Abrir Panel Admin</button>
+        <div class="mt-3">
+          <label class="small-muted">¿Ya pagaste? Subí el comprobante:</label>
+          <input id="receiptInput" type="file" class="form-control mb-2" accept="image/*,application/pdf" />
+          <button class="btn btn-primary" onclick="uploadReceipt()">Subir comprobante y solicitar token</button>
+          <p id="paymentMsg" class="small-muted mt-2"></p>
         </div>
       </div>
     </div>
@@ -175,78 +123,73 @@ body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;margin:0;backgr
 
 <!-- PREMIUM CONTENT -->
 <section class="container py-4" id="premiumContent" style="display:none">
-  <h3 class="section-title">Contenido Exclusivo — Bienvenido</h3>
-  <div class="row">
-    <div class="col-md-4"><div class="card p-3"> <h5>Grimoire Rev Pro</h5><p class="muted">Módulos 3D, skins exclusivos y panel avanzado.</p></div></div>
-    <div class="col-md-4"><div class="card p-3"> <h5>Acceso Anticipado</h5><p class="muted">Probar apps alpha y betas antes que el público.</p></div></div>
-    <div class="col-md-4"><div class="card p-3"> <h5>Experiencias Interactivas</h5><p class="muted">Mini apps WebGL y visualizaciones premium.</p></div></div>
-  </div>
+  <h3 class="section-title">Contenido Exclusivo</h3>
+  <div class="row"><div class="col-md-4"><div class="card p-3"> <h5>Grimoire Rev Pro</h5><p class="muted">Módulos 3D y skins exclusivos.</p></div></div><div class="col-md-4"><div class="card p-3"> <h5>Acceso Anticipado</h5><p class="muted">Prueba apps alpha y betas.</p></div></div><div class="col-md-4"><div class="card p-3"> <h5>Experiencias Interactivas</h5><p class="muted">Mini apps WebGL y visualizaciones premium.</p></div></div></div>
 </section>
 
-<!-- ADMIN PANEL (modal-like) -->
-<div id="adminPanel" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+<!-- ADMIN PANEL (full frontend demo) -->
+<div id="adminPanel" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;padding:20px">
   <div class="login-card p-4">
-    <h4>Panel Admin — Grimoire</h4>
-    <p class="muted">Protegido. Usá la contraseña administrativa para generar tokens y ver usuarios (solo frontend demo).</p>
-    <input id="adminPass" class="form-control mb-2" placeholder="Contraseña admin" />
-    <div class="d-flex gap-2 mb-3">
-      <button class="btn btn-primary" onclick="loginAdmin()">Ingresar</button>
-      <button class="btn btn-outline" onclick="closeAdmin()">Cerrar</button>
+    <div class="d-flex justify-content-between align-items-center mb-3"><h4>Panel Admin — OptiM</h4><small class="small-muted">Demo frontend</small></div>
+    <div id="adminLoginArea">
+      <input id="adminPass" class="form-control mb-2" placeholder="Contraseña admin" />
+      <div class="d-flex gap-2 mb-3"><button class="btn btn-primary" onclick="loginAdmin()">Ingresar</button><button class="btn btn-outline" onclick="closeAdmin()">Cerrar</button></div>
     </div>
+
     <div id="adminActions" style="display:none">
       <h6>Generador de Tokens</h6>
-      <div class="d-flex gap-2 mb-2">
-        <input id="newTokenInput" class="form-control" placeholder="Etiqueta token (ej: GRIMOIRE-ELITE-2025)" />
-        <button class="btn btn-primary" onclick="generarToken()">Generar</button>
-      </div>
-      <div class="mb-2"><small class="muted">Tokens Guardados (localStorage)</small></div>
-      <pre id="tokensList" style="max-height:140px;overflow:auto;background:rgba(0,0,0,0.25);padding:10px;border-radius:8px"></pre>
-      <div class="mt-2 d-flex gap-2">
-        <button class="btn btn-outline" onclick="exportTokens()">Exportar</button>
-        <button class="btn btn-outline" onclick="clearTokens()">Limpiar</button>
-      </div>
+      <div class="d-flex gap-2 mb-2"><input id="newTokenInput" class="form-control" placeholder="Etiqueta (ej: OPTIM-ELITE-2025)"/><button class="btn btn-primary" onclick="generarToken()">Generar</button></div>
+      <small class="small-muted">Tokens guardados en local (demo). Recomendado: backend para producción.</small>
+      <pre id="tokensList" style="max-height:120px;overflow:auto;background:rgba(0,0,0,0.15);padding:10px;border-radius:8px;margin-top:8px"></pre>
+
+      <hr />
+      <h6>Usuarios Premium (simulado)</h6>
+      <div id="usersList" style="max-height:140px;overflow:auto;background:rgba(0,0,0,0.05);padding:10px;border-radius:8px"></div>
+      <div class="d-flex gap-2 mt-2"><button class="btn btn-outline" onclick="exportUsers()">Exportar CSV</button><button class="btn btn-outline" onclick="clearUsers()">Limpiar</button></div>
+
+      <hr />
+      <h6>Pagos</h6>
+      <div class="small-muted mb-2">Ver comprobantes subidos y marcar como aceptados.</div>
+      <div id="paymentsList" style="max-height:120px;overflow:auto;background:rgba(0,0,0,0.05);padding:8px;border-radius:8px"></div>
+
+      <div class="d-flex gap-2 mt-3"><button class="btn btn-outline" onclick="exportTokens()">Exportar Tokens</button><button class="btn btn-outline" onclick="clearTokens()">Limpiar Tokens</button></div>
     </div>
   </div>
 </div>
 
 <!-- LAUNCHER UI (mini) -->
 <div id="launcherUI" style="display:none;position:fixed;right:20px;bottom:20px;width:360px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.2));padding:12px;border-radius:12px;z-index:9998;box-shadow:0 12px 40px rgba(0,0,0,0.6)">
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <strong>Grimoire Rev - Launcher</strong>
-    <div>
-      <button class="btn btn-sm btn-outline" onclick="closeLauncherUI()"><i class="fas fa-times"></i></button>
-    </div>
-  </div>
+  <div class="d-flex justify-content-between align-items-center mb-2"><strong>Grimoire Rev - Launcher</strong><div><button class="btn btn-sm btn-outline" onclick="closeLauncherUI()"><i class="fas fa-times"></i></button></div></div>
   <div id="launcherApps" style="max-height:300px;overflow:auto"></div>
-  <div class="mt-2 d-flex gap-2">
-    <button class="btn btn-primary w-100" onclick="optimizarSistema()">Optimizar Ahora</button>
-  </div>
+  <div class="mt-2 d-flex gap-2"><button class="btn btn-primary w-100" onclick="optimizarSistema()">Optimizar Ahora</button></div>
 </div>
+
+<!-- CONTACTO -->
+<section id="contacto-info" class="py-5 text-center">
+  <h2 class="section-title">Contacto Oficial</h2>
+  <p class="small-muted mb-1">Consultas generales o soporte técnico:</p>
+  <p class="font-weight-bold">📧 <a href="mailto:matias.taibo2023@gmail.com">matias.taibo2023@gmail.com</a></p>
+  <p class="font-weight-bold">📞 3872252758 (solo emergencias o problemas no solucionables)</p>
+</section>
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-      <div>© 2025 Matías Taibo — Grimoire Ecosystem v1 Beta</div>
-      <div>
-        <a class="text-light me-2" href="#"><i class="fab fa-github"></i></a>
-        <a class="text-light" href="#"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
+  <div class="container d-flex justify-content-between align-items-center">
+    <div>© 2025 OptiM — v1 Beta — Matías Taibo</div>
+    <div><a class="text-light me-2" href="#"><i class="fab fa-github"></i></a><a class="text-light" href="#"><i class="fab fa-twitter"></i></a></div>
   </div>
 </footer>
 
-<!-- SCRIPTS -->
 <script>
-/* ========== PWA: register inline service worker via blob (works on GitHub Pages) ========== */
+/* ========== PWA service worker (inline demo) ========== */
 if ('serviceWorker' in navigator) {
-  const swCode = `self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open('grimoire-v1').then(c => c.addAll(['/','/index.html']))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
+  const swCode = `self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open('optim-v1').then(c => c.addAll(['/','/index.html']))); }); self.addEventListener('fetch', e => { e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))); });`;
   const blob = new Blob([swCode], {type: 'application/javascript'});
   const swUrl = URL.createObjectURL(blob);
   navigator.serviceWorker.register(swUrl).catch(()=>{});
 }
 
-/* ========== APP DATA ========== */
+/* ========== APP DATA & Storage KEYS ========== */
 const APPS = [
   {id:'swf',name:'Descompresor de SWF',desc:'Extrae y optimiza archivos Flash',icon:'fa-file-archive'},
   {id:'optwin',name:'Optimizador y Organizador de Windows',desc:'Limpieza profunda, IA y turbo rendimiento',icon:'fa-cogs'},
@@ -254,25 +197,29 @@ const APPS = [
   {id:'aqw',name:'Optimizador de AQW',desc:'Mejora FPS y estabilidad',icon:'fa-dungeon'},
   {id:'organ',name:'Organizador de Archivos Moderno',desc:'Clasificación automática con IA',icon:'fa-folder-open'}
 ];
+const TOKEN_KEY = 'optim_tokens';
+const USERS_KEY = 'optim_users';
+const PAYMENTS_KEY = 'optim_payments';
+const ADMIN_PASS = 'admin-optim-2025'; // CAMBIAR en producción
 
+/* ========== RENDER PROGRAMS ========== */
 function renderPrograms(filter=''){
   const cont = document.getElementById('programasContainer'); cont.innerHTML='';
   APPS.filter(a=>a.name.toLowerCase().includes(filter.toLowerCase())).forEach(a=>{
     const col = document.createElement('div'); col.className='col-md-6 col-lg-4';
-    col.innerHTML = `<div class="card p-3 h-100 text-white"><i class="fas ${a.icon} fa-2x mb-2"></i><h5>${a.name}</h5><p class="muted">${a.desc}</p><div class="d-flex gap-2"><button class='btn btn-primary' onclick="descargar('${a.id}')"><i class='fas fa-download'></i> Descargar</button><button class='btn btn-outline' onclick="abrirEnLauncher('${a.id}')">Abrir</button></div></div>`;
+    col.innerHTML = `<div class="card p-3 h-100 text-white"><i class="fas ${a.icon} fa-2x mb-2"></i><h5>${a.name}</h5><p class="small-muted">${a.desc}</p><div class="d-flex gap-2 mt-3"><button class='btn btn-primary' onclick="descargar('${a.id}')"><i class='fas fa-download'></i> Descargar</button><button class='btn btn-outline' onclick="abrirEnLauncher('${a.id}')">Abrir</button></div></div>`;
     cont.appendChild(col);
   });
 }
-
 renderPrograms();
 
-// Search
+/* ========== SEARCH ========== */
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', e=> renderPrograms(e.target.value));
 
 /* ========== DOWNLOAD / LAUNCH ACTIONS (simulated) ========== */
 function descargar(id){ alert('Simulado: Iniciando descarga del paquete: '+id+' (reemplaza URL en el HTML).'); }
-function abrirEnLauncher(id){ openLauncherUI(); const l = document.getElementById('launcherApps'); const a = APPS.find(x=>x.id===id); const el = document.createElement('div'); el.className='p-2 mb-2'; el.innerHTML = `<strong>${a.name}</strong> <div class='muted'>${a.desc}</div>`; l.prepend(el); }
+function abrirEnLauncher(id){ openLauncherUI(); const l = document.getElementById('launcherApps'); const a = APPS.find(x=>x.id===id); const el = document.createElement('div'); el.className='p-2 mb-2'; el.innerHTML = `<strong>${a.name}</strong><div class='small-muted'>${a.desc}</div>`; l.prepend(el); }
 
 /* ========== LAUNCHER UI ========== */
 function openLauncherUI(){ document.getElementById('launcherUI').style.display='block'; }
@@ -281,99 +228,89 @@ function closeLauncherUI(){ document.getElementById('launcherUI').style.display=
 /* ========== OPTIMIZAR (simulado) ========== */
 function optimizarSistema(){ alert('Optimizando sistema... (simulación).'); }
 
-/* ========== MEMBERSHIP SYSTEM (frontend-only for GitHub Pages) ========== */
-const TOKEN_KEY = 'grimoire_tokens';
-const ADMIN_PASS = 'admin-grimoire-2025'; // cambiar si querés
+/* ========== MEMBERSHIP / PAYMENTS FLOW (frontend-only) ========== */
+function startPayment(method){ const msg = document.getElementById('paymentMsg'); msg.textContent = 'Instrucciones: seleccionaste '+method+". Realizá el pago y luego subí el comprobante. Para PayPal/MercadoPago se mostrará un botón de pago real aquí en producción."; window.scrollTo({top:document.getElementById('membresiaSection').offsetTop,behavior:'smooth'}); }
 
-function validarToken(){ const t = document.getElementById('premiumToken').value.trim(); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); const msg = document.getElementById('tokenMsg'); if(tokens.includes(t)){ msg.innerHTML = '✔ Token válido — Bienvenido premium'; document.getElementById('premiumContent').style.display='block'; localStorage.setItem('grimoire_access','premium'); } else { msg.innerHTML = '✖ Token inválido'; document.getElementById('premiumContent').style.display='none'; localStorage.removeItem('grimoire_access'); }}
+function uploadReceipt(){ const file = document.getElementById('receiptInput').files[0]; const msg = document.getElementById('paymentMsg'); if(!file){ msg.textContent='Subí primero el comprobante.'; return; }
+  const reader = new FileReader(); reader.onload = ()=>{
+    const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]');
+    const id = 'pay-'+Date.now();
+    payments.push({id:id, name:file.name, data:reader.result, status:'pending', date:new Date().toISOString()});
+    localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments));
+    msg.textContent = 'Comprobante subido. El admin revisará y generará el token. ID pago: '+id;
+    refreshPaymentsList();
+  };
+  reader.readAsDataURL(file);
+}
 
-function mostrarGenerador(){ alert('Abrir Generador: requiere admin. Usa el botón Admin.'); openAdminPanel(); }
+function refreshPaymentsList(){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); const el = document.getElementById('paymentsList'); if(!el) return; el.innerHTML=''; payments.forEach(p=>{ const d = document.createElement('div'); d.className='p-2 mb-1'; d.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${p.id}</strong><div class='small-muted'>${p.name} — ${p.status}</div></div><div><button class='btn btn-sm btn-outline' onclick='viewPayment("${p.id}")'>Ver</button></div></div>`; el.appendChild(d); }); }
 
-/* ========== ADMIN PANEL ========== */
-function mostrarAdminPanel(){ openAdminPanel(); }
+function viewPayment(id){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); const p = payments.find(x=>x.id===id); if(!p) return alert('No encontrado'); const w = window.open(); w.document.write(`<h3>Comprobante ${p.id}</h3><p>${p.name}</p><img src='${p.data}' style='max-width:90%;height:auto'/>`); }
 
+/* ========== ADMIN PANEL LOGIC ========== */
 function openAdminPanel(){ document.getElementById('adminPanel').style.display='flex'; }
 function closeAdmin(){ document.getElementById('adminPanel').style.display='none'; document.getElementById('adminActions').style.display='none'; }
+function loginAdmin(){ const pass = document.getElementById('adminPass').value; if(pass===ADMIN_PASS){ document.getElementById('adminActions').style.display='block'; loadTokensList(); loadUsersList(); refreshPaymentsList(); } else { alert('Contraseña admin incorrecta'); }}
 
-function loginAdmin(){ const pass = document.getElementById('adminPass').value; if(pass===ADMIN_PASS){ document.getElementById('adminActions').style.display='block'; loadTokensList(); } else { alert('Contraseña admin incorrecta'); }}
-
-function generarToken(){ const label = document.getElementById('newTokenInput').value.trim() || ('GRIMOIRE-'+Math.random().toString(36).slice(2,10).toUpperCase()); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); tokens.push(label); localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens)); loadTokensList(); alert('Token generado: '+label+' (compártelo con el usuario premium)'); }
+function generarToken(){ const label = document.getElementById('newTokenInput').value.trim() || ('OPTIM-'+Math.random().toString(36).slice(2,10).toUpperCase()); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); tokens.push(label); localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens)); loadTokensList(); alert('Token generado: '+label); }
 
 function loadTokensList(){ const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); document.getElementById('tokensList').textContent = tokens.join('
 ') || '(vacío)'; }
 
-function exportTokens(){ const tokens = localStorage.getItem(TOKEN_KEY) || '[]'; const blob = new Blob([tokens], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'grimoire_tokens.json'; a.click(); URL.revokeObjectURL(url); }
+function exportTokens(){ const tokens = localStorage.getItem(TOKEN_KEY) || '[]'; const blob = new Blob([tokens], {type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'optim_tokens.json'; a.click(); URL.revokeObjectURL(url); }
+function clearTokens(){ if(confirm('Borrar todos los tokens?')){ localStorage.removeItem(TOKEN_KEY); loadTokensList(); }}
 
-function clearTokens(){ if(confirm('Borrar todos los tokens almacenados localmente?')){ localStorage.removeItem(TOKEN_KEY); loadTokensList(); }}
+/* ========== Users (assign tokens to users) ========== */
+function loadUsersList(){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); const el = document.getElementById('usersList'); el.innerHTML=''; users.forEach(u=>{ const d = document.createElement('div'); d.className='p-2 mb-1'; d.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${u.name||u.email||u.token}</strong><div class='small-muted'>${u.email||''} • ${u.plan||'--'} • ${u.token}</div></div><div><button class='btn btn-sm btn-outline' onclick='revokeUser("${u.token}")'>Revocar</button><button class='btn btn-sm btn-primary ms-1' onclick='invoiceUser("${u.token}")'>Factura</button></div></div>`; el.appendChild(d); }); }
 
-/* ========== Plans flow (simulado) ========== */
-function seleccionarPlan(plan){ if(plan==='free'){ alert('Plan Free seleccionado.'); localStorage.setItem('grimoire_plan','free'); } else if(plan==='plus'){ const t = prompt('Ingresa token Plus o acepta generar demo token? escribe GENERAR para demo'); if(t==='GENERAR'){ const demo='PLUS-DEMO-'+Math.random().toString(36).slice(2,8).toUpperCase(); const arr=JSON.parse(localStorage.getItem(TOKEN_KEY)||'[]'); arr.push(demo); localStorage.setItem(TOKEN_KEY,JSON.stringify(arr)); alert('Demo token generado: '+demo); } else if(t){ document.getElementById('premiumToken').value=t; validarToken(); } }
-else if(plan==='elite'){ const confirmElite = confirm('Suscribirte a Grimoire Elite (simulación). Confirmar?'); if(confirmElite){ const demo='ELITE-DEMO-'+Math.random().toString(36).slice(2,8).toUpperCase(); const arr=JSON.parse(localStorage.getItem(TOKEN_KEY)||'[]'); arr.push(demo); localStorage.setItem(TOKEN_KEY,JSON.stringify(arr)); alert('Token Elite demo generado: '+demo); }} }
+function addUserFromPayment(token,email,name,plan){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); users.push({token:token,email:email,name:name,plan:plan,created:new Date().toISOString()}); localStorage.setItem(USERS_KEY,JSON.stringify(users)); loadUsersList(); }
 
-/* ========== Init on load ========== */
-window.addEventListener('load', ()=>{
-  // pre-load launcher apps list
-  const l = document.getElementById('launcherApps'); APPS.forEach(a=>{ const el = document.createElement('div'); el.className='p-2 mb-1'; el.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${a.name}</strong><div class='muted small'>${a.desc}</div></div><div><button class='btn btn-sm btn-primary' onclick="abrirEnLauncher('${a.id}')">Abrir</button></div></div>`; l.appendChild(el);} )
-  // restore premium state
-  if(localStorage.getItem('grimoire_access')==='premium'){
-    document.getElementById('premiumContent').style.display='block';
-  }
-  loadTokensList();
-});
+function revokeUser(token){ if(!confirm('Revocar acceso para '+token+'?')) return; let users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); users = users.filter(u=>u.token!==token); localStorage.setItem(USERS_KEY,JSON.stringify(users)); loadUsersList(); alert('Revocado'); }
 
-/* ========== UI Hooks ========== */
+function exportUsers(){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); if(!users.length) return alert('No hay usuarios'); const csv = users.map(u=>`${u.token},${u.email||''},${u.name||''},${u.plan||''},${u.created||''}`).join('
+'); const blob = new Blob([csv],{type:'text/csv'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='optim_users.csv'; a.click(); URL.revokeObjectURL(url); }
+function clearUsers(){ if(confirm('Borrar todos los usuarios?')){ localStorage.removeItem(USERS_KEY); loadUsersList(); }}
+
+/* ========== Payments admin actions: accept payment and generate token for user ======== */
+function acceptPaymentAndIssueToken(paymentId, email, name, plan){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); const p = payments.find(x=>x.id===paymentId); if(!p) return alert('Pago no encontrado'); // change status
+  p.status='accepted'; localStorage.setItem(PAYMENTS_KEY, JSON.stringify(payments)); refreshPaymentsList(); // generate token
+  const token = 'OPTIM-'+Math.random().toString(36).slice(2,10).toUpperCase(); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); tokens.push(token); localStorage.setItem(TOKEN_KEY, JSON.stringify(tokens)); // create user
+  addUserFromPayment(token,email,name,plan);
+  alert('Pago aceptado. Token emitido: '+token);
+  loadTokensList(); }
+
+/* Simple UI helper to accept a payment (for admin) via prompt */
+function adminAcceptPrompt(){ const payments = JSON.parse(localStorage.getItem(PAYMENTS_KEY) || '[]'); if(!payments.length) return alert('No hay comprobantes pendientes'); const id = prompt('ID de pago a aceptar (ej: pay-...):'); if(!id) return; const email = prompt('Email del usuario:'); const name = prompt('Nombre (opcional):'); const plan = prompt('Plan (Plus/Elite):'); acceptPaymentAndIssueToken(id,email,name,plan); }
+
+/* ========== Invoice generation (simple text/pdf download) ========== */
+function invoiceUser(token){ const users = JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); const u = users.find(x=>x.token===token); if(!u) return alert('Usuario no encontrado'); const invoice = `Factura OptiM
+Fecha: ${new Date().toLocaleString()}
+Cliente: ${u.name||u.email||'--'}
+Token: ${u.token}
+Plan: ${u.plan||'--'}
+Emitida por: Matías Taibo (OptiM)`; const blob = new Blob([invoice], {type:'text/plain'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `factura_${token}.txt`; a.click(); URL.revokeObjectURL(url); }
+
+/* ========== Tokens validation for users */
+function validarToken(){ const t = document.getElementById('premiumToken')?.value.trim(); const tokens = JSON.parse(localStorage.getItem(TOKEN_KEY) || '[]'); const msg = document.getElementById('tokenMsg'); if(!t){ if(msg) msg.textContent='Ingresá un token'; return; } if(tokens.includes(t)){ if(msg) msg.textContent='✔ Token válido — Bienvenido premium'; if(document.getElementById('premiumContent')) document.getElementById('premiumContent').style.display='block'; localStorage.setItem('optim_access','premium'); } else { if(msg) msg.textContent='✖ Token inválido'; if(document.getElementById('premiumContent')) document.getElementById('premiumContent').style.display='none'; localStorage.removeItem('optim_access'); }}
+
+/* ========== Helpers: export/clear payments/tokens ======== */
+function loadInitialData(){ loadTokensList(); loadUsersList(); refreshPaymentsList(); }
+function exportPayments(){ const payments = localStorage.getItem(PAYMENTS_KEY)||'[]'; const blob = new Blob([payments],{type:'application/json'}); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download='optim_payments.json'; a.click(); URL.revokeObjectURL(url); }
+
+/* ========== Init & UI hooks ========== */
+window.addEventListener('load', ()=>{ const l = document.getElementById('launcherApps'); APPS.forEach(a=>{ const el = document.createElement('div'); el.className='p-2 mb-1'; el.innerHTML = `<div class='d-flex justify-content-between align-items-center'><div><strong>${a.name}</strong><div class='small-muted'>${a.desc}</div></div><div><button class='btn btn-sm btn-primary' onclick="abrirEnLauncher('${a.id}')">Abrir</button></div></div>`; l.appendChild(el);} ); if(localStorage.getItem('optim_access')==='premium'){ document.getElementById('premiumContent').style.display='block'; } loadInitialData(); });
+
 document.getElementById('openAdminBtn').addEventListener('click', openAdminPanel);
 document.getElementById('openMemberBtn').addEventListener('click', ()=>{ document.getElementById('membresiaSection').scrollIntoView({behavior:'smooth'}); });
 document.getElementById('ctaLauncher').addEventListener('click', openLauncherUI);
 document.getElementById('ctaExplore').addEventListener('click', ()=>{ document.getElementById('programas').scrollIntoView({behavior:'smooth'}); });
 
-// Simple install prompt handling (deferred prompt simulated)
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); deferredPrompt = e; document.getElementById('installBtn').style.display='inline-block'; document.getElementById('installBtn').addEventListener('click', async ()=>{ deferredPrompt.prompt(); const choice = await deferredPrompt.userChoice; deferredPrompt = null; document.getElementById('installBtn').style.display='none'; });
-});
-
-// small helper to open admin from generador hint
-function openAdminPanelFromHint(){ openAdminPanel(); }
+// quick admin accept helper binding
+window.adminAcceptPrompt = adminAcceptPrompt;
 </script>
 </body>
 </html>
 
-<!-- Payment Section -->
-<section id="payments" class="py-5 text-center">
-  <h2 class="text-3xl font-bold mb-4">Métodos de Pago Oficiales</h2>
-  <p class="mb-6">Adquirí tokens premium de forma segura usando nuestros métodos autorizados:</p>
-  <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-    <div class="p-6 rounded-2xl bg-white/10 backdrop-blur shadow">
-      <h3 class="text-xl font-semibold mb-2">PayPal</h3>
-      <p class="mb-3">Pago internacional rápido y seguro.</p>
-      <a href="#" class="btn-primary">Pagar con PayPal</a>
-    </div>
-    <div class="p-6 rounded-2xl bg-white/10 backdrop-blur shadow">
-      <h3 class="text-xl font-semibold mb-2">Mercado Pago</h3>
-      <p class="mb-3">Pagos locales con tarjeta, débito o efectivo.</p>
-      <a href="#" class="btn-primary">Pagar con Mercado Pago</a>
-    </div>
-    <div class="p-6 rounded-2xl bg-white/10 backdrop-blur shadow">
-      <h3 class="text-xl font-semibold mb-2">Brubank</h3>
-      <p class="mb-3">Transferencia directa.</p>
-      <p class="font-bold">Alias: grimoire.tokens</p>
-    </div>
-    <div class="p-6 rounded-2xl bg-white/10 backdrop-blur shadow">
-      <h3 class="text-xl font-semibold mb-2">Lemon Cash</h3>
-      <p class="mb-3">Pagos con criptomonedas fácilmente.</p>
-      <p class="font-bold">Wallet: enviar consulta</p>
-    </div>
-  </div>
-</section>
-
-<!-- Contact Section -->
-<section id="contacto-info" class="py-5 text-center">
-  <h2 class="text-3xl font-bold mb-3">Contacto Oficial</h2>
-  <p class="mb-1">Consultas generales o soporte técnico:</p>
-  <p class="font-bold">📧 matias.taibo2023@gmail.com</p>
-  <p class="font-bold">📞 3872252758 (solo emergencias o problemas no solucionables)</p>
-</section>
 
 
 
